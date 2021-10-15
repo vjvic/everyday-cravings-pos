@@ -3,6 +3,7 @@ import { deepOrange } from "@mui/material/colors";
 import Layout from "components/Layout/Layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "Pages/Home";
+import Menu from "Pages/Menu";
 
 const secondary = "#F9F9F9";
 
@@ -29,6 +30,7 @@ function App() {
           <Layout>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/menu" component={Menu} />
             </Switch>
           </Layout>
         </Router>

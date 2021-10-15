@@ -11,40 +11,47 @@ import {
 } from "@mui/material";
 import { RiRestaurant2Fill } from "react-icons/ri";
 import { navItems } from "./SidebarData";
+import { useHistory } from "react-router";
 
 const drawerWidth = 240;
-
-const drawer = (
-  <div>
-    {/*   <Toolbar /> */}
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 2,
-      }}
-    >
-      <RiRestaurant2Fill size={38} color="#ff5722" />
-      <Typography component="h1" variant="h4">
-        Resto.
-      </Typography>
-    </Box>
-    <Divider />
-    <List>
-      {navItems.map((item) => (
-        <ListItem button key={item.text}>
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItem>
-      ))}
-    </List>
-  </div>
-);
 
 const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  const history = useHistory();
+
+  const drawer = (
+    <div>
+      {/*   <Toolbar /> */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 2,
+        }}
+      >
+        <RiRestaurant2Fill size={38} color="#ff5722" />
+        <Typography component="h1" variant="h4">
+          Resto.
+        </Typography>
+      </Box>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem
+            button
+            key={item.text}
+            onClick={() => history.push(item.path)}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   return (
     <Box
