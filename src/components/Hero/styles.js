@@ -1,47 +1,22 @@
 import { styled } from "@mui/material";
-import hero from "assets/image/hero-bg.jpg";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 export const HeroSection = styled("section")(({ theme }) => ({
-  background: `url(${hero}) no-repeat center center / cover`,
-  minHeight: 500,
-  borderRadius: "10px",
-  position: "relative",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  textAlign: "center",
+  backgroundColor: theme.palette.primary.main,
+  borderRadius: theme.shape.borderRadius,
   color: "#fff",
-  padding: theme.spacing(4),
+  padding: theme.spacing(5, 3),
   marginBottom: theme.spacing(7),
-
-  [theme.breakpoints.down("md")]: {
-    minHeight: 270,
+  img: {
+    display: "none",
   },
-
-  " > *": {
-    zIndex: 1,
-  },
-
-  "&:before": {
-    content: '" "',
-    borderRadius: theme.shape.borderRadius,
-    background: "rgba(0, 0, 0, 0.8)",
-    position: "absolute",
-    top: 0,
-    height: "100%",
-    width: "100%",
-  },
-}));
-
-export const HeroBtn = styled(Button)(({ theme }) => ({
-  height: "50px",
-  width: "140px",
-  margin: theme.spacing(1),
 
   [theme.breakpoints.up("md")]: {
-    height: "60px",
-    width: "160px",
+    fontSize: "3.4rem",
+    padding: theme.spacing(5, 10),
+    img: {
+      display: "block",
+    },
   },
 }));
 

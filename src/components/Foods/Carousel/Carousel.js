@@ -16,15 +16,15 @@ const ItemCarousel = ({ dummyData, text }) => {
       items: 5,
     },
     laptop: {
-      breakpoint: { max: 1200, min: 720 },
+      breakpoint: { max: 1200, min: 768 },
       items: 3,
     },
     tablet: {
-      breakpoint: { max: 720, min: 464 },
-      items: 2,
+      breakpoint: { max: 768, min: 464 },
+      items: 1,
     },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
+    phone: {
+      breakpoint: { max: 400, min: 300 },
       items: 1,
     },
   };
@@ -36,7 +36,10 @@ const ItemCarousel = ({ dummyData, text }) => {
       <Typography variant="h4">{text}</Typography>
 
       <Box py={3}>
-        <Carousel responsive={responsive}>
+        <Carousel
+          responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "phone"]}
+        >
           {dummyData.meals.map((item) => (
             <Box pr={2} py={2} key={item.idMeal}>
               <Item item={item} />

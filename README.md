@@ -2,7 +2,7 @@
 
 ### Ongoing project
 
-![restoSS](https://user-images.githubusercontent.com/78843809/137473354-72ed32aa-cb1a-40ac-9b3d-027e19959b0e.png)
+![newSS](https://user-images.githubusercontent.com/78843809/137627217-a6c22c82-933b-40c1-b3d3-ab4986537aa9.png)
 
 # How to install
 

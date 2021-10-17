@@ -44,7 +44,7 @@ const Appbar = ({ handleDrawerToggle }) => {
 
         <Box px={2}>
           <IconButton size="large" color="inherit">
-            <Badge badgeContent={5} color="error">
+            <Badge badgeContent={4} color="error">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
