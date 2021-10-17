@@ -12,6 +12,7 @@ import {
 import { RiRestaurant2Fill } from "react-icons/ri";
 import { navItems } from "./SidebarData";
 import { useHistory } from "react-router";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
@@ -49,6 +50,13 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+        <Divider />
+        <ListItem button>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary="logout" />
+        </ListItem>
       </List>
     </div>
   );

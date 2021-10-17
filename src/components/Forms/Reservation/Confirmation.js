@@ -18,7 +18,7 @@ const Confirmation = ({ handleClose, open, userData }) => {
   const { name, value, guest } = userData;
 
   const date = value ? format(userData.value, "PP") : "";
-  const time = value ? format(userData.value, "h:m aaa") : "";
+  const time = value ? format(userData.value, "hh:mm aaa") : "";
 
   return (
     <div>

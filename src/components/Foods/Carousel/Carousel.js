@@ -29,8 +29,6 @@ const ItemCarousel = ({ dummyData, text }) => {
     },
   };
 
-  console.log(dummyData);
-
   return (
     <div>
       <Typography variant="h4">{text}</Typography>

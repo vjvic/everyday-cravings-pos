@@ -18,7 +18,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="span">{children}</Typography>
         </Box>
       )}
     </div>
@@ -101,8 +101,8 @@ const Menu = () => {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Grid container spacing={2}>
             {breakfast.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3}>
-                <Item item={item} />
+              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
+                <Item item={item} key={item.idMeal} />
               </Grid>
             ))}
           </Grid>
@@ -112,8 +112,8 @@ const Menu = () => {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Grid container spacing={2}>
             {lunch.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3}>
-                <Item item={item} />
+              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
+                <Item item={item} key={item.idMeal} />
               </Grid>
             ))}
           </Grid>
@@ -123,7 +123,7 @@ const Menu = () => {
         <TabPanel value={value} index={2} dir={theme.direction}>
           <Grid container spacing={2}>
             {dinner.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3}>
+              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
                 <Item item={item} />
               </Grid>
             ))}
@@ -134,7 +134,7 @@ const Menu = () => {
         <TabPanel value={value} index={3} dir={theme.direction}>
           <Grid container spacing={2}>
             {dessert.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3}>
+              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
                 <Item item={item} />
               </Grid>
             ))}

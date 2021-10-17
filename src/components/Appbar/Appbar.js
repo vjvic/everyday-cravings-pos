@@ -5,9 +5,12 @@ import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
+import { useHistory } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const drawerWidth = 240;
+
+  const history = useHistory();
 
   return (
     <AppBar
@@ -43,7 +46,11 @@ const Appbar = ({ handleDrawerToggle }) => {
         <Box sx={{ flexGrow: 1 }} />
 
         <Box px={2}>
-          <IconButton size="large" color="inherit">
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={() => history.push("/cart")}
+          >
             <Badge badgeContent={4} color="error">
               <ShoppingCartIcon />
             </Badge>

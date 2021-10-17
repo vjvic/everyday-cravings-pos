@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, CircularProgress } from "@mui/material";
 import CartItem from "components/Cart/Item";
 import PaymentInfo from "components/Cart/PaymentInfo";
 import useFetch from "components/hooks/useFetch";
@@ -8,7 +8,19 @@ import useFetch from "components/hooks/useFetch";
 const Cart = () => {
   const { data: cart, loading } = useFetch("search.php?s= ");
 
-  if (loading) return "";
+  if (loading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 240px)",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   const dummyCart = cart.meals.slice(0, 4);
 
