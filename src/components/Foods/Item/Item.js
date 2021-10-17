@@ -28,7 +28,7 @@ const Item = ({ item }) => {
       />
 
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography component="span" variant="body2" color="text.secondary">
           <TextTruncate
             line={3}
             truncateText="…"

@@ -4,6 +4,7 @@ import Layout from "components/Layout/Layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "Pages/Home";
 import Menu from "Pages/Menu";
+import Book from "Pages/Book";
 
 const secondary = "#F9F9F9";
 
@@ -31,6 +32,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/menu" component={Menu} />
+              <Route exact path="/book" component={Book} />
             </Switch>
           </Layout>
         </Router>

@@ -29,6 +29,8 @@ const ItemCarousel = ({ dummyData, text }) => {
     },
   };
 
+  console.log(dummyData);
+
   return (
     <div>
       <Typography variant="h4">{text}</Typography>
@@ -36,7 +38,7 @@ const ItemCarousel = ({ dummyData, text }) => {
       <Box py={3}>
         <Carousel responsive={responsive}>
           {dummyData.meals.map((item) => (
-            <Box pr={2} py={2} key={item.text}>
+            <Box pr={2} py={2} key={item.idMeal}>
               <Item item={item} />
             </Box>
           ))}
