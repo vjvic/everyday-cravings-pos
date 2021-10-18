@@ -13,7 +13,7 @@ const Hero = () => {
         alignItems="center"
         sx={{ gridGap: 4 }}
       >
-        <Grid item xs={12} sm={12} md={6} lg={6}>
+        <Grid item sm={12} lg={6}>
           <HeroTypography components="h1" fontWeight="bold">
             Free Delivery for 30 days 🎉
           </HeroTypography>
@@ -36,7 +36,7 @@ const Hero = () => {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Grid item sm={12} lg={3}>
           <img src={heroSvg} alt="hero svg" width="100%" />
         </Grid>
       </Grid>

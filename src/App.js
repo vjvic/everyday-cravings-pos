@@ -8,6 +8,7 @@ import Book from "Pages/Book";
 import Cart from "Pages/Cart";
 import Favorites from "Pages/Favorites";
 import Results from "Pages/Results";
+import About from "Pages/About";
 
 const secondary = "#F9F9F9";
 
@@ -38,6 +39,7 @@ function App() {
               <Route exact path="/book" component={Book} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/favorites" component={Favorites} />
+              <Route exact path="/about" component={About} />
               <Route exact path="/results/:query" component={Results} />
             </Switch>
           </Layout>
