@@ -7,6 +7,7 @@ import Menu from "Pages/Menu";
 import Book from "Pages/Book";
 import Cart from "Pages/Cart";
 import Favorites from "Pages/Favorites";
+import Results from "Pages/Results";
 
 const secondary = "#F9F9F9";
 
@@ -37,6 +38,7 @@ function App() {
               <Route exact path="/book" component={Book} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/favorites" component={Favorites} />
+              <Route exact path="/results/:query" component={Results} />
             </Switch>
           </Layout>
         </Router>

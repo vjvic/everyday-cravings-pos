@@ -18,7 +18,15 @@ const Item = ({ item, favorite }) => {
 
   return (
     <Card>
-      <CardHeader title={strMeal} subheader={strArea} />
+      <CardHeader
+        sx={{ display: "block", overflow: "hidden" }}
+        title={
+          <Typography noWrap variant="h5">
+            {strMeal}
+          </Typography>
+        }
+        subheader={strArea}
+      />
 
       <CardMedia
         component="img"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Toolbar, IconButton, Avatar, Badge } from "@mui/material";
 import { Box } from "@mui/system";
@@ -8,9 +8,19 @@ import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
+  const [query, setQuery] = useState("");
+  const history = useHistory();
+
   const drawerWidth = 240;
 
-  const history = useHistory();
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (query) {
+      history.push("/results/" + query);
+      setQuery("");
+    }
+  };
 
   return (
     <AppBar
@@ -33,15 +43,18 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search..."
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        <form onSubmit={handleSearch}>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </Search>
+        </form>
 
         <Box sx={{ flexGrow: 1 }} />
 

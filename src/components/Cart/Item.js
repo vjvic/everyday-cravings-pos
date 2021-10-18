@@ -20,7 +20,7 @@ const CartItem = ({ strArea, strMeal, strMealThumb }) => {
         }}
       >
         <CardContent>
-          <Typography component="div" variant="h5">
+          <Typography component="h3" variant="h5">
             {strMeal}
           </Typography>
 
