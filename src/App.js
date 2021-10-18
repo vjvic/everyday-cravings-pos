@@ -6,6 +6,7 @@ import Home from "Pages/Home";
 import Menu from "Pages/Menu";
 import Book from "Pages/Book";
 import Cart from "Pages/Cart";
+import Favorites from "Pages/Favorites";
 
 const secondary = "#F9F9F9";
 
@@ -35,6 +36,7 @@ function App() {
               <Route exact path="/menu" component={Menu} />
               <Route exact path="/book" component={Book} />
               <Route exact path="/cart" component={Cart} />
+              <Route exact path="/favorites" component={Favorites} />
             </Switch>
           </Layout>
         </Router>

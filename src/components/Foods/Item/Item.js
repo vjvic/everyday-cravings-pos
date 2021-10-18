@@ -13,7 +13,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import TextTruncate from "react-text-truncate";
 
-const Item = ({ item }) => {
+const Item = ({ item, favorite }) => {
   const { strMealThumb, strMeal, strArea } = item;
 
   return (
@@ -41,7 +41,7 @@ const Item = ({ item }) => {
         <Typography>&#8369; 500</Typography>
         <Box sx={{ flexGrow: 1 }} />
         <IconButton>
-          <FavoriteIcon />
+          <FavoriteIcon sx={{ color: favorite ? "primary.main" : "" }} />
         </IconButton>
         <IconButton>
           <AddShoppingCartIcon />

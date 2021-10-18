@@ -9,11 +9,11 @@ const ItemCarousel = ({ dummyData, text }) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 6,
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1200 },
-      items: 5,
+      items: 4,
     },
     laptop: {
       breakpoint: { max: 1200, min: 768 },
