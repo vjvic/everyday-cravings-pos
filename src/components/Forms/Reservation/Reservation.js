@@ -43,53 +43,45 @@ const Reservation = () => {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "100%" },
+          "& > :not(style)": { my: 1, width: "100%" },
         }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <Box>
-          <TextField
-            label="Name"
-            variant="standard"
-            fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Box>
+        <TextField
+          label="Name"
+          variant="standard"
+          fullWidth
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-        <Box py={2}>
-          <TextField
-            label="Email"
-            variant="standard"
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Box>
+        <TextField
+          label="Email"
+          variant="standard"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <Box py={2}>
-          <TextField
-            label="Number of guests"
-            variant="standard"
-            type="number"
-            InputProps={{ inputProps: { min: 1, max: 4 } }}
-            fullWidth
-            value={guest}
-            onChange={(e) => setGuest(e.target.value)}
-          />
-        </Box>
+        <TextField
+          label="Number of guests"
+          variant="standard"
+          type="number"
+          InputProps={{ inputProps: { min: 1, max: 4 } }}
+          fullWidth
+          value={guest}
+          onChange={(e) => setGuest(e.target.value)}
+        />
 
-        <Box py={2}>
-          <TextField
-            label="Phone number"
-            variant="standard"
-            fullWidth
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </Box>
+        <TextField
+          label="Phone number"
+          variant="standard"
+          fullWidth
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
 
         <LocalizationProvider dateAdapter={DateAdapter}>
           <DateTimePicker

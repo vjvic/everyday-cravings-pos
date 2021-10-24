@@ -10,7 +10,7 @@ import {
   Box,
 } from "@mui/material";
 import { RiRestaurant2Fill } from "react-icons/ri";
-import { navItems } from "./SidebarData";
+import { navItems, navItemsAdmin } from "./SidebarData";
 import { useHistory } from "react-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -41,6 +41,18 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
       <Divider />
       <List>
         {navItems.map((item) => (
+          <ListItem
+            button
+            key={item.text}
+            onClick={() => history.push(item.path)}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItem>
+        ))}
+        <Divider />
+
+        {navItemsAdmin.map((item) => (
           <ListItem
             button
             key={item.text}

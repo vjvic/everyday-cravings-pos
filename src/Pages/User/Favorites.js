@@ -26,7 +26,7 @@ const Favorites = () => {
   return (
     <div>
       <Box mb={5}>
-        <Typography variant="h3" component="h1">
+        <Typography variant="h4" component="h1">
           Favorites
         </Typography>
       </Box>
