@@ -20,11 +20,11 @@ const mealSchema = mongoose.Schema(
       required: true,
     },
     category: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     price: {
-      type: Numer,
+      type: Number,
       required: true,
       default: 0,
     },
