@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "components/Hero/Hero";
-import FoodCarousel from "components/Foods/Carousel/Carousel";
-import useFetch from "components/hooks/useFetch";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Alert } from "@mui/material";
 import { Box } from "@mui/system";
+import { useSelector, useDispatch } from "react-redux";
+import { getMealList } from "redux/actions/mealAction";
+
+import Menu from "components/Meals/Menu/Menu";
 
 const Home = () => {
-  const { data: popular, loading: popularLoading } = useFetch("search.php?s= ");
-  const { data: newDish, loading: newLoading } = useFetch("search.php?s=f");
-  const { data: today, loading: todayLoading } = useFetch("search.php?s=g");
+  const { loading, meals, error } = useSelector((state) => state.mealList);
+  const dispatch = useDispatch();
 
-  if (popularLoading || newLoading || todayLoading)
+  useEffect(() => {
+    dispatch(getMealList());
+  }, [dispatch]);
+
+  console.log(meals);
+
+  if (loading)
     return (
       <Box
         sx={{
@@ -24,12 +31,12 @@ const Home = () => {
       </Box>
     );
 
+  if (error) return <Alert severity="error">{error}</Alert>;
+
   return (
     <div>
       <Hero />
-      <FoodCarousel dummyData={popular} text={"Popular"} />
-      <FoodCarousel dummyData={newDish} text={"New"} />
-      <FoodCarousel dummyData={today} text={"Dish for Today"} />
+      <Menu meals={meals} />
     </div>
   );
 };

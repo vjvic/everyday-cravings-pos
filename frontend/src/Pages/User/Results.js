@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import Item from "components/Foods/Item/Item";
+import Item from "components/Meals/Item/Item";
 import useFetch from "components/hooks/useFetch";
 import { Grid, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";

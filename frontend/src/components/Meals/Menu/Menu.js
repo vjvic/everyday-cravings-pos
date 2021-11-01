@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Tabs, Tab, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import Item from "components/Foods/Item/Item";
-import useFetch from "components/hooks/useFetch";
-import CircularProgress from "@mui/material/CircularProgress";
+import Item from "components/Meals/Item/Item";
 
 const TabPanel = ({ children, value, index, ...other }) => {
   return (
@@ -25,8 +23,8 @@ const TabPanel = ({ children, value, index, ...other }) => {
   );
 };
 
-const Menu = () => {
-  const [value, setValue] = React.useState(0);
+const Menu = ({ meals }) => {
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -38,36 +36,20 @@ const Menu = () => {
 
   const theme = useTheme();
 
-  //Breakfast
-  const { data: breakfast, loading: breakfastLoading } = useFetch(
-    "search.php?s=breakfast"
-  );
-  //Lunch
-  const { data: lunch, loading: lunchLoading } = useFetch("search.php?s=v ");
-
-  //Dinner
-  const { data: dinner, loading: dinnerLoading } =
-    useFetch("search.php?s=fish ");
-
-  //Dessert
-  const { data: dessert, loading: dessertLoading } =
-    useFetch("search.php?s=cake ");
-
-  //Loader
-
-  if (breakfastLoading || lunchLoading || dinnerLoading || dessertLoading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+  //filter breakfast in array
+  const breakfast = meals
+    ? meals.filter((meal) => meal.category === "breakfast")
+    : [];
+  //filter lunch in array
+  const lunch = meals ? meals.filter((meal) => meal.category === "lunch") : [];
+  //filter dinner in array
+  const dinner = meals
+    ? meals.filter((meal) => meal.category === "dinner")
+    : [];
+  //filter dessert in array
+  const dessert = meals
+    ? meals.filter((meal) => meal.category === "dessert")
+    : [];
 
   return (
     <section>
@@ -86,6 +68,7 @@ const Menu = () => {
           allowScrollButtonsMobile
           aria-label="scrollable force tabs example"
         >
+          <Tab label="All" />
           <Tab label="Breakfast" />
           <Tab label="Lunch" />
           <Tab label="Dinner" />
@@ -97,47 +80,63 @@ const Menu = () => {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {/*  Breakfast content */}
+        {/*  All content */}
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Grid container spacing={2}>
-            {breakfast.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
-                <Item item={item} key={item.idMeal} />
-              </Grid>
-            ))}
+            {meals &&
+              meals.map((item) => (
+                <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+                  <Item item={item} />
+                </Grid>
+              ))}
+          </Grid>
+        </TabPanel>
+
+        {/*  Breakfast content */}
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Grid container spacing={2}>
+            {breakfast &&
+              breakfast.map((item) => (
+                <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+                  <Item item={item} />
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
 
         {/*  Lunch content */}
-        <TabPanel value={value} index={1} dir={theme.direction}>
+        <TabPanel value={value} index={2} dir={theme.direction}>
           <Grid container spacing={2}>
-            {lunch.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
-                <Item item={item} key={item.idMeal} />
-              </Grid>
-            ))}
+            {lunch &&
+              lunch.map((item) => (
+                <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+                  <Item item={item} />
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
 
         {/*  Dinner content */}
-        <TabPanel value={value} index={2} dir={theme.direction}>
+        <TabPanel value={value} index={3} dir={theme.direction}>
           <Grid container spacing={2}>
-            {dinner.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
-                <Item item={item} />
-              </Grid>
-            ))}
+            {dinner &&
+              dinner.map((item) => (
+                <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+                  <Item item={item} />
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
 
         {/*  Dessert content */}
-        <TabPanel value={value} index={3} dir={theme.direction}>
+        <TabPanel value={value} index={4} dir={theme.direction}>
           <Grid container spacing={2}>
-            {dessert.meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
-                <Item item={item} />
-              </Grid>
-            ))}
+            {dessert &&
+              dessert.map((item) => (
+                <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+                  <Item item={item} />
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
       </SwipeableViews>

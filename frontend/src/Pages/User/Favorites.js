@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { Typography, Grid, CircularProgress } from "@mui/material";
 import useFetch from "components/hooks/useFetch";
-import Item from "components/Foods/Item/Item";
+import Item from "components/Meals/Item/Item";
 
 const Favorites = () => {
   const { data: favorites, loading } = useFetch("search.php?s= ");

@@ -8,6 +8,8 @@ const meals = [
     category: "lunch",
     price: 500,
     countInStock: 3,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: "Chicken",
@@ -18,6 +20,8 @@ const meals = [
     category: "dinner",
     price: 500,
     countInStock: 3,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: "Steak",
@@ -28,6 +32,8 @@ const meals = [
     category: "dinner",
     price: 500,
     countInStock: 3,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: "Pancakes",
@@ -38,6 +44,8 @@ const meals = [
     category: "breakfast",
     price: 500,
     countInStock: 3,
+    rating: 0,
+    numReviews: 0,
   },
 ];
 

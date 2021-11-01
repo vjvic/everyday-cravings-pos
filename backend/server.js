@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
+import cors from "cors";
 
 import mealRoutes from "./routes/mealRoutes.js";
 
@@ -11,6 +12,7 @@ connectDB();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
