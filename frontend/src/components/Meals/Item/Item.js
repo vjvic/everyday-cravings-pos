@@ -10,11 +10,15 @@ import {
   Stack,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Item = ({ item, favorite }) => {
-  const { name, image, category, price, rating, numReviews } = item;
+  const { name, image, category, price, rating, numReviews, _id } = item;
+
+  const history = useHistory();
 
   return (
     <Card>
@@ -25,14 +29,27 @@ const Item = ({ item, favorite }) => {
           textTransform: "capitalize",
         }}
         title={
-          <Typography noWrap variant="h5">
+          <Typography
+            component={Link}
+            to={`/meal/${_id}`}
+            color="inherit"
+            noWrap
+            variant="h5"
+          >
             {name}
           </Typography>
         }
         subheader={category}
       />
 
-      <CardMedia component="img" height="194" image={image} alt={name} />
+      <CardMedia
+        component="img"
+        height="194"
+        image={image}
+        alt={name}
+        sx={{ cursor: "pointer" }}
+        onClick={() => history.push(`/meal/${_id}`)}
+      />
 
       <CardContent>
         <Stack direction="row" alignItems="center" pb={1} spacing={1}>

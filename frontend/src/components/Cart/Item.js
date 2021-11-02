@@ -1,50 +1,59 @@
 import React from "react";
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "redux/actions/cartAction";
 
-const CartItem = ({ strArea, strMeal, strMealThumb }) => {
+const CartItem = ({ item }) => {
+  const { image, name, price, countInStock, meal, qty } = item;
+
+  const dispatch = useDispatch();
+
   return (
     <Card sx={{ display: "flex", alignItems: "center", marginY: 2 }}>
-      <CardMedia
-        component="img"
-        sx={{ width: 151 }}
-        image={strMealThumb}
-        alt={strMeal}
-      />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-        }}
+      <CardMedia component="img" sx={{ width: 151 }} image={image} alt={name} />
+
+      <CardContent>
+        <Typography component="h3" variant="h5">
+          {name}
+        </Typography>
+
+        <Typography variant="subtitle1" fontWeight="bold" component="div">
+          &#8369; {price}
+        </Typography>
+      </CardContent>
+      <Box sx={{ flex: 1 }} />
+      <FormControl sx={{ marginX: 2 }}>
+        <InputLabel>Qty</InputLabel>
+        <Select
+          value={qty}
+          onChange={(e) => dispatch(addToCart(meal, Number(e.target.value)))}
+          label="Qty"
+        >
+          {[...Array(countInStock).keys()].map((x) => (
+            <MenuItem key={x + 1} value={x + 1}>
+              {x + 1}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <IconButton
+        sx={{ marginRight: 2 }}
+        onClick={() => dispatch(removeFromCart(meal))}
       >
-        <CardContent>
-          <Typography component="h3" variant="h5">
-            {strMeal}
-          </Typography>
-
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            {strArea}
-          </Typography>
-
-          <Typography variant="subtitle1" fontWeight="bold" component="div">
-            &#8369; 500
-          </Typography>
-        </CardContent>
-      </Box>
-
-      <Box sx={{ flexGrow: 1 }} />
-      <IconButton>
-        <RemoveIcon />
-      </IconButton>
-      <div>1</div>
-      <IconButton>
-        <AddIcon />
+        <DeleteIcon />
       </IconButton>
     </Card>
   );

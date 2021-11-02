@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//Base URL
 export default axios.create({
-  baseURL: "https://www.themealdb.com/api/json/v1/1/",
+  baseURL: "http://localhost:5000",
 });

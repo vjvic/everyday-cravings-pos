@@ -6,10 +6,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
   const history = useHistory();
+
+  const { cartItems } = useSelector((state) => state.cart);
 
   const drawerWidth = 240;
 
@@ -21,6 +24,9 @@ const Appbar = ({ handleDrawerToggle }) => {
       setQuery("");
     }
   };
+
+  //Total cart items
+  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
     <AppBar
@@ -64,7 +70,7 @@ const Appbar = ({ handleDrawerToggle }) => {
             color="inherit"
             onClick={() => history.push("/cart")}
           >
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={total} color="error">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
