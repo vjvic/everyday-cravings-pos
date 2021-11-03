@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 
 import mealRoutes from "./routes/mealRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -20,11 +21,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/meals", mealRoutes);
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
 app.use(notFound);
-
 app.use(errorHandler);
 
 app.listen(
