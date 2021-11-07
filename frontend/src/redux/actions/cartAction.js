@@ -1,5 +1,6 @@
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "redux/constants/cartConstants";
 import mealApi from "components/api/mealApi";
+import { setItemToLcalStorage } from "utils/utils";
 
 //Add to cart action
 export const addToCart = (id, qty) => async (dispatch, getState) => {
@@ -18,7 +19,8 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
   });
 
   //Set cart item to local storage
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+
+  setItemToLcalStorage("cartItems", getState().cart.cartItems);
 };
 
 //Remove cart item action
@@ -28,5 +30,5 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     payload: id,
   });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  setItemToLcalStorage("cartItems", getState().cart.cartItems);
 };

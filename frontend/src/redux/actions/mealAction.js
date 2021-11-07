@@ -28,15 +28,15 @@ export const getMealList = () => async (dispacth) => {
 };
 
 //Fetch meal details
-export const getMealDetails = (id) => async (dispacth) => {
+export const getMealDetails = (id) => async (dispatch) => {
   try {
-    dispacth({ type: MEAL_DETAILS_REQUEST });
+    dispatch({ type: MEAL_DETAILS_REQUEST });
 
     const { data } = await mealApi.get(`/api/meals/${id}`);
 
-    dispacth({ type: MEAL_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: MEAL_DETAILS_SUCCESS, payload: data });
   } catch (err) {
-    dispacth({
+    dispatch({
       type: MEAL_DETAILS_FAIL,
       payload:
         err.response && err.response.data.message

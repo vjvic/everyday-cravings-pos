@@ -9,10 +9,11 @@ import Cart from "Pages/User/Cart";
 import Favorites from "Pages/User/Favorites";
 import Results from "Pages/User/Results";
 import About from "Pages/User/About";
-import Dashboard from "Pages/Admin/Dashboard";
+/* import Dashboard from "Pages/Admin/Dashboard";
 import AddMeal from "Pages/Admin/AddMeal";
-import Orders from "Pages/Admin/Orders";
+import Orders from "Pages/Admin/Orders"; */
 import MealDetails from "Pages/User/MealDetails";
+import LoginPage from "Pages/User/LoginPage";
 
 const secondary = "#F9F9F9";
 
@@ -45,10 +46,11 @@ function App() {
               <Route exact path="/about" component={About} />
               <Route exact path="/results/:query" component={Results} />
               <Route exact path="/meal/:id" component={MealDetails} />
+              <Route exact path="/login" component={LoginPage} />
 
-              <Route exact path="/dashboard" component={Dashboard} />
+              {/*   <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/add-meal" component={AddMeal} />
-              <Route exact path="/orders" component={Orders} />
+              <Route exact path="/orders" component={Orders} /> */}
             </Switch>
           </Layout>
         </Router>

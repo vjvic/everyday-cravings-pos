@@ -45,7 +45,7 @@ const Cart = () => {
   const cartItemsList = (
     <>
       {cartItems.map((item) => (
-        <CartItem item={item} kay={item.meal} />
+        <CartItem item={item} key={item.meal} />
       ))}
     </>
   );

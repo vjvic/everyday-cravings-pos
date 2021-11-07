@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, Toolbar, IconButton, Avatar, Badge } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  Button,
+  Menu,
+  MenuItem,
+  CircularProgress,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import PersonIcon from "@mui/icons-material/Person";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Link } from "react-router-dom";
+import { logout } from "redux/actions/userActions";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
+
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
+  const { loading, userInfo } = useSelector((state) => state.userLogin);
   const { cartItems } = useSelector((state) => state.cart);
 
   const drawerWidth = 240;
@@ -25,8 +42,36 @@ const Appbar = ({ handleDrawerToggle }) => {
     }
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   //Total cart items
   const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
+  if (loading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 240px)",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <AppBar
@@ -76,10 +121,45 @@ const Appbar = ({ handleDrawerToggle }) => {
           </IconButton>
         </Box>
 
-        <Avatar
-          alt="Remy Sharp"
-          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-        />
+        {userInfo ? (
+          <div>
+            <Button
+              onClick={handleMenu}
+              color="inherit"
+              endIcon={<ArrowDropDownIcon />}
+            >
+              {userInfo.name}
+            </Button>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose} component={Link} to="/profile">
+                Profile
+              </MenuItem>
+              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+            </Menu>
+          </div>
+        ) : (
+          <Button
+            variant="outlined"
+            startIcon={<PersonIcon />}
+            component={Link}
+            to="/login"
+          >
+            Sign in
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
