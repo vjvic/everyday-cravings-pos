@@ -35,6 +35,7 @@ const Item = ({ item, favorite }) => {
             color="inherit"
             noWrap
             variant="h5"
+            sx={{ textDecoration: "none" }}
           >
             {name}
           </Typography>
