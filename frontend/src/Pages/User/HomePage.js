@@ -7,15 +7,13 @@ import { getMealList } from "redux/actions/mealAction";
 
 import Menu from "components/Meals/Menu/Menu";
 
-const Home = () => {
+const HomePage = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMealList());
   }, [dispatch]);
-
-  console.log(meals);
 
   if (loading)
     return (
@@ -41,4 +39,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

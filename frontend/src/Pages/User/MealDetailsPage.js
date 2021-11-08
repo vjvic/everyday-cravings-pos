@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import { useHistory } from "react-router";
 
-const MealDetails = () => {
+const MealDetailsPage = () => {
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
 
@@ -179,4 +179,4 @@ const MealDetails = () => {
   );
 };
 
-export default MealDetails;
+export default MealDetailsPage;

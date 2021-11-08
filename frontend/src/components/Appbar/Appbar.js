@@ -20,6 +20,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "redux/actions/userActions";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
@@ -40,16 +41,6 @@ const Appbar = ({ handleDrawerToggle }) => {
       history.push("/results/" + query);
       setQuery("");
     }
-  };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   const logoutHandler = () => {
@@ -109,7 +100,7 @@ const Appbar = ({ handleDrawerToggle }) => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Box px={2}>
+        <Box>
           <IconButton
             size="large"
             color="inherit"
@@ -122,37 +113,33 @@ const Appbar = ({ handleDrawerToggle }) => {
         </Box>
 
         {userInfo ? (
-          <div>
-            <Button
-              onClick={handleMenu}
-              color="inherit"
-              endIcon={<ArrowDropDownIcon />}
-            >
-              {userInfo.name}
-            </Button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose} component={Link} to="/profile">
-                Profile
-              </MenuItem>
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-            </Menu>
-          </div>
+          <PopupState variant="popover">
+            {(popupState) => (
+              <React.Fragment>
+                <Button
+                  endIcon={<ArrowDropDownIcon />}
+                  color="inherit"
+                  {...bindTrigger(popupState)}
+                >
+                  {userInfo.name}
+                </Button>
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem
+                    onClick={popupState.close}
+                    component={Link}
+                    to="/profile"
+                  >
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                </Menu>
+              </React.Fragment>
+            )}
+          </PopupState>
         ) : (
           <Button
             variant="outlined"
+            color="inherit"
             startIcon={<PersonIcon />}
             component={Link}
             to="/login"

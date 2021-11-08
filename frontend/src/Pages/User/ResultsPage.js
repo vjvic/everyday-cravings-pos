@@ -5,7 +5,7 @@ import useFetch from "components/hooks/useFetch";
 import { Grid, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-const Results = () => {
+const ResultsPage = () => {
   const { query } = useParams();
 
   const { data: results, loading } = useFetch(`search.php?s=${query}`);
@@ -44,4 +44,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default ResultsPage;

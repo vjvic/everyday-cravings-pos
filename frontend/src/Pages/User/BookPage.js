@@ -11,7 +11,7 @@ const hoursOperation = [
   "Saturday - Sunday 12:00am - 10:00pm",
 ];
 
-const Book = () => {
+const BookPage = () => {
   const restoDets = (
     <>
       <Box>
@@ -71,4 +71,4 @@ const Book = () => {
   );
 };
 
-export default Book;
+export default BookPage;

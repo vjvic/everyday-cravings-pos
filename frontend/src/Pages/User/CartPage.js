@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "redux/actions/cartAction";
 import { Link } from "react-router-dom";
 
-const Cart = () => {
+const CartPage = () => {
   const { id } = useParams();
   const location = useLocation();
   /*   const history = useHistory(); */
@@ -97,4 +97,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

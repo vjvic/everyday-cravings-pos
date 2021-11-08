@@ -15,7 +15,7 @@ const hoursOperation = [
   "Saturday - Sunday 12:00am - 10:00pm",
 ];
 
-const About = () => {
+const AboutPage = () => {
   return (
     <Container>
       <div>
@@ -81,4 +81,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

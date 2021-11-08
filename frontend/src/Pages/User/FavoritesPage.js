@@ -1,13 +1,13 @@
 import React from "react";
-import { Box } from "@mui/system";
+/* import { Box } from "@mui/system";
 import { Typography, Grid, CircularProgress } from "@mui/material";
 import useFetch from "components/hooks/useFetch";
-import Item from "components/Meals/Item/Item";
+import Item from "components/Meals/Item/Item"; */
 
-const Favorites = () => {
-  const { data: favorites, loading } = useFetch("search.php?s= ");
+const FavoritesPage = () => {
+  /*  const { data: favorites, loading } = useFetch("search.php?s= "); */
 
-  if (loading)
+  /* if (loading)
     return (
       <Box
         sx={{
@@ -19,13 +19,13 @@ const Favorites = () => {
       >
         <CircularProgress />
       </Box>
-    );
+    ); */
 
-  const dummyFavorites = favorites.meals.slice(0, 6);
+  /* const dummyFavorites = favorites.meals.slice(0, 6); */
 
   return (
     <div>
-      <Box mb={5}>
+      {/*    <Box mb={5}>
         <Typography variant="h4" component="h1">
           Favorites
         </Typography>
@@ -37,9 +37,10 @@ const Favorites = () => {
             <Item item={item} favorite={true} />
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
+      Favorites
     </div>
   );
 };
 
-export default Favorites;
+export default FavoritesPage;

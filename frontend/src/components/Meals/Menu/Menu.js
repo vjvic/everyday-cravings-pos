@@ -66,7 +66,6 @@ const Menu = ({ meals }) => {
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
-          aria-label="scrollable force tabs example"
         >
           <Tab label="All" />
           <Tab label="Breakfast" />
