@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  TextField,
-  Container,
-  Button,
-  Input,
-  InputLabel,
-  IconButton,
-  FormControl,
-  Typography,
-} from "@mui/material";
+import { TextField, Button, Typography, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
 import { Link } from "react-router-dom";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "redux/actions/userActions";
 import { Alert } from "@mui/material";
+import loginSvg from "assets/image/login.svg";
 
 const LoginPage = () => {
   const location = useLocation();
@@ -26,10 +15,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
-  const [values, setValues] = useState({
-    password: "",
-    showPassword: false,
-  });
+  const [password, setPassword] = useState("");
 
   const { userInfo, error } = useSelector((state) => state.userLogin);
 
@@ -41,95 +27,84 @@ const LoginPage = () => {
     }
   }, [history, userInfo, redirect]);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  //Handle passowrd change
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  //Toggle password visibility
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(email, values.password);
-    dispatch(login(email, values.password));
+    dispatch(login(email, password));
 
     setEmail("");
-    setValues({ password: "" });
+    setPassword("");
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box my={5}>
-        <Typography variant="h4">SIGN IN</Typography>
-      </Box>
-
-      {error && <Alert severity="error">{error}</Alert>}
-
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { my: 1, width: "100%" },
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          label="Email"
-          variant="standard"
-          fullWidth
-        />
-
-        <FormControl variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
-          <Input
-            id="standard-adornment-password"
-            type={values.showPassword ? "text" : "password"}
-            value={values.password}
-            onChange={handleChange("password")}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-
-        <Button variant="contained" type="submit" sx={{ height: "45px" }}>
-          SIGN IN
-        </Button>
-
+    <Grid container alignItems="center" sx={{ height: "calc(100vh - 350px)" }}>
+      <Grid item lg={6}>
         <Box>
-          <Typography variant="body1">
-            New Customer?{" "}
-            <Link to={redirect ? `/register?redirect${redirect}` : "/register"}>
-              Register
-            </Link>
-          </Typography>
+          <img src={loginSvg} alt="register svg" width="80%" />
         </Box>
-      </Box>
-    </Container>
+      </Grid>
+      <Grid item lg={6}>
+        <Box sx={{ maxWidth: "600px", margin: "auto" }}>
+          <Box my={1}>
+            <Typography variant="body">SIGN IN</Typography>
+          </Box>
+
+          <Box mb={5}>
+            <Typography variant="h4">Welcome Back!</Typography>
+          </Box>
+
+          {error && <Alert severity="error">{error}</Alert>}
+
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { my: 1, width: "100%" },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              label="Email"
+              fullWidth
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <TextField
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              label="Password"
+              type="password"
+              fullWidth
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <Button variant="contained" type="submit" sx={{ height: "45px" }}>
+              SIGN IN
+            </Button>
+
+            <Box>
+              <Typography variant="body1">
+                Don't have an account?{" "}
+                <Link
+                  to={redirect ? `/register?redirect${redirect}` : "/register"}
+                >
+                  Register
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -4,7 +4,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Badge,
+  /*  Badge, */
   Button,
   Menu,
   MenuItem,
@@ -12,25 +12,27 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+/* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; */
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import PersonIcon from "@mui/icons-material/Person";
+/* import PersonIcon from "@mui/icons-material/Person"; */
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import { useLocation } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
 
   const history = useHistory();
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  const { cartItems } = useSelector((state) => state.cart);
+  /* const { cartItems } = useSelector((state) => state.cart); */
 
   const drawerWidth = 240;
 
@@ -48,7 +50,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   };
 
   //Total cart items
-  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  /*  const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
 
   if (loading)
     return (
@@ -63,6 +65,9 @@ const Appbar = ({ handleDrawerToggle }) => {
         <CircularProgress />
       </Box>
     );
+
+  if (location.pathname === "/login" || location.pathname === "/register")
+    return "";
 
   return (
     <AppBar
@@ -99,7 +104,7 @@ const Appbar = ({ handleDrawerToggle }) => {
         </form>
 
         <Box sx={{ flexGrow: 1 }} />
-
+        {/* 
         <Box>
           <IconButton
             size="large"
@@ -110,9 +115,9 @@ const Appbar = ({ handleDrawerToggle }) => {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-        </Box>
+        </Box> */}
 
-        {userInfo ? (
+        {userInfo && (
           <PopupState variant="popover">
             {(popupState) => (
               <React.Fragment>
@@ -136,16 +141,6 @@ const Appbar = ({ handleDrawerToggle }) => {
               </React.Fragment>
             )}
           </PopupState>
-        ) : (
-          <Button
-            variant="outlined"
-            color="inherit"
-            startIcon={<PersonIcon />}
-            component={Link}
-            to="/login"
-          >
-            Sign in
-          </Button>
         )}
       </Toolbar>
     </AppBar>

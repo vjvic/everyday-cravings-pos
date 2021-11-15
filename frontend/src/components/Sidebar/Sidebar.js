@@ -9,9 +9,10 @@ import {
   Drawer,
   Box,
 } from "@mui/material";
-import { RiRestaurant2Fill } from "react-icons/ri";
 import { navItems, navItemsAdmin } from "./SidebarData";
 import { useHistory } from "react-router";
+import { useLocation } from "react-router";
+import logo from "assets/image/logo.png";
 
 const drawerWidth = 240;
 
@@ -20,6 +21,10 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
     window !== undefined ? () => window().document.body : undefined;
 
   const history = useHistory();
+  const location = useLocation();
+
+  if (location.pathname === "/login" || location.pathname === "/register")
+    return "";
 
   const drawer = (
     <div>
@@ -30,12 +35,27 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
           alignItems: "center",
           justifyContent: "center",
           padding: 2,
+          gridGap: 10,
         }}
       >
-        <RiRestaurant2Fill size={38} color="#ff5722" />
-        <Typography component="h1" variant="h4">
-          Resto.
-        </Typography>
+        <img
+          src={logo}
+          alt="logo"
+          width="50px"
+          style={{ borderRadius: 1000 }}
+        />
+        <Box>
+          <Typography component="h1" variant="h5" fontWeight="bold">
+            Everyday
+          </Typography>
+          <Typography
+            variant="body"
+            fontWeight="bold"
+            sx={{ color: "#DE8538" }}
+          >
+            Cravings
+          </Typography>
+        </Box>
       </Box>
       <Divider />
       <List>

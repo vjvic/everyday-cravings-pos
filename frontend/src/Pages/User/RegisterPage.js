@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { TextField, Container, Button, Typography, Alert } from "@mui/material";
+import { TextField, Button, Typography, Alert, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useLocation, useHistory } from "react-router-dom";
@@ -8,6 +8,7 @@ import { userRegister } from "redux/actions/userActions";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import registerSvg from "assets/image/register.svg";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -50,74 +51,101 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box my={5}>
-        <Typography variant="h4">SIGN UP</Typography>
-      </Box>
-
-      {error && <Alert severity="error">{error}</Alert>}
-
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { my: 1, width: "100%" },
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <TextField
-          {...register("email")}
-          label="Email"
-          variant="standard"
-          fullWidth
-          error={errors?.email?.message.length > 0}
-          helperText={errors?.email?.message}
-        />
-
-        <TextField
-          {...register("username")}
-          label="Name"
-          variant="standard"
-          fullWidth
-          error={errors?.username?.message.length > 0}
-          helperText={errors?.username?.message}
-        />
-
-        <TextField
-          {...register("password")}
-          label="Password"
-          variant="standard"
-          type="password"
-          fullWidth
-          error={errors?.password?.message.length > 0}
-          helperText={errors?.password?.message}
-        />
-
-        <TextField
-          {...register("confirmPassword")}
-          label="Confirm Password"
-          variant="standard"
-          type="password"
-          fullWidth
-          error={errors?.confirmPassword?.message.length > 0}
-          helperText={errors?.confirmPassword?.message}
-        />
-
-        <Button variant="contained" type="submit" sx={{ height: "45px" }}>
-          SIGN UP
-        </Button>
-
+    <Grid container alignItems="center" sx={{ height: "calc(100vh - 350px)" }}>
+      <Grid item lg={6}>
         <Box>
-          <Typography variant="body1">
-            Have an account?{" "}
-            <Link to={redirect ? `/register?redirect${redirect}` : "/login"}>
-              Login
-            </Link>
-          </Typography>
+          <img src={registerSvg} alt="register svg" width="80%" />
         </Box>
-      </Box>
-    </Container>
+      </Grid>
+      <Grid item lg={6}>
+        <Box sx={{ maxWidth: "600px", margin: "auto" }}>
+          <Box my={1}>
+            <Typography variant="body">SIGN UP</Typography>
+          </Box>
+
+          <Box mb={5}>
+            <Typography variant="h4">Welcome to Everyday Cravings!</Typography>
+          </Box>
+
+          {error && <Alert severity="error">{error}</Alert>}
+
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { my: 1, width: "100%" },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <TextField
+              {...register("email")}
+              label="Email"
+              fullWidth
+              error={errors?.email?.message.length > 0}
+              helperText={errors?.email?.message}
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <TextField
+              {...register("username")}
+              label="Name"
+              fullWidth
+              error={errors?.username?.message.length > 0}
+              helperText={errors?.username?.message}
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <TextField
+              {...register("password")}
+              label="Password"
+              type="password"
+              fullWidth
+              error={errors?.password?.message.length > 0}
+              helperText={errors?.password?.message}
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <TextField
+              {...register("confirmPassword")}
+              label="Confirm Password"
+              type="password"
+              fullWidth
+              error={errors?.confirmPassword?.message.length > 0}
+              helperText={errors?.confirmPassword?.message}
+              variant="filled"
+              InputLabelProps={{
+                style: { color: "#888" },
+              }}
+            />
+
+            <Button variant="contained" type="submit" sx={{ height: "45px" }}>
+              SIGN UP
+            </Button>
+
+            <Box>
+              <Typography variant="body1">
+                Have an account?{" "}
+                <Link
+                  to={redirect ? `/register?redirect${redirect}` : "/login"}
+                >
+                  Login
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 

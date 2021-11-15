@@ -27,7 +27,7 @@ const LineChart = () => {
               data: [12, 19, 15, 20, 35, 30, 55, 50, 40, 60, 55, 65],
               fill: true,
               lineTension: 0.5,
-              backgroundColor: "rgba(255, 87, 34 , 0.6)",
+              backgroundColor: "rgba(255, 236, 194, 0.6)",
               borderWidth: 1,
             },
           ],

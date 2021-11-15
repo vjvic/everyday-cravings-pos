@@ -9,26 +9,26 @@ import LineChart from "components/Charts/LineChart";
 
 const cardItems = [
   {
-    icon: <FastfoodOutlinedIcon sx={{ fontSize: "50px", color: "#FF5722" }} />,
+    icon: <FastfoodOutlinedIcon sx={{ fontSize: "50px", color: "#DE8538" }} />,
     number: 56,
     text: "Total Menus",
   },
   {
     icon: (
-      <TrendingUpOutlinedIcon sx={{ fontSize: "50px", color: "#FF5722" }} />
+      <TrendingUpOutlinedIcon sx={{ fontSize: "50px", color: "#DE8538" }} />
     ),
     number: "126k",
     text: "Total Revenue",
   },
   {
     icon: (
-      <AssignmentOutlinedIcon sx={{ fontSize: "50px", color: "#FF5722" }} />
+      <AssignmentOutlinedIcon sx={{ fontSize: "50px", color: "#DE8538" }} />
     ),
     number: 279,
     text: "Total Orders",
   },
   {
-    icon: <PeopleAltOutlinedIcon sx={{ fontSize: "50px", color: "#FF5722" }} />,
+    icon: <PeopleAltOutlinedIcon sx={{ fontSize: "50px", color: "#DE8538" }} />,
     number: 60,
     text: "Total Customers",
   },
@@ -60,7 +60,7 @@ const Dashboard = () => {
                       sx={{
                         fontSize: "50px",
                         borderRadius: 1000,
-                        background: "rgba(255, 87, 34 , 0.1)",
+                        background: "#FFECC2",
                         height: 100,
                         width: 100,
                         display: "flex",
@@ -72,7 +72,7 @@ const Dashboard = () => {
                     </Box>
 
                     <div>
-                      <Typography variant="h3" component="h4" fontWeight="bold">
+                      <Typography variant="h4" component="h4" fontWeight="bold">
                         {item.number}
                       </Typography>
                       <Typography variant="body1" component="h4">

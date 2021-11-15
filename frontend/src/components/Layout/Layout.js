@@ -27,7 +27,12 @@ const Layout = ({ children }) => {
 
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, background: "#F9F9F9", overflowX: "hidden" }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          background: "#F9F9F9",
+          /*  overflowX: "hidden", */
+        }}
       >
         <Toolbar />
         {children}
