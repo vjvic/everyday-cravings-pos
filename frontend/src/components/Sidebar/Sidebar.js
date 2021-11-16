@@ -13,6 +13,7 @@ import { navItems, navItemsAdmin } from "./SidebarData";
 import { useHistory } from "react-router";
 import { useLocation } from "react-router";
 import logo from "assets/image/logo.png";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -22,6 +23,8 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
 
   const history = useHistory();
   const location = useLocation();
+
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   if (location.pathname === "/login" || location.pathname === "/register")
     return "";
@@ -71,16 +74,18 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
         ))}
         {/* <Divider /> */}
 
-        {navItemsAdmin.map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => history.push(item.path)}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        {userInfo &&
+          userInfo.isAdmin &&
+          navItemsAdmin.map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
       </List>
     </div>
   );

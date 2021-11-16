@@ -66,6 +66,8 @@ const Menu = ({ meals }) => {
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
+          textColor="warning"
+          indicatorColor="warning"
         >
           <Tab label="All" />
           <Tab label="Breakfast" />

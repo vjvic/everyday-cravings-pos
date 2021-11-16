@@ -1,13 +1,12 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { /* Grid, */ Typography } from "@mui/material";
-/* import MealForm from "components/Forms/AddMeal/MealForm"; */
+import { Grid } from "@mui/material";
+import MealForm from "components/Forms/AddMeal/MealForm";
 
 const AddMeal = () => {
   return (
     <Box mt={5}>
-      <Typography variant="h2">Ongoing...</Typography>
-      {/*   <Grid container spacing={5}>
+      <Grid container spacing={5}>
         <Grid item sm={12} lg={6}>
           <MealForm />
         </Grid>
@@ -21,7 +20,7 @@ const AddMeal = () => {
             />
           </Box>
         </Grid>
-      </Grid> */}
+      </Grid>
     </Box>
   );
 };

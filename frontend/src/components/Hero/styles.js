@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 export const HeroSection = styled("section")(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   borderRadius: theme.shape.borderRadius,
-  color: "#fff",
+  color: "#333",
   padding: theme.spacing(5, 3),
   marginBottom: theme.spacing(7),
   img: {
@@ -22,6 +22,7 @@ export const HeroSection = styled("section")(({ theme }) => ({
 
 export const HeroTypography = styled(Typography)(({ theme }) => ({
   fontSize: "2rem",
+
   [theme.breakpoints.up("md")]: {
     fontSize: "3.4rem",
   },

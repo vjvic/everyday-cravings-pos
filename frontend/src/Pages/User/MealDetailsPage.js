@@ -75,7 +75,9 @@ const MealDetailsPage = () => {
   return (
     <div>
       <Box mb={3}>
-        <Button onClick={() => history.push("/")}>Go Back</Button>
+        <Button color="inherit" onClick={() => history.push("/")}>
+          Go Back
+        </Button>
       </Box>
 
       <Grid container spacing={5}>

@@ -4,11 +4,16 @@ import {
   authUser,
   getUserProfile,
   registerUser,
+  updateUserProfile,
+  getUsers,
 } from "../controllers/userController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
-router.post("/", registerUser);
+router.route("/").post(registerUser).get(protect, isAdmin, getUsers);
 router.post("/login", authUser);
-router.route("/profile").get(protect, getUserProfile);
+router
+  .route("/profile")
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 
 export default router;

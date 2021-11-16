@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { HeroSection, HeroTypography } from "./styles";
 import { Button, Grid, Typography } from "@mui/material";
-import heroSvg from "assets/image/hero.svg";
+/* import heroSvg from "assets/image/hero.svg"; */
 
 const Hero = () => {
   return (
@@ -15,18 +15,24 @@ const Hero = () => {
       >
         <Grid item>
           <HeroTypography components="h1" fontWeight="bold">
-            Free Delivery for 30 days 🎉
+            Everyday{" "}
+            <Typography
+              components="span"
+              variant="h3"
+              fontWeight="bold"
+              sx={{ color: "#DE8538" }}
+            >
+              Cravings!
+            </Typography>
           </HeroTypography>
-          <Typography components="p" variant="h6" fontWeight="bold">
-            Free Delivery for orders over 500 pesos for 30 days
-          </Typography>
+
           <Box mt={3}>
             <Button
               variant="contained"
               size="large"
               sx={{
                 background: "#fff",
-                color: "#ff7043",
+                color: "#DE8538",
                 "&.MuiButtonBase-root:hover": {
                   bgcolor: "#fff",
                 },
@@ -36,9 +42,9 @@ const Hero = () => {
             </Button>
           </Box>
         </Grid>
-        <Grid item sm={3}>
+        {/*  <Grid item sm={3}>
           <img src={heroSvg} alt="hero svg" width="100%" />
-        </Grid>
+        </Grid> */}
       </Grid>
     </HeroSection>
   );
