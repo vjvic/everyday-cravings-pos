@@ -3,7 +3,7 @@ import React from "react";
 import { Typography } from "@mui/material";
 /* import { Box } from "@mui/system"; */
 
-const Orders = () => {
+const OrdersPage = () => {
   return (
     <div>
       <Typography variant="h2">Ongoing...</Typography>
@@ -18,4 +18,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default OrdersPage;

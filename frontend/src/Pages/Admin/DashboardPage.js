@@ -34,14 +34,12 @@ const cardItems = [
   },
 ];
 
-const Dashboard = () => {
+const DashboardPage = () => {
   return (
     <div>
-      <Box mb={5}>
-        <Typography variant="h4" component="h1">
-          Dashboard
-        </Typography>
-      </Box>
+      <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
+        Dashboard
+      </Typography>
 
       <div>
         <Grid container spacing={2}>
@@ -92,4 +90,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

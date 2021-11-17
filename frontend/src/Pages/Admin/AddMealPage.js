@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { Grid } from "@mui/material";
 import MealForm from "components/Forms/AddMeal/MealForm";
 
-const AddMeal = () => {
+const AddMealPage = () => {
   return (
     <Box mt={5}>
       <Grid container spacing={5}>
@@ -25,4 +25,4 @@ const AddMeal = () => {
   );
 };
 
-export default AddMeal;
+export default AddMealPage;

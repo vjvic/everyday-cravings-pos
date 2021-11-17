@@ -8,6 +8,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 export const navItems = [
   {
@@ -62,5 +63,10 @@ export const navItemsAdmin = [
     text: "Orders",
     path: "/admin/orders",
     icon: <ListIcon />,
+  },
+  {
+    text: "User List",
+    path: "/admin/user-list",
+    icon: <PeopleAltIcon />,
   },
 ];
