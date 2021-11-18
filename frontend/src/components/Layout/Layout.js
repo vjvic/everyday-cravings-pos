@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         sx={{
           flexGrow: 1,
           p: 3,
-          background: "#F9F9F9",
+          /* background: "#F9F9F9", */
           /*  overflowX: "hidden", */
         }}
       >

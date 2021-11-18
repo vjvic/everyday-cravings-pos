@@ -18,6 +18,7 @@ import RegisterPage from "Pages/User/RegisterPage";
 import PrivateRoute from "components/Route/PrivateRoute";
 import AdminRoute from "components/Route/AdminRoute";
 import UsersListPage from "Pages/Admin/UsersListPage";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const secondary = "#F9F9F9";
 
@@ -38,44 +39,39 @@ const theme = createTheme({
 
 function App() {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Layout>
-              {/* Users Route */}
-              <PrivateRoute exact path="/" component={HomePage} />
-              <PrivateRoute exact path="/cart/:id?" component={CartPage} />
-              <PrivateRoute exact path="/favorites" component={FavoritesPage} />
-              <PrivateRoute exact path="/about" component={AboutPage} />
-              <PrivateRoute
-                exact
-                path="/results/:query"
-                component={ResultsPage}
-              />
-              <PrivateRoute
-                exact
-                path="/meal/:id"
-                component={MealDetailsPage}
-              />
-              <PrivateRoute exact path="/book" component={BookPage} />
-              {/* Admin Route */}
-              <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
-              <AdminRoute exact path="/admin/add-meal" component={AddMeal} />
-              <AdminRoute exact path="/admin/orders" component={Orders} />
-              <AdminRoute
-                exact
-                path="/admin/user-list"
-                component={UsersListPage}
-              />
-              {/* User Auth Route*/}
-              <Route path="/login" component={LoginPage} />
-              <Route path="/register" component={RegisterPage} />
-            </Layout>
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Switch>
+          <Layout>
+            {/* Users Route */}
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute exact path="/cart/:id?" component={CartPage} />
+            <PrivateRoute exact path="/favorites" component={FavoritesPage} />
+            <PrivateRoute exact path="/about" component={AboutPage} />
+            <PrivateRoute
+              exact
+              path="/results/:query"
+              component={ResultsPage}
+            />
+            <PrivateRoute exact path="/meal/:id" component={MealDetailsPage} />
+            <PrivateRoute exact path="/book" component={BookPage} />
+            {/* Admin Route */}
+            <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
+            <AdminRoute exact path="/admin/add-meal" component={AddMeal} />
+            <AdminRoute exact path="/admin/orders" component={Orders} />
+            <AdminRoute
+              exact
+              path="/admin/user-list"
+              component={UsersListPage}
+            />
+            {/* User Auth Route*/}
+            <Route path="/login" component={LoginPage} />
+            <Route path="/register" component={RegisterPage} />
+          </Layout>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
