@@ -7,17 +7,19 @@ import {
   TableCell,
   TableBody,
   Table,
-  Box,
   IconButton,
   Typography,
   TableHead,
+  CircularProgress,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { listUsers } from "redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { deleteUser } from "redux/actions/userActions";
 
 const UserListPage = () => {
   const [page, setPage] = useState(0);
@@ -25,6 +27,7 @@ const UserListPage = () => {
 
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userList);
+  const { success: deleteSuccess } = useSelector((state) => state.userDelete);
 
   //Change page
   const handleChangePage = (event, newPage) => {
@@ -36,15 +39,28 @@ const UserListPage = () => {
     setPage(0);
   };
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+  //Delete user
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id));
+  };
 
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch]);
+  }, [dispatch, deleteSuccess]);
 
-  if (loading) return "loading...";
+  if (loading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 240px)",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -86,22 +102,13 @@ const UserListPage = () => {
                         <IconButton>
                           <EditIcon />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(row._id)}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>

@@ -4,6 +4,7 @@ import { cartReducer } from "./cartReducers";
 import { userLoginReducer } from "./userReducers";
 import { userRegisterReducer } from "./userReducers";
 import { userListReducer } from "./userReducers";
+import { userDeleteReducer } from "./userReducers";
 
 const reducers = combineReducers({
   mealList: mealListReducer,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userList: userListReducer,
+  userDelete: userDeleteReducer,
 });
 
 export default reducers;
