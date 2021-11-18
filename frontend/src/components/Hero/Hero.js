@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { HeroSection, HeroTypography } from "./styles";
+import { HeroSection /* , HeroTypography */ } from "./styles";
 import { Button, Grid, Typography } from "@mui/material";
 /* import heroSvg from "assets/image/hero.svg"; */
 
@@ -14,17 +14,23 @@ const Hero = () => {
         sx={{ gridGap: 4 }}
       >
         <Grid item>
-          <HeroTypography components="h1" fontWeight="bold">
+          <Typography
+            components="h1"
+            variant="h2"
+            fontWeight="bold"
+            sx={{ letterSpacing: 6, marginBottom: 1 }}
+          >
             Everyday{" "}
-            <Typography
-              components="span"
-              variant="h3"
-              fontWeight="bold"
-              sx={{ color: "#DE8538" }}
-            >
-              Cravings!
-            </Typography>
-          </HeroTypography>
+          </Typography>
+
+          <Typography
+            components="span"
+            variant="h3"
+            fontWeight="bold"
+            sx={{ color: "secondary.main", letterSpacing: 6 }}
+          >
+            Cravings!
+          </Typography>
 
           <Box mt={3}>
             <Button
@@ -32,7 +38,7 @@ const Hero = () => {
               size="large"
               sx={{
                 background: "#fff",
-                color: "#DE8538",
+                color: "secondary.main",
                 "&.MuiButtonBase-root:hover": {
                   bgcolor: "#fff",
                 },

@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
           flexGrow: 1,
           p: 3,
           /* background: "#F9F9F9", */
-          /*  overflowX: "hidden", */
+          overflowX: "hidden",
         }}
       >
         <Toolbar />

@@ -4,7 +4,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  /*  Badge, */
+  Badge,
   Button,
   Menu,
   MenuItem,
@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
-/* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; */
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-/* import PersonIcon from "@mui/icons-material/Person"; */
+/*  import PersonIcon from "@mui/icons-material/Person";  */
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "redux/actions/userActions";
@@ -32,7 +32,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   const dispatch = useDispatch();
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  /* const { cartItems } = useSelector((state) => state.cart); */
+  const { cartItems } = useSelector((state) => state.cart);
 
   const drawerWidth = 240;
 
@@ -50,7 +50,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   };
 
   //Total cart items
-  /*  const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
+  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   if (loading)
     return (
@@ -77,6 +77,7 @@ const Appbar = ({ handleDrawerToggle }) => {
       sx={{
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
+        backgroundColor: "#f9f9f9",
       }}
     >
       <Toolbar>
@@ -104,7 +105,7 @@ const Appbar = ({ handleDrawerToggle }) => {
         </form>
 
         <Box sx={{ flexGrow: 1 }} />
-        {/* 
+
         <Box>
           <IconButton
             size="large"
@@ -115,7 +116,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-        </Box> */}
+        </Box>
 
         {userInfo && (
           <PopupState variant="popover">

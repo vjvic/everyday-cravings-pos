@@ -159,6 +159,7 @@ const UserListPage = () => {
                 <TextField
                   label="Name"
                   variant="outlined"
+                  color="secondary"
                   value={name || ""}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -166,6 +167,7 @@ const UserListPage = () => {
                 <TextField
                   label="Email"
                   variant="outlined"
+                  color="secondary"
                   value={email || ""}
                   onChange={(e) => setEmail(e.target.email)}
                 />
@@ -173,6 +175,7 @@ const UserListPage = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      color="secondary"
                       checked={isAdmin || false}
                       onChange={(e) => setIsAdmin(e.target.checked)}
                     />

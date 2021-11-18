@@ -34,7 +34,7 @@ const CartItem = ({ item }) => {
         </Typography>
       </CardContent>
       <Box sx={{ flex: 1 }} />
-      <FormControl sx={{ marginX: 2 }}>
+      <FormControl sx={{ marginX: 2 }} color="secondary">
         <InputLabel>Qty</InputLabel>
         <Select
           value={qty}

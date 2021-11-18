@@ -55,7 +55,7 @@ const MealDetailsPage = () => {
   const inStock = (
     <>
       <Divider sx={{ marginY: 1 }} />
-      <FormControl fullWidth>
+      <FormControl fullWidth color="secondary">
         <InputLabel>Quantity</InputLabel>
         <Select
           value={qty}

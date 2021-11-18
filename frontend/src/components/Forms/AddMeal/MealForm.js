@@ -18,15 +18,31 @@ const MealForm = () => {
           "& > :not(style)": { my: 1, width: "100%" },
         }}
       >
-        <TextField label="Meal ID" variant="outlined" value="12356" />
+        <TextField
+          label="Meal ID"
+          variant="outlined"
+          color="secondary"
+          value="12356"
+        />
 
-        <TextField label="Meal Name" variant="outlined" value="Pancakes" />
+        <TextField
+          label="Meal Name"
+          variant="outlined"
+          color="secondary"
+          value="Pancakes"
+        />
 
-        <TextField label="Meal Area" variant="outlined" value="American" />
+        <TextField
+          label="Meal Area"
+          variant="outlined"
+          color="secondary"
+          value="American"
+        />
 
         <TextField
           label="Meal Price"
           variant="outlined"
+          color="secondary"
           type="number"
           value="500"
         />
@@ -35,10 +51,11 @@ const MealForm = () => {
           label="Meal Description"
           multiline
           rows={4}
+          color="secondary"
           value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
         />
 
-        <FormControl>
+        <FormControl color="secondary">
           <InputLabel>Category</InputLabel>
           <Select label="Category" value="10">
             <MenuItem value={10}>Breakfast</MenuItem>

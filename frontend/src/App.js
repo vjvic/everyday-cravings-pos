@@ -20,7 +20,7 @@ import AdminRoute from "components/Route/AdminRoute";
 import UsersListPage from "Pages/Admin/UsersListPage";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const secondary = "#F9F9F9";
+const secondary = "#DE8538";
 
 const theme = createTheme({
   palette: {
@@ -29,7 +29,8 @@ const theme = createTheme({
       main: secondary,
     },
     background: {
-      default: secondary,
+      default: "#f9f9f9",
+      paper: "#fff",
     },
   },
   shape: {
