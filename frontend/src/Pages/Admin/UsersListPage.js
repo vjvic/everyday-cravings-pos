@@ -21,15 +21,13 @@ import {
   Alert,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { listUsers } from "redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { deleteUser } from "redux/actions/userActions";
-import { getUserDetails } from "redux/actions/userActions";
-import { updateUser } from "redux/actions/userActions";
+import { deleteUser, listUsers } from "../../redux/actions/userActions";
+import { updateUser, getUserDetails } from "../../redux/actions/userActions";
 
 const style = {
   position: "absolute",
@@ -94,15 +92,13 @@ const UserListPage = () => {
 
     dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
 
-    if (updateSuccess) {
-      setIsModal(false);
-    }
+    setIsModal(false);
   };
 
   // render/re render user list
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch, deleteSuccess, updateSuccess]);
+  }, [dispatch, deleteSuccess, updateSuccess, user]);
 
   useEffect(() => {
     if (user) {
@@ -122,7 +118,7 @@ const UserListPage = () => {
           height: "calc(100vh - 240px)",
         }}
       >
-        <CircularProgress />
+        <CircularProgress color="secondary" />
       </Box>
     );
 
@@ -169,7 +165,7 @@ const UserListPage = () => {
                   variant="outlined"
                   color="secondary"
                   value={email || ""}
-                  onChange={(e) => setEmail(e.target.email)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
 
                 <FormControlLabel
@@ -188,8 +184,9 @@ const UserListPage = () => {
                   type="submit"
                   size="large"
                   sx={{ height: "45px" }}
+                  disabled={updateLoading}
                 >
-                  {updateLoading ? "loading..." : "UPDATE"}
+                  UPDATE
                 </Button>
               </Box>
             )}

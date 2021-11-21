@@ -12,7 +12,7 @@ import {
 import { navItems, navItemsAdmin } from "./SidebarData";
 import { useHistory } from "react-router";
 import { useLocation } from "react-router";
-import logo from "assets/image/logo.png";
+import logo from "../../assets/image/logo.png";
 import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
@@ -72,7 +72,8 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
-        {/* <Divider /> */}
+
+        {userInfo && userInfo.isAdmin && <Divider />}
 
         {userInfo &&
           userInfo.isAdmin &&

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import Hero from "components/Hero/Hero";
+import Hero from "../../components/Hero/Hero";
 import { CircularProgress, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { useSelector, useDispatch } from "react-redux";
-import { getMealList } from "redux/actions/mealAction";
-
-import Menu from "components/Meals/Menu/Menu";
+import { getMealList } from "../../redux/actions/mealAction";
+import Menu from "../../components/Meals/Menu/Menu";
 
 const HomePage = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
@@ -25,7 +24,7 @@ const HomePage = () => {
           height: "calc(100vh - 240px)",
         }}
       >
-        <CircularProgress />
+        <CircularProgress color="secondary" />
       </Box>
     );
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
-import Appbar from "components/Appbar/Appbar";
-import Siderbar from "components/Sidebar/Sidebar";
+import Appbar from "../Appbar/Appbar";
+import Siderbar from "../Sidebar/Sidebar";
 
 const Layout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);

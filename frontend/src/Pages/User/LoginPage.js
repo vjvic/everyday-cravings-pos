@@ -4,9 +4,9 @@ import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "redux/actions/userActions";
+import { login } from "../../redux/actions/userActions";
 import { Alert } from "@mui/material";
-import loginSvg from "assets/image/login.svg";
+import loginSvg from "../../assets/image/login.svg";
 
 const LoginPage = () => {
   const location = useLocation();

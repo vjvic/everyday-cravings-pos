@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 /*  import PersonIcon from "@mui/icons-material/Person";  */
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
-import { logout } from "redux/actions/userActions";
+import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
 

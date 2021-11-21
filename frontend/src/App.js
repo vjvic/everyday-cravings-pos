@@ -1,23 +1,23 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 /* import { deepOrange } from "@mui/material/colors"; */
-import Layout from "components/Layout/Layout";
+import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import BookPage from "Pages/User/BookPage";
-import HomePage from "Pages/User/HomePage";
-import CartPage from "Pages/User/CartPage";
-import FavoritesPage from "Pages/User/FavoritesPage";
-import ResultsPage from "Pages/User/ResultsPage";
-import AboutPage from "Pages/User/AboutPage";
-import Dashboard from "Pages/Admin/DashboardPage";
-import AddMeal from "Pages/Admin/AddMealPage";
-import Orders from "Pages/Admin/OrdersPage";
-import MealDetailsPage from "Pages/User/MealDetailsPage";
-import LoginPage from "Pages/User/LoginPage";
-import RegisterPage from "Pages/User/RegisterPage";
-import PrivateRoute from "components/Route/PrivateRoute";
-import AdminRoute from "components/Route/AdminRoute";
-import UsersListPage from "Pages/Admin/UsersListPage";
+import BookPage from "./Pages/User/BookPage";
+import HomePage from "./Pages/User/HomePage";
+import CartPage from "./Pages/User/CartPage";
+import FavoritesPage from "./Pages/User/FavoritesPage";
+import ResultsPage from "./Pages/User/ResultsPage";
+import AboutPage from "./Pages/User/AboutPage";
+import Dashboard from "./Pages/Admin/DashboardPage";
+import MealsPage from "./Pages/Admin/MealsPage";
+import Orders from "./Pages/Admin/OrdersPage";
+import MealDetailsPage from "./Pages/User/MealDetailsPage";
+import LoginPage from "./Pages/User/LoginPage";
+import RegisterPage from "./Pages/User/RegisterPage";
+import PrivateRoute from "./components/Route/PrivateRoute";
+import AdminRoute from "./components/Route/AdminRoute";
+import UsersListPage from "./Pages/Admin/UsersListPage";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const secondary = "#DE8538";
@@ -59,7 +59,7 @@ function App() {
             <PrivateRoute exact path="/book" component={BookPage} />
             {/* Admin Route */}
             <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
-            <AdminRoute exact path="/admin/add-meal" component={AddMeal} />
+            <AdminRoute exact path="/admin/meals" component={MealsPage} />
             <AdminRoute exact path="/admin/orders" component={Orders} />
             <AdminRoute
               exact

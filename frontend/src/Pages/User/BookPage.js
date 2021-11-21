@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Typography, Grid, List, ListItem, ListItemText } from "@mui/material";
-import Reservation from "components/Forms/Reservation/Reservation";
-import bookSvg from "assets/image/book.svg";
+import Reservation from "../../components/Forms/Reservation/Reservation";
+import bookSvg from "../../assets/image/book.svg";
 
 const location = ["Street name", "City name", "222-222-222"];
 

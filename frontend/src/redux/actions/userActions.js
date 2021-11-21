@@ -20,9 +20,13 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
-} from "redux/constants/userConstants";
-import mealApi from "components/api/mealApi";
-import { setItemToLcalStorage } from "utils/utils";
+} from "../constants/userConstants";
+import {
+  MEAL_CREATE_RESET,
+  MEAL_UPDATE_RESET,
+} from "../constants/mealConstants";
+import mealApi from "../../components/api/mealApi";
+import { setItemToLcalStorage } from "../../utils/utils";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -60,6 +64,8 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: MEAL_CREATE_RESET });
+  dispatch({ type: MEAL_UPDATE_RESET });
 };
 
 export const userRegister = (name, email, password) => async (dispatch) => {

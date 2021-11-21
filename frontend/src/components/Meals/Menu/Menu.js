@@ -3,7 +3,7 @@ import { Typography, Tabs, Tab, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import Item from "components/Meals/Item/Item";
+import Item from "../Item/Item";
 
 const TabPanel = ({ children, value, index, ...other }) => {
   return (

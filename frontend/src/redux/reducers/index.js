@@ -1,16 +1,27 @@
 import { combineReducers } from "redux";
-import { mealListReducer, mealDetailsReducer } from "./mealReducers";
+import {
+  mealListReducer,
+  mealDetailsReducer,
+  mealDeleteReducer,
+  mealCreateReducer,
+  mealUpdateReducer,
+} from "./mealReducers";
 import { cartReducer } from "./cartReducers";
-import { userLoginReducer } from "./userReducers";
-import { userRegisterReducer } from "./userReducers";
-import { userDetailsReducer } from "./userReducers";
-import { userListReducer } from "./userReducers";
-import { userDeleteReducer } from "./userReducers";
-import { userUpdateReducer } from "./userReducers";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userListReducer,
+  userDeleteReducer,
+  userUpdateReducer,
+} from "./userReducers";
 
 const reducers = combineReducers({
   mealList: mealListReducer,
   mealDetails: mealDetailsReducer,
+  mealDelete: mealDeleteReducer,
+  mealCreate: mealCreateReducer,
+  mealUpdate: mealUpdateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

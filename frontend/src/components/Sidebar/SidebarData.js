@@ -4,11 +4,12 @@ import EventIcon from "@mui/icons-material/Event"; */
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import HistoryIcon from "@mui/icons-material/History";
+/* import HistoryIcon from "@mui/icons-material/History"; */
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AddIcon from "@mui/icons-material/Add";
-import ListIcon from "@mui/icons-material/List";
+/* import AddIcon from "@mui/icons-material/Add";
+import ListIcon from "@mui/icons-material/List"; */
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 export const navItems = [
   {
@@ -36,11 +37,11 @@ export const navItems = [
     path: "/favorites",
     icon: <FavoriteIcon />,
   },
-  {
+  /*  {
     text: "Order History",
     path: "/order-history",
     icon: <HistoryIcon />,
-  },
+  }, */
   {
     text: "About",
     path: "/about",
@@ -55,15 +56,15 @@ export const navItemsAdmin = [
     icon: <DashboardIcon />,
   },
   {
-    text: "Add Meal",
-    path: "/admin/add-meal",
-    icon: <AddIcon />,
+    text: "Meals",
+    path: "/admin/meals",
+    icon: <ListAltIcon />,
   },
-  {
+  /*  {
     text: "Orders",
     path: "/admin/orders",
     icon: <ListIcon />,
-  },
+  }, */
   {
     text: "User List",
     path: "/admin/user-list",

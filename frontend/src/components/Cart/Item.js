@@ -13,7 +13,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "redux/actions/cartAction";
+import { addToCart, removeFromCart } from "../../redux/actions/cartAction";
 
 const CartItem = ({ item }) => {
   const { image, name, price, countInStock, meal, qty } = item;

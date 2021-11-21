@@ -9,10 +9,10 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import CartItem from "components/Cart/Item";
+import CartItem from "../../components/Cart/Item";
 import { useParams, useLocation /* useHistory  */ } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "redux/actions/cartAction";
+import { addToCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {

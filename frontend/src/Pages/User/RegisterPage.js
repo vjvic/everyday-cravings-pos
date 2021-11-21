@@ -4,11 +4,11 @@ import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userRegister } from "redux/actions/userActions";
+import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import registerSvg from "assets/image/register.svg";
+import registerSvg from "../../assets/image/login.svg";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),

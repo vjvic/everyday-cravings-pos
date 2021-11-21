@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMealDetails } from "redux/actions/mealAction";
+import { getMealDetails } from "../../redux/actions/mealAction";
 import { useParams } from "react-router";
 import { Box } from "@mui/system";
 import {
@@ -46,7 +46,7 @@ const MealDetailsPage = () => {
           height: "calc(100vh - 240px)",
         }}
       >
-        <CircularProgress />
+        <CircularProgress color="secondary" />
       </Box>
     );
 

@@ -5,7 +5,7 @@ import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import LineChart from "components/Charts/LineChart";
+import LineChart from "../../components/Charts/LineChart";
 
 const cardItems = [
   {
