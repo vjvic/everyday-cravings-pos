@@ -19,6 +19,7 @@ import PrivateRoute from "./components/Route/PrivateRoute";
 import AdminRoute from "./components/Route/AdminRoute";
 import UsersListPage from "./Pages/Admin/UsersListPage";
 import CssBaseline from "@mui/material/CssBaseline";
+import ProfilePage from "./Pages/User/ProfilePage";
 
 const secondary = "#DE8538";
 
@@ -57,6 +58,7 @@ function App() {
             />
             <PrivateRoute exact path="/meal/:id" component={MealDetailsPage} />
             <PrivateRoute exact path="/book" component={BookPage} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
             {/* Admin Route */}
             <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
             <AdminRoute exact path="/admin/meals" component={MealsPage} />
