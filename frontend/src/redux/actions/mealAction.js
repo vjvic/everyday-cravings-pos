@@ -14,6 +14,9 @@ import {
   MEAL_UPDATE_REQUEST,
   MEAL_UPDATE_SUCCESS,
   MEAL_UPDATE_FAIL,
+  MEAL_CREATE_REVIEW_REQUEST,
+  MEAL_CREATE_REVIEW_SUCCESS,
+  MEAL_CREATE_REVIEW_FAIL,
 } from "../constants/mealConstants";
 import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
@@ -173,3 +176,41 @@ export const updateMeal = (meal) => async (dispatch, getState) => {
     });
   }
 };
+
+export const creatMealReview =
+  (mealID, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: MEAL_CREATE_REVIEW_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await mealApi.post(`/api/meals/${mealID}/reviews`, review, config);
+
+      dispatch({
+        type: MEAL_CREATE_REVIEW_SUCCESS,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: MEAL_CREATE_REVIEW_FAIL,
+        payload: message,
+      });
+    }
+  };
