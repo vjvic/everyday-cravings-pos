@@ -5,7 +5,16 @@ import Meal from "../models/mealModel.js";
 //@route GET /api/meals
 //@access Public
 const getMeal = asyncHandler(async (req, res) => {
-  const meals = await Meal.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const meals = await Meal.find({ ...keyword });
 
   res.json(meals);
 });

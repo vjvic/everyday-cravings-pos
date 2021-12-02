@@ -53,7 +53,7 @@ function App() {
             <PrivateRoute exact path="/about" component={AboutPage} />
             <PrivateRoute
               exact
-              path="/results/:query"
+              path="/results/:keyword"
               component={ResultsPage}
             />
             <PrivateRoute exact path="/meal/:id" component={MealDetailsPage} />

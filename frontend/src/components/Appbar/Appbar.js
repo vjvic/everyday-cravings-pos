@@ -24,7 +24,7 @@ import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
-  const [query, setQuery] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const history = useHistory();
   const location = useLocation();
@@ -39,9 +39,9 @@ const Appbar = ({ handleDrawerToggle }) => {
   const handleSearch = (e) => {
     e.preventDefault();
 
-    if (query) {
-      history.push("/results/" + query);
-      setQuery("");
+    if (keyword) {
+      history.push("/results/" + keyword);
+      setKeyword("");
     }
   };
 
@@ -98,8 +98,8 @@ const Appbar = ({ handleDrawerToggle }) => {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
             />
           </Search>
         </form>

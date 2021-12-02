@@ -22,22 +22,24 @@ import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
 
 //Fetch meal list
-export const getMealList = () => async (dispacth) => {
-  try {
-    dispacth({ type: MEAL_REQUEST });
-    const { data } = await mealApi.get("/api/meals");
+export const getMealList =
+  (keyword = "") =>
+  async (dispacth) => {
+    try {
+      dispacth({ type: MEAL_REQUEST });
+      const { data } = await mealApi.get(`/api/meals?keyword=${keyword}`);
 
-    dispacth({ type: MEAL_SUCCESS, payload: data });
-  } catch (err) {
-    dispacth({
-      type: MEAL_FAIL,
-      payload:
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : err.message,
-    });
-  }
-};
+      dispacth({ type: MEAL_SUCCESS, payload: data });
+    } catch (err) {
+      dispacth({
+        type: MEAL_FAIL,
+        payload:
+          err.response && err.response.data.message
+            ? err.response.data.message
+            : err.message,
+      });
+    }
+  };
 
 //Fetch meal details
 export const getMealDetails = (id) => async (dispatch) => {
