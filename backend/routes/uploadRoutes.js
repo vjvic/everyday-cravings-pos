@@ -1,11 +1,12 @@
-import path from "path";
+/* import path from "path"; */
 import express from "express";
-import multer from "multer";
+/* import multer from "multer"; */
 const router = express.Router();
+/* import fileUpload from "express-fileupload"; */
 
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "uploads");
   },
   filename(req, file, cb) {
     cb(
@@ -37,5 +38,24 @@ const upload = multer({
 router.post("/", upload.single("image"), (req, res) => {
   res.send(`/${req.file.path}`);
 });
+ */
+
+/* router.post("/", (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+
+  const file = req.files.file;
+  const __dirname = path.resolve();
+
+  file.mv(`${__dirname}/frontend/public/uploads/${file.name}`, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+  });
+}); */
 
 export default router;

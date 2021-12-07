@@ -160,7 +160,7 @@ const MealsPage = () => {
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
     setUploading(true);
 
     console.log(file);
@@ -174,7 +174,8 @@ const MealsPage = () => {
 
       const { data } = await mealApi.post("/api/upload", formData, config);
 
-      setImage(data);
+      console.log(data);
+      setImage(data.filePath);
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -498,6 +499,7 @@ const MealsPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
+
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
