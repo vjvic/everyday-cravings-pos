@@ -1,31 +1,31 @@
-import AboutPage from "./AboutPage/AboutPage";
-import BookPage from "./BookPage/BookPage";
-import CartPage from "./CartPage/CartPage";
-import DashboardPage from "./DashboardPage/DashboardPage";
-import FavoritesPage from "./FavoritesPage/FavoritesPage";
-import HomePage from "./HomePage/HomePage";
-import LoginPage from "./LoginPage/LoginPage";
-import MealDetailsPage from "./MealDetailsPage/MealDetailsPage";
-import MealsPage from "./MealsPage/MealsPage";
-import OrdersPage from "./OrdersPage/OrdersPage";
-import ProfilePage from "./ProfilePage/ProfilePage";
-import RegisterPage from "./RegisterPage/RegisterPage";
-import UserListPage from "./UserListPage/UsersListPage";
-import ResultsPage from "./ResultsPage/ResultsPage";
+import About from "./About/about";
+import Book from "./Book/book";
+import Cart from "./Cart/cart";
+import Dashboard from "./Dashboard/dashboard";
+import Favorites from "./Favorite/favorite";
+import Home from "./Home/home";
+import Login from "./Login/login";
+import MealDetails from "./MealDetails/meal-details";
+import Meals from "./Meal/meal";
+import Orders from "./Orders/orders";
+import Profile from "./Profile/profile";
+import Register from "./Register/register";
+import UserList from "./UserList/user-list";
+import Results from "./Results/results";
 
 export {
-  AboutPage,
-  BookPage,
-  CartPage,
-  DashboardPage,
-  FavoritesPage,
-  HomePage,
-  LoginPage,
-  MealDetailsPage,
-  MealsPage,
-  OrdersPage,
-  ProfilePage,
-  RegisterPage,
-  UserListPage,
-  ResultsPage,
+  About,
+  Book,
+  Cart,
+  Dashboard,
+  Favorites,
+  Home,
+  Login,
+  MealDetails,
+  Meals,
+  Orders,
+  Profile,
+  Register,
+  UserList,
+  Results,
 };
