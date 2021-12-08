@@ -77,6 +77,7 @@ const MealsPage = () => {
   } = useSelector((state) => state.mealDetails);
 
   const { success: deleteSuccess } = useSelector((state) => state.mealDelete);
+
   const {
     loading: mealCreateLoading,
     success: createSuccess,

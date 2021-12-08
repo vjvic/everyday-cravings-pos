@@ -7,7 +7,6 @@ import AdminRoute from "./components/Route/AdminRoute";
 import Layout from "./components/Layout/Layout";
 import {
   About,
-  Book,
   Cart,
   Dashboard,
   Favorites,
@@ -54,7 +53,6 @@ function App() {
             <PrivateRoute exact path="/about" component={About} />
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/meal/:id" component={MealDetails} />
-            <PrivateRoute exact path="/book" component={Book} />
             <PrivateRoute exact path="/profile" component={Profile} />
             {/* Admin Route */}
             <AdminRoute exact path="/admin/dashboard" component={Dashboard} />

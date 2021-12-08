@@ -1,5 +1,4 @@
 import About from "./About/about";
-import Book from "./Book/book";
 import Cart from "./Cart/cart";
 import Dashboard from "./Dashboard/dashboard";
 import Favorites from "./Favorite/favorite";
@@ -15,7 +14,6 @@ import Results from "./Results/results";
 
 export {
   About,
-  Book,
   Cart,
   Dashboard,
   Favorites,
