@@ -32,6 +32,7 @@ const Layout = ({ children }) => {
           p: 3,
           /* background: "#F9F9F9", */
           overflowX: "hidden",
+          height: "100vh",
         }}
       >
         <Toolbar />
