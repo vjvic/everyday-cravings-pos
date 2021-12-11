@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMealDetails,
-  creatMealReview,
+  /*  creatMealReview, */
 } from "../../redux/actions/mealAction";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom"; */
 import { Box } from "@mui/system";
 import {
   CircularProgress,
@@ -13,8 +13,8 @@ import {
   Button,
   Typography,
   Divider,
-  Stack,
-  Rating,
+  /*  Stack,
+  Rating, */
   Card,
   CardContent,
   Grid,
@@ -22,30 +22,30 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  TextField,
+  /*  TextField, */
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
 
 const MealDetailsPage = () => {
-  const [reviewRating, setReviewRating] = useState(0);
-  const [comment, setComment] = useState("");
+  /*   const [reviewRating, setReviewRating] = useState(0);
+  const [comment, setComment] = useState(""); */
 
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  /*  const { userInfo } = useSelector((state) => state.userLogin);
   const { error: errorReviews, success: successReviews } = useSelector(
     (state) => state.mealCreateReviews
-  );
+  ); */
 
-  const { name, image, countInStock, rating, numReviews, price } = meal;
+  const { name, image, countInStock, /* rating, numReviews, */ price } = meal;
 
   const [qty, setQty] = useState(1);
 
   const { id } = useParams();
   const history = useHistory();
 
-  const handleReview = (e) => {
+  /*   const handleReview = (e) => {
     e.preventDefault();
     console.log(reviewRating, comment);
     dispatch(
@@ -54,12 +54,12 @@ const MealDetailsPage = () => {
         rating: reviewRating,
       })
     );
-  };
+  }; */
 
   useEffect(() => {
     dispatch(getMealDetails(id));
     dispatch({ type: MEAL_CREATE_REVIEW_RESET });
-  }, [dispatch, id, successReviews]);
+  }, [dispatch, id]);
 
   if (loading)
     return (
@@ -127,9 +127,9 @@ const MealDetailsPage = () => {
               {name}
             </Typography>
 
-            <Divider />
+            {/* <Divider /> */}
 
-            <Stack direction="row" alignItems="center" pb={1} spacing={1}>
+            {/*  <Stack direction="row" alignItems="center" pb={1} spacing={1}>
               <Rating
                 name="half-rating-read"
                 defaultValue={rating}
@@ -137,7 +137,7 @@ const MealDetailsPage = () => {
                 readOnly
               />
               <Typography variant="body2">{numReviews} reviews</Typography>
-            </Stack>
+            </Stack> */}
 
             <Divider />
 
@@ -175,7 +175,9 @@ const MealDetailsPage = () => {
                   variant="contained"
                   fullWidth
                   size="large"
-                  onClick={() => history.push(`/cart/${id}?qty=${qty}`)}
+                  onClick={() =>
+                    history.push(`/admin/create-order/${id}?qty=${qty}`)
+                  }
                 >
                   Add to Cart
                 </Button>
@@ -185,7 +187,7 @@ const MealDetailsPage = () => {
         </Grid>
       </Grid>
 
-      <Grid container sx={{ marginTop: 2 }}>
+      {/* <Grid container sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={12} lg={4}>
           <Box mb={2}>
             <Typography variant="h4" sx={{ paddingBottom: 2 }}>
@@ -265,7 +267,7 @@ const MealDetailsPage = () => {
             )}
           </Box>
         </Grid>
-      </Grid>
+      </Grid> */}
     </div>
   );
 };

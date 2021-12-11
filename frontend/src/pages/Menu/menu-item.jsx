@@ -3,7 +3,7 @@ import { Typography, Tabs, Tab, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import Item from "../../../components/Meals/Item/Item";
+import Item from "../../components/Meals/Item/Item";
 
 const TabPanel = ({ children, value, index, ...other }) => {
   return (
@@ -23,7 +23,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
   );
 };
 
-const Menu = ({ meals }) => {
+const MenuItem = ({ meals }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -145,4 +145,4 @@ const Menu = ({ meals }) => {
   );
 };
 
-export default Menu;
+export default MenuItem;

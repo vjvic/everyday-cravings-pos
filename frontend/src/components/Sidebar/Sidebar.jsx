@@ -73,7 +73,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
           </ListItem>
         ))}
 
-        {userInfo && userInfo.isAdmin && <Divider />}
+        {/*     {userInfo && userInfo.isAdmin && <Divider />} */}
 
         {userInfo &&
           userInfo.isAdmin &&

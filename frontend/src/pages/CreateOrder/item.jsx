@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/actions/cartAction";
 
-const CartItem = ({ item }) => {
+const Item = ({ item }) => {
   const { image, name, price, countInStock, meal, qty } = item;
 
   const dispatch = useDispatch();
@@ -59,4 +59,4 @@ const CartItem = ({ item }) => {
   );
 };
 
-export default CartItem;
+export default Item;

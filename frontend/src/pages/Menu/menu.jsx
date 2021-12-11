@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import Hero from "./Hero/Hero";
-import { CircularProgress, Alert } from "@mui/material";
+import MenuItem from "./menu-item";
+import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/system";
-import { useSelector, useDispatch } from "react-redux";
+import { CircularProgress, Alert } from "@mui/material";
 import { getMealList } from "../../redux/actions/mealAction";
-import Menu from "./Menu/Menu";
 
-const HomePage = () => {
+const Menu = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
   const dispatch = useDispatch();
 
@@ -32,10 +31,9 @@ const HomePage = () => {
 
   return (
     <div>
-      <Hero />
-      <Menu meals={meals} />
+      <MenuItem meals={meals} />
     </div>
   );
 };
 
-export default HomePage;
+export default Menu;

@@ -4,19 +4,16 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  IconButton,
   Typography,
-  Rating,
-  Stack,
+  /* Rating,
+  Stack, */
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
 const Item = ({ item, favorite }) => {
-  const { name, image, category, price, rating, numReviews, _id } = item;
+  const { name, image, category, price, _id } = item;
 
   const history = useHistory();
 
@@ -53,7 +50,7 @@ const Item = ({ item, favorite }) => {
       />
 
       <CardContent>
-        <Stack direction="row" alignItems="center" pb={1} spacing={1}>
+        {/*     <Stack direction="row" alignItems="center" pb={1} spacing={1}>
           <Rating
             name="half-rating-read"
             defaultValue={rating}
@@ -62,7 +59,7 @@ const Item = ({ item, favorite }) => {
           />
           <Typography variant="body2">{numReviews} reviews</Typography>
         </Stack>
-
+ */}
         <Box
           sx={{
             display: "flex",
@@ -72,9 +69,6 @@ const Item = ({ item, favorite }) => {
         >
           {" "}
           <Typography variant="h5">&#8369; {price}</Typography>
-          <IconButton>
-            <FavoriteIcon sx={{ color: favorite ? "primary.main" : "" }} />
-          </IconButton>
         </Box>
       </CardContent>
     </Card>
