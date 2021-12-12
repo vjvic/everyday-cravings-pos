@@ -8,7 +8,9 @@ import cors from "cors";
 
 import mealRoutes from "./routes/mealRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+
+/* import uploadRoutes from "./routes/uploadRoutes.js"; */
 
 dotenv.config();
 
@@ -26,6 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/meals", mealRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 /* app.use("/api/upload", uploadRoutes); */
 
 app.post("/api/upload", (req, res) => {

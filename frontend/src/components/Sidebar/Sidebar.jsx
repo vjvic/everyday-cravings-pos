@@ -25,8 +25,13 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const location = useLocation();
 
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { order } = useSelector((state) => state.orderDetails);
 
-  if (location.pathname === "/login" || location.pathname === "/register")
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === `/admin/receipt/${order ? order._id : " "}`
+  )
     return "";
 
   const drawer = (

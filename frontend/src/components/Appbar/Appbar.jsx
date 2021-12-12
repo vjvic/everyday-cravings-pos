@@ -32,6 +32,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   const dispatch = useDispatch();
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
+  const { order } = useSelector((state) => state.orderDetails);
   /* const { cartItems } = useSelector((state) => state.cart); */
 
   const drawerWidth = 240;
@@ -66,7 +67,11 @@ const Appbar = ({ handleDrawerToggle }) => {
       </Box>
     );
 
-  if (location.pathname === "/login" || location.pathname === "/register")
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === `/admin/receipt/${order ? order._id : " "}`
+  )
     return "";
 
   return (

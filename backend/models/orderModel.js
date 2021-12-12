@@ -1,72 +1,15 @@
 import mongoose from "mongoose";
 
-const orderSchema = mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    orderItems: [
-      {
-        name: { type: String, required: true },
-        qty: { type: Number, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
-        meal: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: "Product",
-        },
-      },
-    ],
-    shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-    },
-    paymentMethod: {
-      type: String,
-      required: true,
-    },
-    paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
-    },
-    taxPrice: {
-      type: String,
-      required: true,
-      default: 0.0,
-    },
-    totalPrice: {
-      type: String,
-      required: true,
-      default: 0.0,
-    },
-    isPaid: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    paidAt: {
-      type: Date,
-    },
-    isDeliverd: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    deliveredAt: {
-      type: Date,
-    },
-  },
-  {
-    timeStamps: true,
-  }
-);
+const orderSchema = mongoose.Schema({
+  customerName: { type: String, required: true },
+  change: { type: Number, required: true },
+  date: { type: String, required: true },
+  paymentType: { type: String, required: true },
+  paid: { type: Number, required: true },
+  subTotal: { type: Number, required: true },
+  totalAmount: { type: Number, required: true },
+  totalItem: { type: Number, required: true },
+});
 
 const Order = mongoose.model("Order", orderSchema);
 

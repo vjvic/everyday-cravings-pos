@@ -6,8 +6,9 @@ import Profile from "./Profile/profile";
 import Register from "./Register/register";
 import UserList from "./UserList/user-list";
 import Results from "./Results/results";
-import CreateOrder from "./CreateOrder/create-order";
+import Cashier from "./Cashier/cashier";
 import Menu from "./Menu/menu";
+import Receipt from "./Receipt/receipt";
 
 export {
   Dashboard,
@@ -18,6 +19,7 @@ export {
   Register,
   UserList,
   Results,
-  CreateOrder,
+  Cashier,
   Menu,
+  Receipt,
 };

@@ -10,10 +10,11 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListIcon from "@mui/icons-material/List"; */
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
+/* import BorderColorIcon from "@mui/icons-material/BorderColor"; */
 import ListIcon from "@mui/icons-material/List";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import { FaCashRegister } from "react-icons/fa";
 
 export const navItems = [
   /*  {
@@ -56,7 +57,7 @@ export const navItems = [
 export const navItemsAdmin = [
   {
     text: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/",
     icon: <DashboardIcon />,
   },
   {
@@ -80,9 +81,9 @@ export const navItemsAdmin = [
     icon: <MenuBookIcon />,
   },
   {
-    text: "Create Order",
-    path: "/admin/create-order",
-    icon: <BorderColorIcon />,
+    text: "Cashier",
+    path: "/admin/cashier",
+    icon: <FaCashRegister />,
   },
   {
     text: "Orderlist",

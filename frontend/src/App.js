@@ -19,8 +19,9 @@ import {
   Register,
   UserList,
   Results,
-  CreateOrder,
+  Cashier,
   Menu,
+  Receipt,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -58,15 +59,12 @@ function App() {
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/profile" component={Profile} />
             {/* Admin Route */}
-            <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
+            <AdminRoute exact path="/" component={Dashboard} />
             <AdminRoute exact path="/admin/meals" component={Meals} />
             <AdminRoute exact path="/admin/user-list" component={UserList} />
             <AdminRoute exact path="/admin/menu" component={Menu} />
-            <AdminRoute
-              exact
-              path="/admin/create-order/:id?"
-              component={CreateOrder}
-            />
+            <AdminRoute exact path="/admin/cashier/:id?" component={Cashier} />
+            <AdminRoute exact path="/admin/receipt/:id" component={Receipt} />
             {/* User Auth Route*/}
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />

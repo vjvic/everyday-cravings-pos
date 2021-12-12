@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
 import Item from "./item";
+import { createOrder } from "../../redux/actions/orderAction";
+import { useHistory } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -35,23 +37,75 @@ const style = {
   borderRadius: 1,
 };
 
-const CreateOrder = () => {
+const Cashier = () => {
   const { id } = useParams();
   const location = useLocation();
-  /*   const history = useHistory(); */
+  const history = useHistory();
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
+
+  const [customerName, setCustomerName] = useState("");
+  const [paid, setPaid] = useState("");
+  const [paymentType, setPaymentType] = useState("");
 
   //Item quantity
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const { cartItems } = useSelector((state) => state.cart);
+  const { success, loading, error, order } = useSelector(
+    (state) => state.orderCreate
+  );
+
+  //Total amount
+  const totalAmount = cartItems.reduce(
+    (acc, item) => acc + item.qty * item.price,
+    0
+  );
+  // Total Items
+  const totalItem = cartItems.length;
+
+  //Subtotal
+  const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
+  //change
+  const change = Math.abs(totalAmount - Number(paid));
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+
+    const orders = {
+      totalItem,
+      subTotal,
+      customerName,
+      paid: Number(paid),
+      change: change,
+      totalAmount,
+      paymentType,
+      date: new Date(),
+    };
+
+    if (customerName && paid >= totalAmount && paymentType) {
+      dispatch(createOrder(orders));
+    }
+  };
 
   useEffect(() => {
     if (id) {
       dispatch(addToCart(id, qty));
     }
   }, [dispatch, id, qty]);
+
+  useEffect(() => {
+    if (success) {
+      setIsSave(false);
+      setCustomerName("");
+      setPaid("");
+      setPaymentType("");
+      if (order._id) {
+        history.push(`/admin/receipt/${order._id}`);
+      }
+    }
+  }, [success, history, order]);
 
   const noCart = (
     <Alert severity="info">
@@ -94,34 +148,31 @@ const CreateOrder = () => {
 
             <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
               <strong>Total Amount: </strong>
-              <span>100</span>
+              <span>&#8369; {totalAmount.toFixed(2)}</span>
             </Typography>
-            <Typography variant="body" omponent="p">
-              <strong>Total Change: </strong>
-              <span>20</span>
-            </Typography>
+            {Number(paid) >= totalAmount && (
+              <Typography variant="body" omponent="p">
+                <strong>Total Change: </strong>
+                <span>&#8369; {change.toFixed(2)}</span>
+              </Typography>
+            )}
 
-            {/* 
-        {updateError && <Alert severity="error">{updateError}</Alert>}
-        {mealError && <Alert severity="error">{mealError}</Alert>} */}
+            {error && <Alert severity="error">{error}</Alert>}
 
-            {/* {mealLoading ? (
-          "loading..."
-        ) : ( */}
             <Box
               component="form"
               mt={3}
               sx={{
                 "& > :not(style)": { my: 1, width: "100%" },
               }}
-              /* onSubmit={handleEditSubmit} */
+              onSubmit={handlePayment}
             >
               <TextField
                 label="Customer Name"
                 variant="outlined"
                 color="secondary"
-                /* value={name || ""} */
-                /*  onChange={(e) => setName(e.target.value)} */
+                value={customerName || ""}
+                onChange={(e) => setCustomerName(e.target.value)}
               />
 
               <TextField
@@ -129,17 +180,17 @@ const CreateOrder = () => {
                 type="number"
                 variant="outlined"
                 color="secondary"
-                /* value={name || ""} */
-                /*  onChange={(e) => setName(e.target.value)} */
+                value={paid || ""}
+                onChange={(e) => setPaid(e.target.value)}
               />
 
               <FormControl fullWidth color="secondary">
                 <InputLabel>Payment Type</InputLabel>
                 <Select
-                  /*  defaultValue={category || ""}
-                    value={category || ""} */
+                  defaultValue={paymentType || ""}
+                  value={paymentType || ""}
                   label="Payment Type"
-                  /* onChange={(e) => setCategory(e.target.value)} */
+                  onChange={(e) => setPaymentType(e.target.value)}
                 >
                   <MenuItem value="cash">Cash</MenuItem>
                   <MenuItem value="credit-card">Credit Card</MenuItem>
@@ -151,20 +202,24 @@ const CreateOrder = () => {
                 type="submit"
                 size="large"
                 sx={{ height: "45px" }}
+                disabled={loading}
               >
                 Save payment
               </Button>
             </Box>
-            {/*   )} */}
           </Box>
         </Fade>
       </Modal>
       <div>
         <Box mb={5}>
           <Typography variant="h4" component="h1" sx={{ marginBottom: 2 }}>
-            Create Order
+            Cashier
           </Typography>
         </Box>
+
+        <Typography variant="h5" sx={{ marginBottom: 2 }}>
+          Cart Items
+        </Typography>
 
         <Grid container spacing={3}>
           <Grid item sm={12} md={7} lg={7}>
@@ -179,7 +234,7 @@ const CreateOrder = () => {
                   component="h3"
                   sx={{ paddingBottom: 2 }}
                 >
-                  Total ({cartItems.length}) Items
+                  Total ({totalItem}) Items
                 </Typography>
 
                 <Typography
@@ -187,15 +242,12 @@ const CreateOrder = () => {
                   component="h3"
                   sx={{ paddingBottom: 2 }}
                 >
-                  Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                  ) Items
+                  Subtotal ({subTotal}) Items
                 </Typography>
 
                 <Typography variant="body1">
                   &#8369;
-                  {cartItems
-                    .reduce((acc, item) => acc + item.qty * item.price, 0)
-                    .toFixed(2)}
+                  {totalAmount.toFixed(2)}
                 </Typography>
 
                 <Divider />
@@ -219,4 +271,4 @@ const CreateOrder = () => {
   );
 };
 
-export default CreateOrder;
+export default Cashier;

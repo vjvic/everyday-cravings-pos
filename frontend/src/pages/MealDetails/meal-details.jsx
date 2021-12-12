@@ -176,7 +176,7 @@ const MealDetailsPage = () => {
                   fullWidth
                   size="large"
                   onClick={() =>
-                    history.push(`/admin/create-order/${id}?qty=${qty}`)
+                    history.push(`/admin/cashier/${id}?qty=${qty}`)
                   }
                 >
                   Add to Cart

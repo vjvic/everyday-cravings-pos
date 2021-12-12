@@ -1,0 +1,22 @@
+.container table,
+.container th,
+.container td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+.hide {
+  margin-top: 1rem;
+}
+
+.hide button {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+@media print {
+  .hide {
+    display: none;
+  }
+}
