@@ -42,11 +42,12 @@ const ResultsPage = () => {
       </Box>
 
       <Grid container spacing={2}>
-        {meals.map((item) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
-            <Item item={item} />
-          </Grid>
-        ))}
+        {meals &&
+          meals.map((item) => (
+            <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
+              <Item item={item} />
+            </Grid>
+          ))}
       </Grid>
     </div>
   );

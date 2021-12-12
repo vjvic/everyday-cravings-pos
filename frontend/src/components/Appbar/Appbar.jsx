@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -11,10 +11,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Box } from "@mui/system";
-/* import SearchIcon from "@mui/icons-material/Search"; */
+import SearchIcon from "@mui/icons-material/Search";
 /* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; */
-/* import { Search, SearchIconWrapper, StyledInputBase } from "./styles"; */
-/* import { useHistory } from "react-router"; */
+import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
+import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 /*  import PersonIcon from "@mui/icons-material/Person";  */
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -24,9 +24,9 @@ import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
-  /*  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState("");
 
-  const history = useHistory(); */
+  const history = useHistory();
   const location = useLocation();
 
   const dispatch = useDispatch();
@@ -37,14 +37,14 @@ const Appbar = ({ handleDrawerToggle }) => {
 
   const drawerWidth = 240;
 
-  /* const handleSearch = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
 
     if (keyword) {
       history.push("/results/" + keyword);
       setKeyword("");
     }
-  }; */
+  };
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -96,18 +96,18 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        {/*  <form onSubmit={handleSearch}>
+        <form onSubmit={handleSearch}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search..."
+              placeholder="Search meal"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
           </Search>
-        </form> */}
+        </form>
 
         <Box sx={{ flexGrow: 1 }} />
         {/* 

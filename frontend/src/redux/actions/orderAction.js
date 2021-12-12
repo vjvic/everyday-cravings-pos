@@ -12,10 +12,21 @@ import {
 import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
 
-export const getOrderList = () => async (dispacth) => {
+export const getOrderList = () => async (dispacth, getState) => {
   try {
     dispacth({ type: ORDER_LIST_REQUEST });
-    const { data } = await mealApi.get("api/orders");
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.get("api/orders", config);
 
     dispacth({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (err) {

@@ -9,6 +9,7 @@ import Results from "./Results/results";
 import Cashier from "./Cashier/cashier";
 import Menu from "./Menu/menu";
 import Receipt from "./Receipt/receipt";
+import SalesReport from "./SalesReport/sales-report";
 
 export {
   Dashboard,
@@ -22,4 +23,5 @@ export {
   Cashier,
   Menu,
   Receipt,
+  SalesReport,
 };

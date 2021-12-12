@@ -22,6 +22,7 @@ import {
   Cashier,
   Menu,
   Receipt,
+  SalesReport,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -65,6 +66,11 @@ function App() {
             <AdminRoute exact path="/admin/menu" component={Menu} />
             <AdminRoute exact path="/admin/cashier/:id?" component={Cashier} />
             <AdminRoute exact path="/admin/receipt/:id" component={Receipt} />
+            <AdminRoute
+              exact
+              path="/admin/sales-report"
+              component={SalesReport}
+            />
             {/* User Auth Route*/}
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
