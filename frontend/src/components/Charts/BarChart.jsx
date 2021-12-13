@@ -1,30 +1,29 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { Box } from "@mui/system";
 
-const LineChart = () => {
+const BarChart = ({ revenueData }) => {
   return (
     <Box mt={7}>
-      <Line
+      <Bar
         data={{
           labels: [
-            "January",
-            "Februrary",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
+            "08:00",
+            "09:00",
+            "10:00",
+            "11:00",
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "18:00",
+            "19:00",
+            "20:00",
           ],
           datasets: [
             {
               label: "Revenue",
-              data: [12, 19, 15, 20, 35, 30, 55, 50, 40, 60, 55, 65],
+              data: revenueData,
               fill: true,
               lineTension: 0.5,
               backgroundColor: "rgba(255, 236, 194, 0.6)",
@@ -56,4 +55,4 @@ const LineChart = () => {
   );
 };
 
-export default LineChart;
+export default BarChart;
