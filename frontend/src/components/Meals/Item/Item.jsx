@@ -5,8 +5,6 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  /* Rating,
-  Stack, */
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
@@ -50,16 +48,6 @@ const Item = ({ item, favorite }) => {
       />
 
       <CardContent>
-        {/*     <Stack direction="row" alignItems="center" pb={1} spacing={1}>
-          <Rating
-            name="half-rating-read"
-            defaultValue={rating}
-            precision={0.5}
-            readOnly
-          />
-          <Typography variant="body2">{numReviews} reviews</Typography>
-        </Stack>
- */}
         <Box
           sx={{
             display: "flex",

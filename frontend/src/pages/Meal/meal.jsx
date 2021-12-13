@@ -52,10 +52,8 @@ const style = {
 const MealsPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [isEdit, setIsEdit] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
@@ -63,6 +61,7 @@ const MealsPage = () => {
   const [countInStock, setCountInstock] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -140,8 +139,6 @@ const MealsPage = () => {
         description,
       })
     );
-
-    setIsEdit(false);
   };
 
   //Create meal submit
@@ -152,9 +149,10 @@ const MealsPage = () => {
     dispatch(
       createMeal(name, price, image, category, countInStock, description)
     );
-
-    setIsCreate(false);
   };
+
+  //Valid image tpyes
+  const types = ["image/jpeg", "image/png"];
 
   //Upload file handler
 
@@ -162,25 +160,27 @@ const MealsPage = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    setUploading(true);
 
-    console.log(file);
+    if (file && types.includes(file.type)) {
+      setUploading(true);
+      setUploadError(false);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
 
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
+        const { data } = await mealApi.post("/api/upload", formData, config);
 
-      const { data } = await mealApi.post("/api/upload", formData, config);
-
-      console.log(data);
-      setImage(data.filePath);
-      setUploading(false);
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
+        console.log(data);
+        setImage(data.filePath);
+        setUploading(false);
+      } catch {
+        setUploading(false);
+      }
+    } else {
+      setUploadError("please add an image (jpeg or png)");
     }
   };
 
@@ -189,6 +189,21 @@ const MealsPage = () => {
     dispatch(getMealList());
   }, [dispatch, deleteSuccess, updateSuccess, createSuccess]);
 
+  //Close modal if update success
+  useEffect(() => {
+    if (updateSuccess) {
+      setIsEdit(false);
+    }
+  }, [updateSuccess]);
+
+  //Close modal if create success
+  useEffect(() => {
+    if (createSuccess) {
+      setIsCreate(false);
+    }
+  }, [createSuccess]);
+
+  //Set user initital state if edit
   useEffect(() => {
     if (meal) {
       setName(meal.name);
@@ -234,6 +249,7 @@ const MealsPage = () => {
 
             {updateError && <Alert severity="error">{updateError}</Alert>}
             {mealError && <Alert severity="error">{mealError}</Alert>}
+            {uploadError && <Alert severity="error">{uploadError}</Alert>}
 
             {mealLoading ? (
               "loading..."
@@ -344,9 +360,12 @@ const MealsPage = () => {
             <Typography variant="h4" component="h2">
               Add Meal
             </Typography>
+
             {mealCreateError && (
               <Alert severity="error">{mealCreateError}</Alert>
             )}
+
+            {uploadError && <Alert severity="error">{uploadError}</Alert>}
             <Box
               component="form"
               mt={3}
@@ -504,7 +523,7 @@ const MealsPage = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={meals && meals.length}
+            count={meals ? meals.length : 0}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

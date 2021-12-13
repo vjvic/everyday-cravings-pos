@@ -6,7 +6,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 import { Alert } from "@mui/material";
-import loginSvg from "../../assets/image/login.svg";
 
 const LoginPage = () => {
   const location = useLocation();
@@ -40,7 +39,7 @@ const LoginPage = () => {
     <Grid container alignItems="center" sx={{ height: "calc(100vh - 350px)" }}>
       <Grid item lg={6}>
         <Box>
-          <img src={loginSvg} alt="register svg" width="80%" />
+          <img src="/images/login.svg" alt="register svg" width="80%" />
         </Box>
       </Grid>
       <Grid item lg={6}>

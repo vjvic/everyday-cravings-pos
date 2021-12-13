@@ -4,7 +4,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  /* Badge, */
   Button,
   Menu,
   MenuItem,
@@ -12,11 +11,9 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
-/* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; */
 import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-/*  import PersonIcon from "@mui/icons-material/Person";  */
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userActions";
@@ -33,7 +30,6 @@ const Appbar = ({ handleDrawerToggle }) => {
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
   const { order } = useSelector((state) => state.orderDetails);
-  /* const { cartItems } = useSelector((state) => state.cart); */
 
   const drawerWidth = 240;
 
@@ -49,9 +45,6 @@ const Appbar = ({ handleDrawerToggle }) => {
   const logoutHandler = () => {
     dispatch(logout());
   };
-
-  //Total cart items
-  /* const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
 
   if (loading)
     return (
@@ -110,19 +103,7 @@ const Appbar = ({ handleDrawerToggle }) => {
         </form>
 
         <Box sx={{ flexGrow: 1 }} />
-        {/* 
-        <Box>
-          <IconButton
-            size="large"
-            color="inherit"
-            onClick={() => history.push("/cart")}
-          >
-            <Badge badgeContent={total} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Box>
- */}
+
         {userInfo && (
           <PopupState variant="popover">
             {(popupState) => (

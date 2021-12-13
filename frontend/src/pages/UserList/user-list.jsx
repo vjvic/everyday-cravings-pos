@@ -91,14 +91,19 @@ const UserListPage = () => {
     e.preventDefault();
 
     dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
-
-    setIsModal(false);
   };
 
   // render/re render user list
   useEffect(() => {
     dispatch(listUsers());
   }, [dispatch, deleteSuccess, updateSuccess, user]);
+
+  // Close modal if update success
+  useEffect(() => {
+    if (updateSuccess) {
+      setIsModal(false);
+    }
+  }, [updateSuccess]);
 
   useEffect(() => {
     if (user) {

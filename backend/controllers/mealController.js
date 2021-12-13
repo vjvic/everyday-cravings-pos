@@ -58,7 +58,6 @@ const createMeal = asyncHandler(async (req, res) => {
     image,
     category,
     countInStock,
-    numReviews,
     description,
   } = req.body;
 
@@ -68,7 +67,6 @@ const createMeal = asyncHandler(async (req, res) => {
     image,
     category,
     countInStock,
-    numReviews,
     description,
   });
 
@@ -76,11 +74,9 @@ const createMeal = asyncHandler(async (req, res) => {
     res.json({
       name: meal.name,
       price: meal.price,
-      user: req.user._id,
       image: meal.image,
       category: meal.category,
       countInStock: meal.countInStock,
-      numReviews: meal.numReviews,
       description: meal.description,
     });
   } else {
@@ -113,52 +109,4 @@ const updateMeal = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc Create new review
-//@route PUT /api/meals/:id/reviews
-//@access Private
-const createMealReviews = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
-
-  const meal = await Meal.findById(req.params.id);
-
-  if (meal) {
-    const alreadyReviewed = meal.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    );
-
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error("Meal already reviewed");
-    }
-
-    const review = {
-      name: req.user.name,
-      rating: Number(rating),
-      comment,
-      user: req.user._id,
-    };
-
-    meal.reviews.push(review);
-
-    meal.numReviews = meal.reviews.length;
-
-    meal.rating =
-      meal.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      meal.reviews.length;
-
-    meal.save();
-    res.status(201).json({ message: "Review added" });
-  } else {
-    res.status(404);
-    throw Error("meal not found");
-  }
-});
-
-export {
-  getMeal,
-  getMealById,
-  deleteMeal,
-  createMeal,
-  updateMeal,
-  createMealReviews,
-};
+export { getMeal, getMealById, deleteMeal, createMeal, updateMeal };

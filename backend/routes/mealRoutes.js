@@ -6,12 +6,10 @@ import {
   deleteMeal,
   createMeal,
   updateMeal,
-  createMealReviews,
 } from "../controllers/mealController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
 router.route("/").get(getMeal).post(protect, isAdmin, createMeal);
-router.route("/:id/reviews").post(protect, createMealReviews);
 router
   .route("/:id")
   .get(getMealById)

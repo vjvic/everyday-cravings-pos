@@ -8,7 +8,6 @@ import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import registerSvg from "../../assets/image/login.svg";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -54,7 +53,7 @@ const RegisterPage = () => {
     <Grid container alignItems="center" sx={{ height: "calc(100vh - 350px)" }}>
       <Grid item lg={6}>
         <Box>
-          <img src={registerSvg} alt="register svg" width="80%" />
+          <img src="/images/register.svg" alt="register svg" width="80%" />
         </Box>
       </Grid>
       <Grid item lg={6}>

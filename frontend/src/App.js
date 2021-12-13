@@ -6,23 +6,18 @@ import PrivateRoute from "./components/Route/PrivateRoute";
 import AdminRoute from "./components/Route/AdminRoute";
 import Layout from "./components/Layout/Layout";
 import {
-  /*   About,
-  Cart, */
   Dashboard,
-  /*  Favorites,
-  Home, */
   Login,
   MealDetails,
   Meals,
-  /*   Orders, */
   Profile,
   Register,
-  UserList,
   Results,
   Cashier,
   Menu,
   Receipt,
   SalesReport,
+  UserList,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -50,28 +45,20 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            {/* Users Route */}
-            {/*   <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute exact path="/cart/:id?" component={Cart} />
-            <PrivateRoute exact path="/favorites" component={Favorites} />
-            <PrivateRoute exact path="/about" component={About} />
-  */}
             <PrivateRoute exact path="/meal/:id" component={MealDetails} />
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/profile" component={Profile} />
-            {/* Admin Route */}
             <AdminRoute exact path="/" component={Dashboard} />
             <AdminRoute exact path="/admin/meals" component={Meals} />
-            <AdminRoute exact path="/admin/user-list" component={UserList} />
             <AdminRoute exact path="/admin/menu" component={Menu} />
             <AdminRoute exact path="/admin/cashier/:id?" component={Cashier} />
             <AdminRoute exact path="/admin/receipt/:id" component={Receipt} />
+            <AdminRoute exact path="/admin/user-list" component={UserList} />
             <AdminRoute
               exact
               path="/admin/sales-report"
               component={SalesReport}
             />
-            {/* User Auth Route*/}
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>
