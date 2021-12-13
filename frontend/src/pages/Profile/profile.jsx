@@ -4,7 +4,6 @@ import {
   Button,
   Typography,
   Alert,
-  Grid,
   CircularProgress,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -66,94 +65,83 @@ const ProfilePage = () => {
     );
 
   return (
-    <Grid
-      container
-      sx={{ height: "calc(100vh - 350px)", marginTop: 10 }}
-      spacing={3}
-    >
-      <Grid item lg={4}>
-        <Box sx={{ maxWidth: "600px", margin: "auto" }}>
-          <Box mb={5}>
-            <Typography variant="h4">User Profile</Typography>
-          </Box>
-
-          {errorDetails && <Alert severity="error">{errorDetails}</Alert>}
-          {errorUpdate && <Alert severity="error">{errorUpdate}</Alert>}
-          {successUpdate && <Alert severity="success">Update Success</Alert>}
-
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { my: 1, width: "100%" },
-            }}
-            noValidate
-            autoComplete="off"
-            onSubmit={handleUpdate}
-          >
-            <TextField
-              value={email}
-              label="Email"
-              fullWidth
-              variant="filled"
-              color="secondary"
-              onChange={(e) => setEmail(e.target.value)}
-              InputLabelProps={{
-                style: { color: "#888" },
-              }}
-            />
-
-            <TextField
-              value={name}
-              label="Name"
-              fullWidth
-              variant="filled"
-              color="secondary"
-              onChange={(e) => setName(e.target.value)}
-              InputLabelProps={{
-                style: { color: "#888" },
-              }}
-            />
-
-            <TextField
-              value={password}
-              label="Password"
-              type="password"
-              fullWidth
-              variant="filled"
-              color="secondary"
-              onChange={(e) => setPassword(e.target.value)}
-              InputLabelProps={{
-                style: { color: "#888" },
-              }}
-            />
-
-            <TextField
-              value={confirmPassword}
-              label="Confirm Password"
-              type="password"
-              fullWidth
-              variant="filled"
-              color="secondary"
-              error={errorPassword.length > 0}
-              helperText={errorPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              InputLabelProps={{
-                style: { color: "#888" },
-              }}
-            />
-
-            <Button variant="contained" type="submit" sx={{ height: "45px" }}>
-              UPDATE
-            </Button>
-          </Box>
-        </Box>
-      </Grid>
-      <Grid item lg={8}>
+    <div>
+      <Box sx={{ maxWidth: "600px", margin: "auto" }}>
         <Box mb={5}>
-          <Typography variant="h4">Orders</Typography>
+          <Typography variant="h4">Profile</Typography>
         </Box>
-      </Grid>
-    </Grid>
+
+        {errorDetails && <Alert severity="error">{errorDetails}</Alert>}
+        {errorUpdate && <Alert severity="error">{errorUpdate}</Alert>}
+        {successUpdate && <Alert severity="success">Update Success</Alert>}
+
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { my: 1, width: "100%" },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleUpdate}
+        >
+          <TextField
+            value={email}
+            label="Email"
+            fullWidth
+            variant="filled"
+            color="secondary"
+            onChange={(e) => setEmail(e.target.value)}
+            InputLabelProps={{
+              style: { color: "#888" },
+            }}
+          />
+
+          <TextField
+            value={name}
+            label="Name"
+            fullWidth
+            variant="filled"
+            color="secondary"
+            onChange={(e) => setName(e.target.value)}
+            InputLabelProps={{
+              style: { color: "#888" },
+            }}
+          />
+
+          <TextField
+            value={password}
+            label="Password"
+            type="password"
+            fullWidth
+            variant="filled"
+            color="secondary"
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: "#888" },
+            }}
+          />
+
+          <TextField
+            value={confirmPassword}
+            label="Confirm Password"
+            type="password"
+            fullWidth
+            variant="filled"
+            color="secondary"
+            error={errorPassword.length > 0}
+            helperText={errorPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: "#888" },
+            }}
+          />
+
+          <Button variant="contained" type="submit" sx={{ height: "45px" }}>
+            UPDATE
+          </Button>
+        </Box>
+      </Box>
+    </div>
   );
 };
 

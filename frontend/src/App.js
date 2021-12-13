@@ -11,13 +11,11 @@ import {
   MealDetails,
   Meals,
   Profile,
-  Register,
   Results,
   Cashier,
   Menu,
   Receipt,
   SalesReport,
-  UserList,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -53,14 +51,12 @@ function App() {
             <AdminRoute exact path="/admin/menu" component={Menu} />
             <AdminRoute exact path="/admin/cashier/:id?" component={Cashier} />
             <AdminRoute exact path="/admin/receipt/:id" component={Receipt} />
-            <AdminRoute exact path="/admin/user-list" component={UserList} />
             <AdminRoute
               exact
               path="/admin/sales-report"
               component={SalesReport}
             />
             <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
           </Layout>
         </Switch>
       </Router>

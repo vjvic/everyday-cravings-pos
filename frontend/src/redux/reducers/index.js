@@ -8,11 +8,7 @@ import {
 } from "./mealReducers";
 import {
   userLoginReducer,
-  userRegisterReducer,
   userDetailsReducer,
-  userListReducer,
-  userDeleteReducer,
-  userUpdateReducer,
   userUpdateProfileReducer,
 } from "./userReducers";
 import {
@@ -30,11 +26,7 @@ const reducers = combineReducers({
   mealUpdate: mealUpdateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
-  userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
-  userList: userListReducer,
-  userDelete: userDeleteReducer,
-  userUpdate: userUpdateReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderList: orderListReducer,
   orderCreate: orderCreateReducer,
