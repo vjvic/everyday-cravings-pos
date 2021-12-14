@@ -33,13 +33,13 @@ const DashboardPage = () => {
   );
 
   //Total amount
-  const amount = orders.map((order) => order.totalAmount);
-  const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
+  const amount = orders && orders.map((order) => order.totalAmount);
+  const totalAmount = orders && amount.reduce((acc, amount) => acc + amount, 0);
 
   //Total customers
-  const customer = orders.map((order) => order.customerName);
-  const uniqueCustomer = [...new Set(customer)];
-  const totalCustomer = uniqueCustomer.length;
+  const customer = orders && orders.map((order) => order.customerName);
+  const uniqueCustomer = orders && [...new Set(customer)];
+  const totalCustomer = orders && uniqueCustomer.length;
 
   //Total orders
   const totalOrders = orders ? orders.length : null;
@@ -49,31 +49,37 @@ const DashboardPage = () => {
 
   //Get revenue for specific time
   const getRevenueToday = (time) => {
-    const orderTime = orders.filter((order) => {
-      const orderDate = format(new Date(order.date), "HH P");
-      const dateNow = format(new Date(), "P");
+    const orderTime =
+      orders &&
+      orders.filter((order) => {
+        const orderDate = format(new Date(order.date), "HH P");
+        const dateNow = format(new Date(), "P");
 
-      return orderDate === `${time} ${dateNow}`;
-    });
+        return orderDate === `${time} ${dateNow}`;
+      });
 
-    const amount = orderTime.map((order) => order.totalAmount);
+    const amount = orders && orderTime.map((order) => order.totalAmount);
 
-    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
+    const totalAmount =
+      orders && amount.reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
   };
 
   const getTotalRevenueToday = () => {
-    const orderTime = orders.filter((order) => {
-      const orderDate = format(new Date(order.date), "P");
-      const dateNow = format(new Date(), "P");
+    const orderTime =
+      orders &&
+      orders.filter((order) => {
+        const orderDate = format(new Date(order.date), "P");
+        const dateNow = format(new Date(), "P");
 
-      return orderDate === dateNow;
-    });
+        return orderDate === dateNow;
+      });
 
-    const amount = orderTime.map((order) => order.totalAmount);
+    const amount = orders && orderTime.map((order) => order.totalAmount);
 
-    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
+    const totalAmount =
+      orders && amount.reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
   };
