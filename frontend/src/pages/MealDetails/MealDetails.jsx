@@ -126,7 +126,12 @@ const MealDetailsPage = () => {
               <Divider sx={{ marginY: 1 }} />
 
               <Typography variant="body" component="p">
-                Status: {meal.countInStock > 0 ? "In stock" : "Out of stock"}
+                Status:{" "}
+                {meal.countInStock > 0 ? (
+                  <span style={{ color: "green" }}>In stock</span>
+                ) : (
+                  <span style={{ color: "red" }}>Out of stock</span>
+                )}
               </Typography>
 
               {countInStock > 0 && inStock}

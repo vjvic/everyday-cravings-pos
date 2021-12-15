@@ -98,10 +98,22 @@ const SalesReport = () => {
                         <TableCell>{capitalize(row.customerName)}</TableCell>
                         <TableCell>{capitalize(row.paymentType)}</TableCell>
                         <TableCell>
-                          &#8369; {row.totalAmount.toFixed(2)}
+                          <Typography noWrap variant="body2">
+                            &#8369; {row.totalAmount.toFixed(2)}
+                          </Typography>
                         </TableCell>
-                        <TableCell> &#8369;{row.paid.toFixed(2)}</TableCell>
-                        <TableCell> &#8369; {row.change.toFixed(2)}</TableCell>
+                        <TableCell>
+                          {" "}
+                          <Typography noWrap variant="body2">
+                            &#8369; {row.paid.toFixed(2)}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          {" "}
+                          <Typography noWrap variant="body2">
+                            &#8369; {row.change.toFixed(2)}
+                          </Typography>
+                        </TableCell>
                         <TableCell>{row.totalItem}</TableCell>
                         <TableCell>{row.subTotal}</TableCell>
                         <TableCell>{format(new Date(row.date), "P")}</TableCell>

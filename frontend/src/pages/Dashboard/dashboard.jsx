@@ -1,6 +1,16 @@
 import React, { useEffect } from "react";
 import { Box } from "@mui/system";
-import { Typography, Grid, Card, CardContent } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  capitalize,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
@@ -33,13 +43,13 @@ const DashboardPage = () => {
   );
 
   //Total amount
-  const amount = orders && orders.map((order) => order.totalAmount);
-  const totalAmount = orders && amount.reduce((acc, amount) => acc + amount, 0);
+  const amount = orders.map((order) => order.totalAmount);
+  const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
   //Total customers
-  const customer = orders && orders.map((order) => order.customerName);
-  const uniqueCustomer = orders && [...new Set(customer)];
-  const totalCustomer = orders && uniqueCustomer.length;
+  const customer = orders.map((order) => order.customerName);
+  const uniqueCustomer = [...new Set(customer)];
+  const totalCustomer = uniqueCustomer.length;
 
   //Total orders
   const totalOrders = orders ? orders.length : null;
@@ -49,37 +59,31 @@ const DashboardPage = () => {
 
   //Get revenue for specific time
   const getRevenueToday = (time) => {
-    const orderTime =
-      orders &&
-      orders.filter((order) => {
-        const orderDate = format(new Date(order.date), "HH P");
-        const dateNow = format(new Date(), "P");
+    const orderTime = orders.filter((order) => {
+      const orderDate = format(new Date(order.date), "HH P");
+      const dateNow = format(new Date(), "P");
 
-        return orderDate === `${time} ${dateNow}`;
-      });
+      return orderDate === `${time} ${dateNow}`;
+    });
 
-    const amount = orders && orderTime.map((order) => order.totalAmount);
+    const amount = orderTime.map((order) => order.totalAmount);
 
-    const totalAmount =
-      orders && amount.reduce((acc, amount) => acc + amount, 0);
+    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
   };
 
   const getTotalRevenueToday = () => {
-    const orderTime =
-      orders &&
-      orders.filter((order) => {
-        const orderDate = format(new Date(order.date), "P");
-        const dateNow = format(new Date(), "P");
+    const orderTime = orders.filter((order) => {
+      const orderDate = format(new Date(order.date), "P");
+      const dateNow = format(new Date(), "P");
 
-        return orderDate === dateNow;
-      });
+      return orderDate === dateNow;
+    });
 
-    const amount = orders && orderTime.map((order) => order.totalAmount);
+    const amount = orderTime.map((order) => order.totalAmount);
 
-    const totalAmount =
-      orders && amount.reduce((acc, amount) => acc + amount, 0);
+    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
   };
@@ -134,6 +138,23 @@ const DashboardPage = () => {
     },
   ];
 
+  //Get the total of occurence in array
+  const topCustomer = orders.reduce((res, val) => {
+    if (res[val.customerName]) {
+      res[val.customerName]++;
+    } else {
+      res[val.customerName] = 1;
+    }
+    return res;
+  }, {});
+
+  //Sort by the highest
+  const sortName = Object.entries(topCustomer)
+    .sort((a, b) => b[1] - a[1])
+    .map((v) => v[0]);
+
+  /* const sortName = []; */
+
   return (
     <div>
       <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
@@ -144,7 +165,7 @@ const DashboardPage = () => {
         <Grid container spacing={2}>
           {cardItems.map((item) => (
             <Grid item xs={12} sm={12} md={6} lg={3} key={item.text}>
-              <Card elevation={0}>
+              <Card>
                 <CardContent>
                   <Box
                     sx={{
@@ -156,7 +177,11 @@ const DashboardPage = () => {
                     <Box sx={style}>{item.icon}</Box>
 
                     <div>
-                      <Typography variant="h5" component="h4" fontWeight="bold">
+                      <Typography
+                        variant={mealsLoading || ordersLoading ? "body" : "h5"}
+                        component="h4"
+                        fontWeight="bold"
+                      >
                         {mealsLoading || ordersLoading
                           ? "loading..."
                           : item.number}
@@ -173,29 +198,65 @@ const DashboardPage = () => {
         </Grid>
       </div>
 
-      <Card sx={{ marginTop: 5, padding: 1 }} elevation={0}>
-        <Typography
-          variant="h5"
-          component="h3"
-          fontWeight="bold"
-          sx={{ marginTop: 5, marginX: 2 }}
-        >
-          Today's Revenue
-        </Typography>
+      <Grid container spacing={2} sx={{ marginTop: 5, padding: 1 }}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
+          {sortName.length <= 0 ? (
+            " "
+          ) : (
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="h3" fontWeight="bold">
+                  Top Customer
+                </Typography>
 
-        <Typography
-          variant="body"
-          component="p"
-          sx={{ marginTop: 1, marginX: 2 }}
-        >
-          Total revenue for today:{" "}
-          <Typography variant="body" sx={{ color: "green" }}>
-            &#8369; {getTotalRevenueToday()}
-          </Typography>
-        </Typography>
+                <List>
+                  {sortName.slice(0, 5).map((top, index) => (
+                    <ListItem key={index}>
+                      <ListItemIcon>#{index + 1}</ListItemIcon>
 
-        <BarChart revenueData={revenueData} />
-      </Card>
+                      <ListItemText primary={capitalize(top)} />
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
+          )}
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={sortName <= 0 ? 12 : 9}
+          lg={sortName <= 0 ? 12 : 9}
+        >
+          <Card>
+            <CardContent>
+              <Typography
+                variant="h5"
+                component="h3"
+                fontWeight="bold"
+                sx={{ marginTop: 5 }}
+              >
+                Today's Revenue
+              </Typography>
+
+              <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+                Total revenue for today:{" "}
+                {mealsLoading || ordersLoading ? (
+                  "loading..."
+                ) : (
+                  <Typography variant="body" sx={{ color: "green" }}>
+                    &#8369; {getTotalRevenueToday()}
+                  </Typography>
+                )}
+              </Typography>
+
+              <BarChart revenueData={revenueData} />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
   );
 };

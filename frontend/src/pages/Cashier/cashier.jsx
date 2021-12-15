@@ -76,7 +76,7 @@ const Cashier = () => {
     const orders = {
       totalItem,
       subTotal,
-      customerName,
+      customerName: customerName.toLowerCase(),
       paid: Number(paid),
       change: change,
       totalAmount,

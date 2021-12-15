@@ -22,7 +22,12 @@ const Item = ({ item }) => {
 
   return (
     <Card sx={{ display: "flex", alignItems: "center", marginY: 2 }}>
-      <CardMedia component="img" sx={{ width: 151 }} image={image} alt={name} />
+      <CardMedia
+        component="img"
+        sx={{ width: 151, height: 100 }}
+        image={image}
+        alt={name}
+      />
 
       <CardContent>
         <Typography component="h3" variant="h5">

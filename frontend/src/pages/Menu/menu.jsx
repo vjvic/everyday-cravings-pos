@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import MenuItem from "./menu-item";
+import MenuItem from "./MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/system";
 import { CircularProgress, Alert } from "@mui/material";
