@@ -36,6 +36,7 @@ import {
   updateMeal,
 } from "../../redux/actions/mealAction";
 import mealApi from "../../components/api/mealApi";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const style = {
   position: "absolute",
@@ -258,7 +259,7 @@ const MealsPage = () => {
                 component="form"
                 mt={3}
                 sx={{
-                  "& > :not(style)": { my: 1, width: "100%" },
+                  "& > :not(style)": { my: 1 },
                 }}
                 onSubmit={handleEditSubmit}
               >
@@ -268,6 +269,7 @@ const MealsPage = () => {
                   color="secondary"
                   value={name || ""}
                   onChange={(e) => setName(e.target.value)}
+                  fullWidth
                 />
 
                 <TextField
@@ -277,6 +279,7 @@ const MealsPage = () => {
                   type="number"
                   value={price || ""}
                   onChange={(e) => setPrice(e.target.value)}
+                  fullWidth
                 />
 
                 <TextField
@@ -285,12 +288,14 @@ const MealsPage = () => {
                   color="secondary"
                   value={image || ""}
                   onChange={(e) => setImage(e.target.value)}
+                  fullWidth
                 />
 
                 <Button
                   variant="contained"
                   component="label"
                   disabled={uploading}
+                  startIcon={<FileUploadIcon />}
                 >
                   Upload File
                   <input type="file" hidden onChange={uploadFileHandler} />
@@ -318,6 +323,7 @@ const MealsPage = () => {
                   type="number"
                   value={countInStock || ""}
                   onChange={(e) => setCountInstock(e.target.value)}
+                  fullWidth
                 />
 
                 <TextField
@@ -328,6 +334,7 @@ const MealsPage = () => {
                   rows={3}
                   value={description || ""}
                   onChange={(e) => setDescription(e.target.value)}
+                  fullWidth
                 />
 
                 <Button
@@ -336,6 +343,7 @@ const MealsPage = () => {
                   size="large"
                   sx={{ height: "45px" }}
                   disabled={updateLoading}
+                  fullWidth
                 >
                   UPDATE
                 </Button>
@@ -370,7 +378,7 @@ const MealsPage = () => {
               component="form"
               mt={3}
               sx={{
-                "& > :not(style)": { my: 1, width: "100%" },
+                "& > :not(style)": { my: 1 },
               }}
               onSubmit={handleCreateSubmit}
             >
@@ -380,6 +388,7 @@ const MealsPage = () => {
                 color="secondary"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                fullWidth
               />
 
               <TextField
@@ -389,6 +398,7 @@ const MealsPage = () => {
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                fullWidth
               />
 
               <TextField
@@ -397,12 +407,14 @@ const MealsPage = () => {
                 color="secondary"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
+                fullWidth
               />
 
               <Button
                 variant="contained"
                 component="label"
                 disabled={uploading}
+                startIcon={<FileUploadIcon />}
               >
                 Upload File
                 <input type="file" hidden onChange={uploadFileHandler} />
@@ -430,6 +442,7 @@ const MealsPage = () => {
                 type="number"
                 value={countInStock}
                 onChange={(e) => setCountInstock(e.target.value)}
+                fullWidth
               />
 
               <TextField
@@ -440,6 +453,7 @@ const MealsPage = () => {
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                fullWidth
               />
 
               <Button
@@ -448,6 +462,7 @@ const MealsPage = () => {
                 size="large"
                 sx={{ height: "45px" }}
                 disabled={mealCreateLoading}
+                fullWidth
               >
                 Add Meal
               </Button>

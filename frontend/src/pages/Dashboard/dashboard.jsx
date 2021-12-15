@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  CircularProgress,
 } from "@mui/material";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
@@ -97,6 +98,8 @@ const DashboardPage = () => {
     getRevenueToday("13"),
     getRevenueToday("14"),
     getRevenueToday("15"),
+    getRevenueToday("16"),
+    getRevenueToday("17"),
     getRevenueToday("18"),
     getRevenueToday("19"),
     getRevenueToday("20"),
@@ -154,6 +157,20 @@ const DashboardPage = () => {
     .map((v) => v[0]);
 
   /* const sortName = []; */
+
+  if (ordersLoading || mealsLoading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 240px)",
+        }}
+      >
+        <CircularProgress color="secondary" />
+      </Box>
+    );
 
   return (
     <div>
