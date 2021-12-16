@@ -22,14 +22,12 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
 app.use("/api/meals", mealRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 /* app.use("/api/upload", uploadRoutes); */
+
+const __dirname = path.resolve();
 
 app.post("/api/upload", (req, res) => {
   if (req.files === null) {
@@ -37,7 +35,6 @@ app.post("/api/upload", (req, res) => {
   }
 
   const file = req.files.file;
-  const __dirname = path.resolve();
 
   file.mv(`${__dirname}/frontend/public/uploads/${file.name}`, (err) => {
     if (err) {
@@ -48,6 +45,18 @@ app.post("/api/upload", (req, res) => {
     res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
   });
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running...");
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
