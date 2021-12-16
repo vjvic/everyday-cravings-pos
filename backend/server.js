@@ -64,6 +64,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(
-  5000,
+  PORT,
   console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
 );
