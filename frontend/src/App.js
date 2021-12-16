@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
-import AdminRoute from "./components/Route/AdminRoute";
 import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
