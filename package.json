@@ -25,6 +25,7 @@
   "homepage": "https://github.com/vjvic/Restaurant-reservation#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.27.1",
     "cors": "^2.8.5",
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",
@@ -34,7 +35,6 @@
     "jsonwebtoken": "^8.5.1",
     "material-ui-popup-state": "^2.0.0",
     "mongoose": "^6.0.12",
-    "multer": "^1.4.3",
     "react-icons": "^4.3.1"
   },
   "devDependencies": {
