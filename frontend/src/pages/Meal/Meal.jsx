@@ -35,8 +35,9 @@ import {
   getMealDetails,
   updateMeal,
 } from "../../redux/actions/mealAction";
-import mealApi from "../../components/api/mealApi";
+/* import mealApi from "../../components/api/mealApi"; */
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -161,21 +162,18 @@ const MealsPage = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("upload_preset", "bphf8igw");
 
     if (file && types.includes(file.type)) {
       setUploading(true);
       setUploadError(false);
+
       try {
-        const config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
-
-        const { data } = await mealApi.post("/api/upload", formData, config);
-
-        console.log(data);
-        setImage(data.filePath);
+        const { data } = await axios.post(
+          "https://api.cloudinary.com/v1_1/domxafmfs/image/upload",
+          formData
+        );
+        setImage(data.secure_url);
         setUploading(false);
       } catch {
         setUploading(false);
