@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Alert,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderList } from "../../redux/actions/orderAction";
@@ -38,12 +39,12 @@ const DashboardPage = () => {
   const {
     orders,
     loading: ordersLoading,
-    /* error: ordersError, */
+    error: ordersError,
   } = useSelector((state) => state.orderList);
   const {
     meals,
     loading: mealsLoading,
-    /* error: mealsError, */
+    error: mealsError,
   } = useSelector((state) => state.mealList);
 
   useEffect(() => {
@@ -51,7 +52,10 @@ const DashboardPage = () => {
     dispatch(getMealList());
   }, [dispatch]);
 
-  if (orders === undefined && meals === undefined) return "undefined";
+  if (ordersLoading || mealsLoading) return <Loader />;
+  if (orders === undefined && meals === undefined) return "";
+  if (ordersError || mealsError)
+    return <Alert severity="error">{ordersError || mealsError}</Alert>;
 
   //Total amount
   const amount = orders.map((order) => order.totalAmount);
@@ -162,8 +166,6 @@ const DashboardPage = () => {
     .map((v) => v[0]);
 
   /* const sortName = []; */
-
-  if (ordersLoading || mealsLoading) return <Loader />;
 
   return (
     <div>
