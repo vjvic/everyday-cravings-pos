@@ -22,20 +22,20 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { getMealList } from "../../redux/actions/mealAction";
-import AddIcon from "@mui/icons-material/Add";
 import {
   deleteMeal,
   createMeal,
   getMealDetails,
   updateMeal,
 } from "../../redux/actions/mealAction";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { Box } from "@mui/system";
+import { useDispatch, useSelector } from "react-redux";
+import { getMealList } from "../../redux/actions/mealAction";
 import { Loader } from "../../components";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 import axios from "axios";
 
 const style = {
