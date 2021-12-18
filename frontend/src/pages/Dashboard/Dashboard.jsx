@@ -10,17 +10,16 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  CircularProgress,
 } from "@mui/material";
-import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
-import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import BarChart from "../../components/Charts/BarChart";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderList } from "../../redux/actions/orderAction";
 import { getMealList } from "../../redux/actions/mealAction";
 import { format } from "date-fns";
+import { BarChart, Loader } from "../../components";
+import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
+import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 
 const style = {
   fontSize: "50px",
@@ -36,12 +35,23 @@ const style = {
 const DashboardPage = () => {
   const dispatch = useDispatch();
 
-  const { orders, loading: ordersLoading } = useSelector(
-    (state) => state.orderList
-  );
-  const { meals, loading: mealsLoading } = useSelector(
-    (state) => state.mealList
-  );
+  const {
+    orders,
+    loading: ordersLoading,
+    /* error: ordersError, */
+  } = useSelector((state) => state.orderList);
+  const {
+    meals,
+    loading: mealsLoading,
+    /* error: mealsError, */
+  } = useSelector((state) => state.mealList);
+
+  useEffect(() => {
+    dispatch(getOrderList());
+    dispatch(getMealList());
+  }, [dispatch]);
+
+  if (orders === undefined && meals === undefined) return "undefined";
 
   //Total amount
   const amount = orders.map((order) => order.totalAmount);
@@ -105,11 +115,6 @@ const DashboardPage = () => {
     getRevenueToday("20"),
   ];
 
-  useEffect(() => {
-    dispatch(getOrderList());
-    dispatch(getMealList());
-  }, [dispatch]);
-
   const cardItems = [
     {
       icon: (
@@ -158,19 +163,7 @@ const DashboardPage = () => {
 
   /* const sortName = []; */
 
-  if (ordersLoading || mealsLoading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (ordersLoading || mealsLoading) return <Loader />;
 
   return (
     <div>

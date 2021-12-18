@@ -6,6 +6,7 @@ import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
 import { getOrderDetails } from "../../redux/actions/orderAction";
 import styles from "./receipt.module.css";
 import { format } from "date-fns";
+import { Loader } from "../../components";
 
 const Receipt = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const Receipt = () => {
     dispatch(getOrderDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return "loading...";
+  if (loading) return <Loader />;
 
   return (
     <div>

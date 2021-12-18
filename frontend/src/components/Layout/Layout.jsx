@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
-import Appbar from "../Appbar/Appbar";
-import Siderbar from "../Sidebar/Sidebar";
+import { Appbar, Sidebar } from "..";
 
 const Layout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -18,7 +17,7 @@ const Layout = ({ children }) => {
       <Appbar handleDrawerToggle={handleDrawerToggle} />
 
       {/*  Drawer */}
-      <Siderbar
+      <Sidebar
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
       />

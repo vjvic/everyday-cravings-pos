@@ -4,7 +4,6 @@ import { getMealDetails } from "../../redux/actions/mealAction";
 import { useParams } from "react-router";
 import { Box } from "@mui/system";
 import {
-  CircularProgress,
   Alert,
   Button,
   Typography,
@@ -18,6 +17,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useHistory } from "react-router";
+import { Loader } from "../../components";
 
 const MealDetailsPage = () => {
   const dispatch = useDispatch();
@@ -34,19 +34,7 @@ const MealDetailsPage = () => {
     dispatch(getMealDetails(id));
   }, [dispatch, id]);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
 

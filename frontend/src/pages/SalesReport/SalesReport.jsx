@@ -10,12 +10,12 @@ import {
   Typography,
   TableHead,
   capitalize,
-  CircularProgress,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
+import { Loader } from "../../components";
 
 const SalesReport = () => {
   const dispatch = useDispatch();
@@ -39,19 +39,7 @@ const SalesReport = () => {
     dispatch(getOrderList());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (loading) return <Loader />;
 
   return (
     <div>
