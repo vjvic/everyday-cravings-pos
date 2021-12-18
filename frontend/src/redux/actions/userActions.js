@@ -15,8 +15,8 @@ import {
   MEAL_CREATE_RESET,
   MEAL_UPDATE_RESET,
 } from "../constants/mealConstants";
-import mealApi from "../../components/api/mealApi";
 import { setItemToLcalStorage } from "../../utils/utils";
+import { mealApi } from "../../components";
 
 export const login = (email, password) => async (dispatch) => {
   try {

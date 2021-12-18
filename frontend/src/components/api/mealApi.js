@@ -2,5 +2,5 @@ import axios from "axios";
 
 //Base URL
 export default axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://everydaypos.herokuapp.com",
 });

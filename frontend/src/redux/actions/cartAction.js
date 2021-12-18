@@ -1,6 +1,6 @@
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
-import mealApi from "../../components/api/mealApi";
 import { setItemToLcalStorage } from "../../utils/utils";
+import { mealApi } from "../../components";
 
 //Add to cart action
 export const addToCart = (id, qty) => async (dispatch, getState) => {

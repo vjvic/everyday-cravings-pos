@@ -15,8 +15,8 @@ import {
   MEAL_UPDATE_SUCCESS,
   MEAL_UPDATE_FAIL,
 } from "../constants/mealConstants";
-import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
+import { mealApi } from "../../components";
 
 //Fetch meal list
 export const getMealList =
