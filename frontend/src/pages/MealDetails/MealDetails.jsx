@@ -72,7 +72,11 @@ const MealDetailsPage = () => {
             <img
               src={image}
               alt={name}
-              style={{ borderRadius: "10px" }}
+              style={{
+                borderRadius: "10px",
+                maxHeight: "400px",
+                objectFit: "cover",
+              }}
               width="100%"
             />
           </div>
