@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import Item from "../../components/Meals/Item/Item";
-import { Grid, CircularProgress, Typography, Alert } from "@mui/material";
+import { Grid, Typography, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { useSelector, useDispatch } from "react-redux";
 import { getMealList } from "../../redux/actions/mealAction";
+import { Loader } from "../../components";
 
 const ResultsPage = () => {
   const { keyword } = useParams();
@@ -16,19 +17,7 @@ const ResultsPage = () => {
     dispatch(getMealList(keyword));
   }, [dispatch, keyword]);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+  if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
 

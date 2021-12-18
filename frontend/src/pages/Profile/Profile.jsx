@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-  Alert,
-  CircularProgress,
-} from "@mui/material";
+import { TextField, Button, Typography, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserDetails,
   updateUserProfile,
 } from "../../redux/actions/userActions";
+import { Loader } from "../../components";
 
 const ProfilePage = () => {
   const [email, setEmail] = useState("");
@@ -50,19 +45,7 @@ const ProfilePage = () => {
     }
   };
 
-  if (loadingDetails || loadingUpdate)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (loadingDetails || loadingUpdate) return <Loader />;
 
   return (
     <div>

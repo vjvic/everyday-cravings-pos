@@ -10,7 +10,6 @@ import {
   IconButton,
   Typography,
   TableHead,
-  CircularProgress,
   Modal,
   Fade,
   Backdrop,
@@ -35,8 +34,8 @@ import {
   getMealDetails,
   updateMeal,
 } from "../../redux/actions/mealAction";
-/* import mealApi from "../../components/api/mealApi"; */
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { Loader } from "../../components";
 import axios from "axios";
 
 const style = {
@@ -214,19 +213,7 @@ const MealsPage = () => {
     }
   }, [dispatch, meal]);
 
-  if (mealsLoading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (mealsLoading) return <Loader />;
 
   return (
     <>

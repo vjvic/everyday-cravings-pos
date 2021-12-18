@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import MenuItem from "./MenuItem";
 import { useDispatch, useSelector } from "react-redux";
-import { Box } from "@mui/system";
-import { CircularProgress, Alert } from "@mui/material";
+import { Alert } from "@mui/material";
 import { getMealList } from "../../redux/actions/mealAction";
+import { Loader } from "../../components";
 
 const Menu = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
@@ -13,19 +13,7 @@ const Menu = () => {
     dispatch(getMealList());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
 
