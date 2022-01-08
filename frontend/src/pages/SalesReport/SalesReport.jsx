@@ -10,6 +10,10 @@ import {
   Typography,
   TableHead,
   capitalize,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +26,7 @@ const SalesReport = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [date, setDate] = useState("");
 
   const { orders, loading } = useSelector((state) => state.orderList);
 
@@ -35,6 +40,25 @@ const SalesReport = () => {
     setPage(0);
   };
 
+  const filterDate = (filterDate) => {
+    const currentDay = format(new Date(), "d");
+    const currentMonth = format(new Date(), "MM");
+    const currentYear = format(new Date(), "yyyy");
+    const selectedDay = format(new Date(filterDate), "d");
+    const selectedMonth = format(new Date(filterDate), "MM");
+    const selectedYear = format(new Date(filterDate), "yyyy");
+
+    if (date === "Today") {
+      return selectedDay === currentDay;
+    } else if (date === "This Month") {
+      return selectedMonth === currentMonth;
+    } else if (date === "This Year") {
+      return selectedYear === currentYear;
+    } else {
+      return filterDate;
+    }
+  };
+
   useEffect(() => {
     dispatch(getOrderList());
   }, [dispatch]);
@@ -44,9 +68,28 @@ const SalesReport = () => {
   return (
     <div>
       <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
+        <Typography variant="h4" component="h1">
           Sales Report
         </Typography>
+
+        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <FormControl
+            color="secondary"
+            variant="standard"
+            sx={{ minWidth: 120 }}
+          >
+            <InputLabel>Date Filters</InputLabel>
+            <Select
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              label="Date Filters"
+            >
+              {["All", "Today", "This Month", "This Year"].map((d) => (
+                <MenuItem value={d}>{d}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
@@ -73,6 +116,7 @@ const SalesReport = () => {
 
               <TableBody>
                 {orders
+                  .filter((order) => filterDate(order.date))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
