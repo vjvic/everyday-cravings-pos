@@ -14,6 +14,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,9 @@ const SalesReport = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [date, setDate] = useState("");
+  /* const [date, setDate] = useState(""); */
+  const [selectedYear, setSelectedYear] = useState("");
+  const [filterName, setFilterName] = useState("");
 
   const { orders, loading } = useSelector((state) => state.orderList);
 
@@ -40,7 +43,12 @@ const SalesReport = () => {
     setPage(0);
   };
 
-  const filterDate = (filterDate) => {
+  const years = orders.map((order) => format(new Date(order.date), "yyyy"));
+  const uniqueYears = [...new Set(years)];
+
+  console.log(uniqueYears);
+
+  /*   const filterDate = (filterDate) => {
     const currentDay = format(new Date(), "d");
     const currentMonth = format(new Date(), "MM");
     const currentYear = format(new Date(), "yyyy");
@@ -56,6 +64,22 @@ const SalesReport = () => {
       return selectedYear === currentYear;
     } else {
       return filterDate;
+    }
+  }; */
+
+  const filterItem = (order) => {
+    if (selectedYear && filterName) {
+      return (
+        format(new Date(order.date), "yyyy") === selectedYear &&
+        /* filterDate(order.date) && */
+        order.customerName === filterName
+      );
+    } else if (filterName) {
+      return order.customerName === filterName;
+    } else if (selectedYear) {
+      return format(new Date(order.date), "yyyy") === selectedYear;
+    } else {
+      return order;
     }
   };
 
@@ -73,7 +97,34 @@ const SalesReport = () => {
         </Typography>
 
         <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <TextField
+            label="Search by name"
+            variant="standard"
+            color="secondary"
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+          />
+
           <FormControl
+            color="secondary"
+            variant="standard"
+            sx={{ minWidth: 120, marginX: 2 }}
+          >
+            <InputLabel>Filter by year</InputLabel>
+            <Select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              label="Filter by year"
+            >
+              {uniqueYears.map((d, index) => (
+                <MenuItem key={index} value={d}>
+                  {d}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {/*   <FormControl
             color="secondary"
             variant="standard"
             sx={{ minWidth: 120 }}
@@ -84,11 +135,13 @@ const SalesReport = () => {
               onChange={(e) => setDate(e.target.value)}
               label="Date Filters"
             >
-              {["All", "Today", "This Month", "This Year"].map((d) => (
-                <MenuItem value={d}>{d}</MenuItem>
+              {["All", "Today", "This Month", "This Year"].map((d, index) => (
+                <MenuItem key={index} value={d}>
+                  {d}
+                </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Box>
 
         <Paper sx={{ width: "100%", mb: 2 }}>
@@ -116,7 +169,7 @@ const SalesReport = () => {
 
               <TableBody>
                 {orders
-                  .filter((order) => filterDate(order.date))
+                  .filter((order) => filterItem(order))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;

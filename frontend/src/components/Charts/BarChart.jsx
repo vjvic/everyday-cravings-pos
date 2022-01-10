@@ -1,27 +1,40 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Box } from "@mui/system";
+import { getAllDaysOfMonth, getAllMonthsOfYear } from "../../utils/utils";
 
-const BarChart = ({ revenueData }) => {
+const BarChart = ({ revenueData, date }) => {
+  const dataToday = [
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+  ];
+
+  const selectedDate = (date) => {
+    if (date === "Today") {
+      return dataToday;
+    } else if (date === "This Month") {
+      return getAllDaysOfMonth();
+    } else if (date === "This Year") {
+      return getAllMonthsOfYear();
+    }
+  };
+
   return (
     <Box mt={7}>
       <Bar
         data={{
-          labels: [
-            "08:00",
-            "09:00",
-            "10:00",
-            "11:00",
-            "12:00",
-            "13:00",
-            "14:00",
-            "15:00",
-            "16:00",
-            "17:00",
-            "18:00",
-            "19:00",
-            "20:00",
-          ],
+          labels: selectedDate(date),
           datasets: [
             {
               label: "Revenue",
