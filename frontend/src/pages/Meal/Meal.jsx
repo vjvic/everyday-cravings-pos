@@ -63,6 +63,8 @@ const MealsPage = () => {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+  const [filterName, setFilterName] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const dispatch = useDispatch();
 
@@ -182,6 +184,41 @@ const MealsPage = () => {
     }
   };
 
+  //Return filter item
+
+  const filterByCategory = (order) => {
+    if (selectedCategory === "Breakfast") {
+      return order.category === "breakfast";
+    } else if (selectedCategory === "Lunch") {
+      return order.category === "lunch";
+    } else if (selectedCategory === "Dinner") {
+      return order.category === "dinner";
+    } else if (selectedCategory === "Dessert") {
+      return order.cateory === "dessert";
+    } else if (selectedCategory === "All") {
+      return order;
+    } else {
+      return order;
+    }
+  };
+
+  const filterItem = (order) => {
+    if (filterName && selectedCategory) {
+      return (
+        order.name.toLowerCase() === filterName.toLowerCase() &&
+        filterByCategory(order)
+      );
+    }
+
+    if (filterName) {
+      return order.name.toLowerCase() === filterName.toLowerCase();
+    } else if (selectedCategory) {
+      return filterByCategory(order);
+    } else {
+      return order;
+    }
+  };
+
   // render/re render meal list
   useEffect(() => {
     dispatch(getMealList());
@@ -212,6 +249,8 @@ const MealsPage = () => {
       setDescription(meal.description);
     }
   }, [dispatch, meal]);
+
+  console.log(meals);
 
   if (mealsLoading) return <Loader />;
 
@@ -474,6 +513,37 @@ const MealsPage = () => {
           </Button>
         </Stack>
 
+        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <TextField
+            label="Search by meal name"
+            variant="standard"
+            color="secondary"
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+          />
+
+          <FormControl
+            color="secondary"
+            variant="standard"
+            sx={{ minWidth: 120, marginX: 2 }}
+          >
+            <InputLabel>Filter by category</InputLabel>
+            <Select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              label="Filter by category"
+            >
+              {["All", "Breakfast", "Lunch", "Dinner", "Dessert"].map(
+                (c, index) => (
+                  <MenuItem key={index} value={c}>
+                    {c}
+                  </MenuItem>
+                )
+              )}
+            </Select>
+          </FormControl>
+        </Box>
+
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
             <Table size="medium">
@@ -490,6 +560,7 @@ const MealsPage = () => {
               <TableBody>
                 {meals &&
                   meals
+                    .filter((meal) => filterItem(meal))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

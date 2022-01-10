@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import {
   Typography,
@@ -11,6 +11,10 @@ import {
   ListItemIcon,
   ListItemText,
   Alert,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderList } from "../../redux/actions/orderAction";
@@ -21,6 +25,7 @@ import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import { getAllDaysOfMonth, getAllMonthsOfYear } from "../../utils/utils";
 
 const style = {
   fontSize: "50px",
@@ -35,6 +40,7 @@ const style = {
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
+  const [date, setDate] = useState("Today");
 
   const {
     orders,
@@ -74,36 +80,65 @@ const DashboardPage = () => {
 
   //Get revenue for specific time
   const getRevenueToday = (time) => {
-    const orderTime = orders.filter((order) => {
-      const orderDate = format(new Date(order.date), "HH P");
-      const dateNow = format(new Date(), "P");
+    const orderTime = orders
+      .filter((order) => {
+        const orderDate = format(new Date(order.date), "HH P");
+        const dateNow = format(new Date(), "P");
 
-      return orderDate === `${time} ${dateNow}`;
-    });
-
-    const amount = orderTime.map((order) => order.totalAmount);
-
-    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
-
-    return totalAmount;
+        return orderDate === `${time} ${dateNow}`;
+      })
+      .map((order) => order.totalAmount)
+      .reduce((acc, amount) => acc + amount, 0);
+    return orderTime;
   };
 
+  //Return the revenue for the month
+  const getRevenueThisMonth = (day) => {
+    const orderMonth = orders
+      .filter((order) => {
+        const filterMonth = format(new Date(order.date), "d MM");
+        const currentMonth = format(new Date(), "MM");
+
+        return filterMonth === `${day} ${currentMonth}`;
+      })
+      .map((order) => order.totalAmount)
+      .reduce((acc, amount) => acc + amount, 0);
+
+    return orderMonth;
+  };
+
+  //Return the revenue for the year
+  const getRevenueThisYear = (month) => {
+    const orderYear = orders
+      .filter((order) => {
+        const filterYear = format(new Date(order.date), "MMM yyyy");
+        const currentYear = format(new Date(), "yyyy");
+
+        return filterYear === `${month} ${currentYear}`;
+      })
+      .map((order) => order.totalAmount)
+      .reduce((acc, amount) => acc + amount, 0);
+
+    return orderYear;
+  };
+
+  //Return total revenue for today
   const getTotalRevenueToday = () => {
-    const orderTime = orders.filter((order) => {
-      const orderDate = format(new Date(order.date), "P");
-      const dateNow = format(new Date(), "P");
+    const totalAmount = orders
+      .filter((order) => {
+        const orderDate = format(new Date(order.date), "P");
+        const dateNow = format(new Date(), "P");
 
-      return orderDate === dateNow;
-    });
-
-    const amount = orderTime.map((order) => order.totalAmount);
-
-    const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
+        return orderDate === dateNow;
+      })
+      .map((order) => order.totalAmount)
+      .reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
   };
 
-  const revenueData = [
+  //Today revenue data
+  const revenueToday = [
     getRevenueToday("08"),
     getRevenueToday("09"),
     getRevenueToday("10"),
@@ -119,6 +154,28 @@ const DashboardPage = () => {
     getRevenueToday("20"),
   ];
 
+  //This month revenue data
+  const revenueThisMonth = getAllDaysOfMonth().map((d) =>
+    getRevenueThisMonth(d)
+  );
+
+  //This year revenue data
+  const revenueThisYear = getAllMonthsOfYear().map((m) =>
+    getRevenueThisYear(m)
+  );
+
+  //Return data based on selected date
+  const selectedDate = (date) => {
+    if (date === "Today") {
+      return revenueToday;
+    } else if (date === "This Month") {
+      return revenueThisMonth;
+    } else if (date === "This Year") {
+      return revenueThisYear;
+    }
+  };
+
+  // Card Items
   const cardItems = [
     {
       icon: (
@@ -165,7 +222,29 @@ const DashboardPage = () => {
     .sort((a, b) => b[1] - a[1])
     .map((v) => v[0]);
 
-  /* const sortName = []; */
+  //Return text based on selected date
+  const dateText = () => {
+    if (date === "Today") {
+      return "Today";
+    } else if (date === "This Month") {
+      return "This Month";
+    } else if (date === "This Year") {
+      return "This Year";
+    }
+  };
+
+  //Return totol revenue based on selected date
+  const getTotalRevenue = () => {
+    if (date === "Today") {
+      return getTotalRevenueToday();
+    } else if (date === "This Month") {
+      return revenueThisMonth.reduce((acc, amount) => acc + amount, 0);
+    } else if (date === "This Year") {
+      return revenueThisYear.reduce((acc, amount) => acc + amount, 0);
+    }
+  };
+
+  console.log(getTotalRevenue());
 
   return (
     <div>
@@ -244,27 +323,61 @@ const DashboardPage = () => {
         >
           <Card>
             <CardContent>
-              <Typography
-                variant="h5"
-                component="h3"
-                fontWeight="bold"
-                sx={{ marginTop: 5 }}
+              <Box
+                mb={2}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
               >
-                Today's Revenue
-              </Typography>
-
-              <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
-                Total revenue for today:{" "}
-                {mealsLoading || ordersLoading ? (
-                  "loading..."
-                ) : (
-                  <Typography variant="body" sx={{ color: "green" }}>
-                    &#8369; {getTotalRevenueToday()}
+                <div>
+                  <Typography
+                    variant="h5"
+                    component="h3"
+                    fontWeight="bold"
+                    sx={{ marginTop: 5 }}
+                  >
+                    Revenue
                   </Typography>
-                )}
-              </Typography>
 
-              <BarChart revenueData={revenueData} />
+                  <Typography
+                    variant="body"
+                    component="p"
+                    sx={{ marginTop: 1 }}
+                  >
+                    Total revenue for {dateText()}:{" "}
+                    {mealsLoading || ordersLoading ? (
+                      "loading..."
+                    ) : (
+                      <Typography variant="body" sx={{ color: "green" }}>
+                        &#8369; {getTotalRevenue().toFixed(2)}
+                      </Typography>
+                    )}
+                  </Typography>
+                </div>
+
+                <FormControl
+                  color="secondary"
+                  variant="standard"
+                  sx={{ minWidth: 120 }}
+                >
+                  <InputLabel>Date Filters</InputLabel>
+                  <Select
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    label="Date Filters"
+                  >
+                    {["Today", "This Month", "This Year"].map((d, index) => (
+                      <MenuItem key={index} value={d}>
+                        {d}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <BarChart revenueData={selectedDate(date)} date={date} />
             </CardContent>
           </Card>
         </Grid>
