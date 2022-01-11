@@ -8,6 +8,7 @@ import Cashier from "./Cashier/Cashier";
 import Menu from "./Menu/Menu";
 import Receipt from "./Receipt/Receipt";
 import SalesReport from "./SalesReport/SalesReport";
+import Register from "./Register/Register";
 
 export {
   Dashboard,
@@ -20,4 +21,5 @@ export {
   Menu,
   Receipt,
   SalesReport,
+  Register,
 };

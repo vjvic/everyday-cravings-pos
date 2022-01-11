@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
   Login,
+  Register,
   MealDetails,
   Meals,
   Profile,
@@ -60,6 +61,7 @@ function App() {
               component={SalesReport}
             />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
           </Layout>
         </Switch>
       </Router>

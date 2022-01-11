@@ -9,7 +9,7 @@ import {
   Drawer,
   Box,
 } from "@mui/material";
-import { navItems } from "./SidebarData";
+import { navItems, navItemsAdmin } from "./SidebarData";
 import { useHistory } from "react-router";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const location = useLocation();
 
   const { order } = useSelector((state) => state.orderDetails);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   if (
     location.pathname === "/login" ||
@@ -75,10 +76,24 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+
+        {userInfo && userInfo.isAdmin && <Divider />}
+
+        {userInfo &&
+          userInfo.isAdmin &&
+          navItemsAdmin.map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
       </List>
     </div>
   );
-
   return (
     <Box
       component="nav"
