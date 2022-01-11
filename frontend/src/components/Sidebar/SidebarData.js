@@ -6,6 +6,7 @@ import { FaCashRegister } from "react-icons/fa";
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HistoryIcon from "@mui/icons-material/History";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 export const navItems = [
   {
@@ -29,13 +30,18 @@ export const navItems = [
 export const navItemsAdmin = [
   {
     text: "Dashboard",
-    path: "/",
+    path: "/admin/dashboard",
     icon: <DashboardIcon />,
   },
   {
     text: "Meal list",
     path: "/admin/meals",
     icon: <ListAltIcon />,
+  },
+  {
+    text: "User List",
+    path: "/admin/user-list",
+    icon: <PeopleAltIcon />,
   },
   {
     text: "Menu",

@@ -9,6 +9,8 @@ import Menu from "./Menu/Menu";
 import Receipt from "./Receipt/Receipt";
 import SalesReport from "./SalesReport/SalesReport";
 import Register from "./Register/Register";
+import UserList from "./UserList/UserList";
+import Home from "./Home/Home";
 
 export {
   Dashboard,
@@ -22,4 +24,6 @@ export {
   Receipt,
   SalesReport,
   Register,
+  UserList,
+  Home,
 };
