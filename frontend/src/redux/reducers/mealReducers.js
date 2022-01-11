@@ -16,6 +16,10 @@ import {
   MEAL_UPDATE_SUCCESS,
   MEAL_UPDATE_FAIL,
   MEAL_UPDATE_RESET,
+  MEAL_CREATE_REVIEW_REQUEST,
+  MEAL_CREATE_REVIEW_SUCCESS,
+  MEAL_CREATE_REVIEW_FAIL,
+  MEAL_CREATE_REVIEW_RESET,
 } from "../constants/mealConstants";
 
 export const mealListReducer = (state = { mealList: [] }, action) => {
@@ -85,6 +89,21 @@ export const mealUpdateReducer = (state = { meal: {} }, action) => {
       return { loading: false, error: action.payload };
     case MEAL_UPDATE_RESET:
       return { product: {} };
+    default:
+      return state;
+  }
+};
+
+export const mealCreateReviewsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MEAL_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case MEAL_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case MEAL_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case MEAL_CREATE_REVIEW_RESET:
+      return {};
     default:
       return state;
   }
