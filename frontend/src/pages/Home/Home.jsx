@@ -1,39 +1,58 @@
 import React, { useEffect } from "react";
 import Hero from "./Hero/Hero";
-import { CircularProgress, Alert } from "@mui/material";
-import { Box } from "@mui/system";
+import { Alert, Grid, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { getMealList } from "../../redux/actions/mealAction";
-import Menu from "./Menu/Menu";
+import { getMealList, getTopMealList } from "../../redux/actions/mealAction";
+import Item from "../../components/Meals/Item/Item";
+import { Loader } from "../../components";
+/* import Menu from "./Menu/Menu"; */
 
 const Home = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
+
+  const {
+    loading: mealTopLoading,
+    meals: topMeal,
+    error: mealTopError,
+  } = useSelector((state) => state.mealTop);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMealList());
+    dispatch(getTopMealList());
   }, [dispatch]);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (mealTopLoading || loading) return <Loader />;
 
-  if (error) return <Alert severity="error">{error}</Alert>;
+  if (mealTopError || error)
+    return <Alert severity="error">{mealTopError || error}</Alert>;
 
   return (
     <div>
       <Hero />
-      <Menu meals={meals} />
+      {/*  <Menu meals={meals} /> */}
+      <Typography variant="h4" sx={{ marginBottom: 2 }}>
+        Top Rated
+      </Typography>
+
+      <Grid container spacing={2}>
+        {topMeal.map((item) => (
+          <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+            <Item item={item} />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Typography variant="h4" sx={{ marginY: 2 }}>
+        All Meals
+      </Typography>
+      <Grid container spacing={2}>
+        {meals.map((item) => (
+          <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+            <Item item={item} />
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

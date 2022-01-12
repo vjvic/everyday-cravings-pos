@@ -44,6 +44,15 @@ const getMealByCategory = asyncHandler(async (req, res) => {
   res.json(meals);
 });
 
+//@desc Fetch all top meals
+//@route GET /api/meals/top
+//@access Public
+const getTopMeal = asyncHandler(async (req, res) => {
+  const meals = await Meal.find({}).sort({ rating: -1 }).limit(4);
+
+  res.json(meals);
+});
+
 //@desc Delete meal by id
 //@route DELETE /api/meals/:id
 //@access Private/Admin
@@ -172,4 +181,5 @@ export {
   updateMeal,
   createMealReviews,
   getMealByCategory,
+  getTopMeal,
 };

@@ -33,7 +33,7 @@ const Category = () => {
         <Grid container spacing={2}>
           {meals &&
             meals.map((item) => (
-              <Grid item xs={12} sm={12} md={6} lg={3} key={item.idMeal}>
+              <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
                 <Item item={item} />
               </Grid>
             ))}

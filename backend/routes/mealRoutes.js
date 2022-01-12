@@ -8,9 +8,11 @@ import {
   updateMeal,
   createMealReviews,
   getMealByCategory,
+  getTopMeal,
 } from "../controllers/mealController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
+router.get("/top", getTopMeal);
 router.route("/").get(getMeal).post(protect, isAdmin, createMeal);
 router.route("/:id/reviews").post(protect, createMealReviews);
 router
@@ -18,7 +20,6 @@ router
   .get(getMealById)
   .delete(protect, isAdmin, deleteMeal)
   .put(protect, isAdmin, updateMeal);
-
-router.route("/category/:category").get(getMealByCategory);
+router.get("/category/:category", getMealByCategory);
 
 export default router;

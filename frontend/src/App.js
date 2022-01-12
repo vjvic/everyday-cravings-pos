@@ -55,7 +55,7 @@ function App() {
             <PrivateRoute exact path="/meal/:id" component={MealDetails} />
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />
             <PrivateRoute exact path="/admin/menu" component={Menu} />
             <PrivateRoute exact path="/admin/user-list" component={UserList} />

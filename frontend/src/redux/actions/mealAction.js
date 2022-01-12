@@ -20,6 +20,9 @@ import {
   MEAL_CATEGORY_REQUEST,
   MEAL_CATEGORY_SUCCESS,
   MEAL_CATEGORY_FAIL,
+  MEAL_TOP_SUCCESS,
+  MEAL_TOP_REQUEST,
+  MEAL_TOP_FAIL,
 } from "../constants/mealConstants";
 import { logout } from "./userActions";
 import { mealApi } from "../../components";
@@ -237,3 +240,21 @@ export const creatMealReview =
       });
     }
   };
+
+//Fetch top meal
+export const getTopMealList = () => async (dispacth) => {
+  try {
+    dispacth({ type: MEAL_TOP_REQUEST });
+    const { data } = await mealApi.get(`/api/meals/top`);
+
+    dispacth({ type: MEAL_TOP_SUCCESS, payload: data });
+  } catch (err) {
+    dispacth({
+      type: MEAL_TOP_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
