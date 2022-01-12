@@ -18,6 +18,7 @@ import {
   SalesReport,
   UserList,
   Home,
+  Category,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -46,6 +47,11 @@ function App() {
         <Switch>
           <Layout>
             <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute
+              exact
+              path="/category/:category"
+              component={Category}
+            />
             <PrivateRoute exact path="/meal/:id" component={MealDetails} />
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/profile" component={Profile} />

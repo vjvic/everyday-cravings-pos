@@ -17,6 +17,9 @@ import {
   MEAL_CREATE_REVIEW_REQUEST,
   MEAL_CREATE_REVIEW_SUCCESS,
   MEAL_CREATE_REVIEW_FAIL,
+  MEAL_CATEGORY_REQUEST,
+  MEAL_CATEGORY_SUCCESS,
+  MEAL_CATEGORY_FAIL,
 } from "../constants/mealConstants";
 import { logout } from "./userActions";
 import { mealApi } from "../../components";
@@ -40,6 +43,24 @@ export const getMealList =
       });
     }
   };
+
+//Fetch meal by categroy
+export const getMealByCategory = (category) => async (dispacth) => {
+  try {
+    dispacth({ type: MEAL_CATEGORY_REQUEST });
+    const { data } = await mealApi.get(`/api/meals/category/${category}`);
+
+    dispacth({ type: MEAL_CATEGORY_SUCCESS, payload: data });
+  } catch (err) {
+    dispacth({
+      type: MEAL_CATEGORY_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
 
 //Fetch meal details
 export const getMealDetails = (id) => async (dispatch) => {

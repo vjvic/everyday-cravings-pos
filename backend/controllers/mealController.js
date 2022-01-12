@@ -33,6 +33,17 @@ const getMealById = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Fetch meal by category
+//@route GET /api/meals/category/:category
+//@access Public
+const getMealByCategory = asyncHandler(async (req, res) => {
+  const category = req.params.category;
+
+  const meals = await Meal.find({ category });
+
+  res.json(meals);
+});
+
 //@desc Delete meal by id
 //@route DELETE /api/meals/:id
 //@access Private/Admin
@@ -160,4 +171,5 @@ export {
   createMeal,
   updateMeal,
   createMealReviews,
+  getMealByCategory,
 };

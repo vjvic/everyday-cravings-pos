@@ -6,6 +6,7 @@ import {
   mealCreateReducer,
   mealUpdateReducer,
   mealCreateReviewsReducer,
+  mealCategoryReducer,
 } from "./mealReducers";
 import {
   userLoginReducer,
@@ -25,6 +26,7 @@ import { cartReducer } from "./cartReducers";
 
 const reducers = combineReducers({
   mealList: mealListReducer,
+  mealCategory: mealCategoryReducer,
   mealDetails: mealDetailsReducer,
   mealDelete: mealDeleteReducer,
   mealCreate: mealCreateReducer,

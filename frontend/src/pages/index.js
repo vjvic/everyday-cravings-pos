@@ -11,6 +11,7 @@ import SalesReport from "./SalesReport/SalesReport";
 import Register from "./Register/Register";
 import UserList from "./UserList/UserList";
 import Home from "./Home/Home";
+import Category from "./Category/Category";
 
 export {
   Dashboard,
@@ -26,4 +27,5 @@ export {
   Register,
   UserList,
   Home,
+  Category,
 };

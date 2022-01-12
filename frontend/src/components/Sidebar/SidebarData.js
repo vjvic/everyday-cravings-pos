@@ -4,9 +4,15 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { FaCashRegister } from "react-icons/fa";
 import HomeIcon from "@mui/icons-material/Home";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import HistoryIcon from "@mui/icons-material/History";
+/* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import HistoryIcon from "@mui/icons-material/History"; */
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import {
+  MdBreakfastDining,
+  MdLunchDining,
+  MdDinnerDining,
+} from "react-icons/md";
+import { GiCupcake } from "react-icons/gi";
 
 export const navItems = [
   {
@@ -14,16 +20,25 @@ export const navItems = [
     path: "/",
     icon: <HomeIcon />,
   },
-
   {
-    text: " Cart",
-    path: "/cart",
-    icon: <ShoppingCartIcon />,
+    text: "Breakfast",
+    path: "/category/breakfast",
+    icon: <MdBreakfastDining />,
   },
   {
-    text: "Order History",
-    path: "/order-history",
-    icon: <HistoryIcon />,
+    text: "Lunch",
+    path: "/category/lunch",
+    icon: <MdLunchDining />,
+  },
+  {
+    text: "Dinner",
+    path: "/category/dinner",
+    icon: <MdDinnerDining />,
+  },
+  {
+    text: "Dessert",
+    path: "/category/dessert",
+    icon: <GiCupcake />,
   },
 ];
 
@@ -59,3 +74,7 @@ export const navItemsAdmin = [
     icon: <AssessmentIcon />,
   },
 ];
+
+/* export const category = [
+
+]; */

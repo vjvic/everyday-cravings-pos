@@ -7,6 +7,7 @@ import {
   createMeal,
   updateMeal,
   createMealReviews,
+  getMealByCategory,
 } from "../controllers/mealController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
@@ -17,5 +18,7 @@ router
   .get(getMealById)
   .delete(protect, isAdmin, deleteMeal)
   .put(protect, isAdmin, updateMeal);
+
+router.route("/category/:category").get(getMealByCategory);
 
 export default router;
