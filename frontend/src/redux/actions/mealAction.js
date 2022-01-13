@@ -30,14 +30,14 @@ import { mealApi } from "../../components";
 //Fetch meal list
 export const getMealList =
   (keyword = "") =>
-  async (dispacth) => {
+  async (dispatch) => {
     try {
-      dispacth({ type: MEAL_REQUEST });
+      dispatch({ type: MEAL_REQUEST });
       const { data } = await mealApi.get(`/api/meals?keyword=${keyword}`);
 
-      dispacth({ type: MEAL_SUCCESS, payload: data });
+      dispatch({ type: MEAL_SUCCESS, payload: data });
     } catch (err) {
-      dispacth({
+      dispatch({
         type: MEAL_FAIL,
         payload:
           err.response && err.response.data.message
@@ -48,14 +48,14 @@ export const getMealList =
   };
 
 //Fetch meal by categroy
-export const getMealByCategory = (category) => async (dispacth) => {
+export const getMealByCategory = (category) => async (dispatch) => {
   try {
-    dispacth({ type: MEAL_CATEGORY_REQUEST });
+    dispatch({ type: MEAL_CATEGORY_REQUEST });
     const { data } = await mealApi.get(`/api/meals/category/${category}`);
 
-    dispacth({ type: MEAL_CATEGORY_SUCCESS, payload: data });
+    dispatch({ type: MEAL_CATEGORY_SUCCESS, payload: data });
   } catch (err) {
-    dispacth({
+    dispatch({
       type: MEAL_CATEGORY_FAIL,
       payload:
         err.response && err.response.data.message
@@ -242,14 +242,14 @@ export const creatMealReview =
   };
 
 //Fetch top meal
-export const getTopMealList = () => async (dispacth) => {
+export const getTopMealList = () => async (dispatch) => {
   try {
-    dispacth({ type: MEAL_TOP_REQUEST });
+    dispatch({ type: MEAL_TOP_REQUEST });
     const { data } = await mealApi.get(`/api/meals/top`);
 
-    dispacth({ type: MEAL_TOP_SUCCESS, payload: data });
+    dispatch({ type: MEAL_TOP_SUCCESS, payload: data });
   } catch (err) {
-    dispacth({
+    dispatch({
       type: MEAL_TOP_FAIL,
       payload:
         err.response && err.response.data.message

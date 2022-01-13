@@ -13,6 +13,7 @@ import {
   MdDinnerDining,
 } from "react-icons/md";
 import { GiCupcake } from "react-icons/gi";
+import { BiDrink } from "react-icons/bi";
 
 export const navItems = [
   {
@@ -39,6 +40,11 @@ export const navItems = [
     text: "Dessert",
     path: "/category/dessert",
     icon: <GiCupcake />,
+  },
+  {
+    text: "Drinks",
+    path: "/category/drinks",
+    icon: <BiDrink />,
   },
 ];
 

@@ -10,8 +10,7 @@ import {
   Box,
 } from "@mui/material";
 import { navItems, navItemsAdmin } from "./SidebarData";
-import { useHistory } from "react-router";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
@@ -25,6 +24,10 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
 
   const { order } = useSelector((state) => state.orderDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
+
+  const activeColor = (path) => {
+    return location.pathname === path ? "#F5F5F5" : null;
+  };
 
   if (
     location.pathname === "/login" ||
@@ -71,6 +74,9 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
             button
             key={item.text}
             onClick={() => history.push(item.path)}
+            sx={{
+              backgroundColor: activeColor(item.path),
+            }}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
@@ -86,6 +92,10 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
               button
               key={item.text}
               onClick={() => history.push(item.path)}
+              /* className={location.pathname === item.path ? classes.active : null} */
+              sx={{
+                backgroundColor: activeColor(item.path),
+              }}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />

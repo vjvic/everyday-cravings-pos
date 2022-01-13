@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Hero from "./Hero/Hero";
-import { Alert, Grid, Typography } from "@mui/material";
+import { Alert } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getMealList, getTopMealList } from "../../redux/actions/mealAction";
-import Item from "../../components/Meals/Item/Item";
 import { Loader } from "../../components";
 /* import Menu from "./Menu/Menu"; */
+import { MealGrid } from "../../components";
 
 const Home = () => {
   const { loading, meals, error } = useSelector((state) => state.mealList);
@@ -30,29 +30,12 @@ const Home = () => {
   return (
     <div>
       <Hero />
-      {/*  <Menu meals={meals} /> */}
-      <Typography variant="h4" sx={{ marginBottom: 2 }}>
-        Top Rated
-      </Typography>
 
-      <Grid container spacing={2}>
-        {topMeal.map((item) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
-            <Item item={item} />
-          </Grid>
-        ))}
-      </Grid>
+      {/* Top rated */}
+      <MealGrid meals={topMeal} text={"Top Rated"} />
 
-      <Typography variant="h4" sx={{ marginY: 2 }}>
-        All Meals
-      </Typography>
-      <Grid container spacing={2}>
-        {meals.map((item) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
-            <Item item={item} />
-          </Grid>
-        ))}
-      </Grid>
+      {/*  All meals */}
+      <MealGrid meals={meals} text={"All Meals"} />
     </div>
   );
 };

@@ -5,6 +5,9 @@ import Meal from "../models/mealModel.js";
 //@route GET /api/meals
 //@access Public
 const getMeal = asyncHandler(async (req, res) => {
+  /*  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1; */
+
   const keyword = req.query.keyword
     ? {
         name: {
@@ -14,8 +17,12 @@ const getMeal = asyncHandler(async (req, res) => {
       }
     : {};
 
+  /*   const count = await Meal.countDocuments({ ...keyword }); */
   const meals = await Meal.find({ ...keyword });
+  /*   .limit(pageSize)
+    .skip(pageSize * (page - 1)); */
 
+  /*  res.json({ meals, page, pages: Math.ceil(count / pageSize) }); */
   res.json(meals);
 });
 
