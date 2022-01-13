@@ -63,7 +63,7 @@ const MealsPage = () => {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
-  const [filterName, setFilterName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const dispatch = useDispatch();
@@ -203,15 +203,22 @@ const MealsPage = () => {
   };
 
   const filterItem = (order) => {
-    if (filterName && selectedCategory) {
+    if (searchTerm !== "" && selectedCategory) {
       return (
-        order.name.toLowerCase() === filterName.toLowerCase() &&
-        filterByCategory(order)
+        Object.values(order)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) && filterByCategory(order)
       );
     }
 
-    if (filterName) {
-      return order.name.toLowerCase() === filterName.toLowerCase();
+    if (searchTerm !== "") {
+      return (
+        Object.values(order)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) && filterByCategory(order)
+      );
     } else if (selectedCategory) {
       return filterByCategory(order);
     } else {
@@ -517,11 +524,11 @@ const MealsPage = () => {
 
         <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
           <TextField
-            label="Search by meal name"
+            label="Search..."
             variant="standard"
             color="secondary"
-            value={filterName}
-            onChange={(e) => setFilterName(e.target.value)}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <FormControl

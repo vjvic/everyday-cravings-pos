@@ -29,7 +29,7 @@ const SalesReport = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   /* const [date, setDate] = useState(""); */
   const [selectedYear, setSelectedYear] = useState("");
-  const [filterName, setFilterName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { orders, loading } = useSelector((state) => state.orderList);
 
@@ -68,14 +68,20 @@ const SalesReport = () => {
   }; */
 
   const filterItem = (order) => {
-    if (selectedYear && filterName) {
+    if (selectedYear && searchTerm !== "") {
       return (
         format(new Date(order.date), "yyyy") === selectedYear &&
         /* filterDate(order.date) && */
-        order.customerName === filterName
+        Object.values(order)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
       );
-    } else if (filterName) {
-      return order.customerName === filterName;
+    } else if (searchTerm !== "") {
+      return Object.values(order)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
     } else if (selectedYear) {
       return format(new Date(order.date), "yyyy") === selectedYear;
     } else {
@@ -98,11 +104,11 @@ const SalesReport = () => {
 
         <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
           <TextField
-            label="Search by name"
+            label="Search..."
             variant="standard"
             color="secondary"
-            value={filterName}
-            onChange={(e) => setFilterName(e.target.value)}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <FormControl

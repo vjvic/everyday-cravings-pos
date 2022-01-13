@@ -49,6 +49,8 @@ const UserListPage = () => {
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userList);
   const { user, loading: userLoading } = useSelector(
@@ -93,6 +95,19 @@ const UserListPage = () => {
     dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
 
     setIsModal(false);
+  };
+
+  //Filter user
+
+  const filterUser = (user) => {
+    if (searchTerm !== "") {
+      return Object.values(user)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    } else {
+      return user;
+    }
   };
 
   // render/re render user list
@@ -199,6 +214,16 @@ const UserListPage = () => {
           User List
         </Typography>
 
+        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <TextField
+            label="Search..."
+            variant="standard"
+            color="secondary"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Box>
+
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
             <Table size="medium">
@@ -214,6 +239,7 @@ const UserListPage = () => {
 
               <TableBody>
                 {users
+                  .filter((user) => filterUser(user))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
