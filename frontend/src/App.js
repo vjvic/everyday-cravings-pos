@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
   Login,
+  Register,
   MealDetails,
   Meals,
   Profile,
@@ -15,6 +16,9 @@ import {
   Menu,
   Receipt,
   SalesReport,
+  UserList,
+  Home,
+  Category,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -42,12 +46,19 @@ function App() {
       <Router>
         <Switch>
           <Layout>
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute
+              exact
+              path="/category/:category"
+              component={Category}
+            />
             <PrivateRoute exact path="/meal/:id" component={MealDetails} />
             <PrivateRoute exact path="/results/:keyword" component={Results} />
             <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />
             <PrivateRoute exact path="/admin/menu" component={Menu} />
+            <PrivateRoute exact path="/admin/user-list" component={UserList} />
             <PrivateRoute
               exact
               path="/admin/cashier/:id?"
@@ -60,6 +71,7 @@ function App() {
               component={SalesReport}
             />
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
           </Layout>
         </Switch>
       </Router>

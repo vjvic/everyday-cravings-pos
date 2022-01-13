@@ -8,6 +8,10 @@ import Cashier from "./Cashier/Cashier";
 import Menu from "./Menu/Menu";
 import Receipt from "./Receipt/Receipt";
 import SalesReport from "./SalesReport/SalesReport";
+import Register from "./Register/Register";
+import UserList from "./UserList/UserList";
+import Home from "./Home/Home";
+import Category from "./Category/Category";
 
 export {
   Dashboard,
@@ -20,4 +24,8 @@ export {
   Menu,
   Receipt,
   SalesReport,
+  Register,
+  UserList,
+  Home,
+  Category,
 };

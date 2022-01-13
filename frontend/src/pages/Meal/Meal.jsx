@@ -337,6 +337,7 @@ const MealsPage = () => {
                     <MenuItem value="dinner">Dinner</MenuItem>
                     <MenuItem value="lunch">Lunch</MenuItem>
                     <MenuItem value="dessert">Dessert</MenuItem>
+                    <MenuItem value="drinks">Drinks</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -456,6 +457,7 @@ const MealsPage = () => {
                   <MenuItem value="dinner">Dinner</MenuItem>
                   <MenuItem value="lunch">Lunch</MenuItem>
                   <MenuItem value="dessert">Dessert</MenuItem>
+                  <MenuItem value="drinks">Drinks</MenuItem>
                 </Select>
               </FormControl>
 

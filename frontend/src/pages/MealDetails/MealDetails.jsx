@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMealDetails } from "../../redux/actions/mealAction";
+import {
+  getMealDetails,
+  creatMealReview,
+} from "../../redux/actions/mealAction";
 import { useParams } from "react-router";
 import { Box } from "@mui/system";
 import {
@@ -11,17 +14,32 @@ import {
   Card,
   CardContent,
   Grid,
-  FormControl,
+  /*  FormControl,
   Select,
   MenuItem,
-  InputLabel,
+  InputLabel, */
+  TextField,
+  Rating,
+  IconButton,
+  Stack,
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
+import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
+import { Link } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const MealDetailsPage = () => {
+  const [reviewRating, setReviewRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const { error: errorReviews, success: successReviews } = useSelector(
+    (state) => state.mealCreateReviews
+  );
 
   const { name, image, countInStock, price } = meal;
 
@@ -30,15 +48,27 @@ const MealDetailsPage = () => {
   const { id } = useParams();
   const history = useHistory();
 
+  const handleReview = (e) => {
+    e.preventDefault();
+    console.log(reviewRating, comment);
+    dispatch(
+      creatMealReview(id, {
+        comment,
+        rating: reviewRating,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(getMealDetails(id));
-  }, [dispatch, id]);
+    dispatch({ type: MEAL_CREATE_REVIEW_RESET });
+  }, [dispatch, id, successReviews]);
 
   if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
 
-  const inStock = (
+  /*   const inStock = (
     <>
       <Divider sx={{ marginY: 1 }} />
       <FormControl fullWidth color="secondary">
@@ -56,7 +86,7 @@ const MealDetailsPage = () => {
         </Select>
       </FormControl>
     </>
-  );
+  ); */
 
   return (
     <div>
@@ -126,7 +156,31 @@ const MealDetailsPage = () => {
                 )}
               </Typography>
 
-              {countInStock > 0 && inStock}
+              {/* {countInStock > 0 && inStock} */}
+
+              {countInStock > 0 && (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography>Quantity:</Typography>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <IconButton
+                      onClick={() => setQty(qty - 1)}
+                      disabled={qty === 1}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+
+                    <div>{qty}</div>
+
+                    <IconButton
+                      variant="contained"
+                      onClick={() => setQty(qty + 1)}
+                      disabled={qty === countInStock}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+              )}
 
               <Box mt={2}>
                 <Button
@@ -136,12 +190,95 @@ const MealDetailsPage = () => {
                   onClick={() =>
                     history.push(`/admin/cashier/${id}?qty=${qty}`)
                   }
+                  disabled={countInStock === 0}
                 >
                   Add to Cart
                 </Button>
               </Box>
             </CardContent>
           </Card>
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{ marginTop: 2 }}>
+        <Grid item xs={12} sm={12} lg={4}>
+          <Box mb={2}>
+            <Typography variant="h4" sx={{ paddingBottom: 2 }}>
+              Reviews
+            </Typography>
+            {meal.reviews.length === 0 && (
+              <Alert severity="info">No Reviews</Alert>
+            )}
+            <Box as="ul" sx={{ listStyle: "none", padding: 0 }}>
+              {meal.reviews.map((review) => (
+                <Box as="li" my={2} key={review._id}>
+                  <Box display="flex" alignItems="center">
+                    <strong>{review.name}</strong>
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={review.rating}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </Box>
+                  <Typography variant="body2">
+                    {review.createdAt.substring(0, 10)}
+                  </Typography>
+                  <Typography
+                    component="p"
+                    variant="body"
+                    sx={{ paddingTop: 1 }}
+                  >
+                    {review.comment}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+
+          <Box>
+            <Typography variant="h4" sx={{ paddingBottom: 1 }}>
+              Write a Review
+            </Typography>
+
+            {errorReviews && <Alert severity="error">{errorReviews}</Alert>}
+
+            {userInfo ? (
+              <form onSubmit={handleReview}>
+                <Rating
+                  value={reviewRating || 0}
+                  precision={0.5}
+                  onChange={(event, newValue) => {
+                    setReviewRating(newValue);
+                  }}
+                />
+                <div>
+                  <TextField
+                    label="Write a review"
+                    variant="outlined"
+                    color="secondary"
+                    multiline
+                    rows={3}
+                    value={comment || ""}
+                    onChange={(e) => setComment(e.target.value)}
+                    fullWidth
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ marginTop: 2 }}
+                >
+                  Submit
+                </Button>
+              </form>
+            ) : (
+              <Alert severity="info">
+                Please <Link to="/login">signin </Link> to write a review
+              </Alert>
+            )}
+          </Box>
         </Grid>
       </Grid>
     </div>

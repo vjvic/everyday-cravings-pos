@@ -16,15 +16,38 @@ import {
   MEAL_UPDATE_SUCCESS,
   MEAL_UPDATE_FAIL,
   MEAL_UPDATE_RESET,
+  MEAL_CREATE_REVIEW_REQUEST,
+  MEAL_CREATE_REVIEW_SUCCESS,
+  MEAL_CREATE_REVIEW_FAIL,
+  MEAL_CREATE_REVIEW_RESET,
+  MEAL_CATEGORY_REQUEST,
+  MEAL_CATEGORY_SUCCESS,
+  MEAL_CATEGORY_FAIL,
+  MEAL_TOP_REQUEST,
+  MEAL_TOP_SUCCESS,
+  MEAL_TOP_FAIL,
 } from "../constants/mealConstants";
 
-export const mealListReducer = (state = { mealList: [] }, action) => {
+export const mealListReducer = (state = { meals: [] }, action) => {
   switch (action.type) {
     case MEAL_REQUEST:
       return { loading: true, meals: [] };
     case MEAL_SUCCESS:
       return { loading: false, meals: action.payload };
     case MEAL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const mealCategoryReducer = (state = { meals: [] }, action) => {
+  switch (action.type) {
+    case MEAL_CATEGORY_REQUEST:
+      return { loading: true, meals: [] };
+    case MEAL_CATEGORY_SUCCESS:
+      return { loading: false, meals: action.payload };
+    case MEAL_CATEGORY_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -85,6 +108,34 @@ export const mealUpdateReducer = (state = { meal: {} }, action) => {
       return { loading: false, error: action.payload };
     case MEAL_UPDATE_RESET:
       return { product: {} };
+    default:
+      return state;
+  }
+};
+
+export const mealCreateReviewsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MEAL_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case MEAL_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case MEAL_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case MEAL_CREATE_REVIEW_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const mealTopListReducer = (state = { meals: [] }, action) => {
+  switch (action.type) {
+    case MEAL_TOP_REQUEST:
+      return { loading: true, meals: [] };
+    case MEAL_TOP_SUCCESS:
+      return { loading: false, meals: action.payload };
+    case MEAL_TOP_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

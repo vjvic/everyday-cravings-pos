@@ -8,6 +8,7 @@ import {
   Menu,
   MenuItem,
   CircularProgress,
+  Badge,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
@@ -19,6 +20,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [keyword, setKeyword] = useState("");
@@ -30,6 +32,10 @@ const Appbar = ({ handleDrawerToggle }) => {
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
   const { order } = useSelector((state) => state.orderDetails);
+  const { cartItems } = useSelector((state) => state.cart);
+
+  //Total cart items
+  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const drawerWidth = 240;
 
@@ -95,7 +101,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search meal"
+              placeholder="Search..."
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
@@ -103,6 +109,18 @@ const Appbar = ({ handleDrawerToggle }) => {
         </form>
 
         <Box sx={{ flexGrow: 1 }} />
+
+        <Box>
+          <IconButton
+            size="large"
+            color="inherit"
+            onClick={() => history.push("/cart")}
+          >
+            <Badge badgeContent={total} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Box>
 
         {userInfo && (
           <PopupState variant="popover">
