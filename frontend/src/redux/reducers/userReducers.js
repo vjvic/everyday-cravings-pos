@@ -26,7 +26,14 @@ import {
   USER_PROFILE_UPDATE_FAIL,
 } from "../constants/userConstants";
 
-export const userLoginReducer = (state = {}, action) => {
+const userInfoFromLocalStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
+
+export const userLoginReducer = (
+  state = { userInfo: userInfoFromLocalStorage },
+  action
+) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };

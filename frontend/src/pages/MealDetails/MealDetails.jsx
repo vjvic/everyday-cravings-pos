@@ -14,17 +14,21 @@ import {
   Card,
   CardContent,
   Grid,
-  FormControl,
+  /*  FormControl,
   Select,
   MenuItem,
-  InputLabel,
+  InputLabel, */
   TextField,
   Rating,
+  IconButton,
+  Stack,
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
 import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
 import { Link } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const MealDetailsPage = () => {
   const [reviewRating, setReviewRating] = useState(0);
@@ -64,7 +68,7 @@ const MealDetailsPage = () => {
 
   if (error) return <Alert severity="error">{error}</Alert>;
 
-  const inStock = (
+  /*   const inStock = (
     <>
       <Divider sx={{ marginY: 1 }} />
       <FormControl fullWidth color="secondary">
@@ -82,7 +86,7 @@ const MealDetailsPage = () => {
         </Select>
       </FormControl>
     </>
-  );
+  ); */
 
   return (
     <div>
@@ -152,7 +156,31 @@ const MealDetailsPage = () => {
                 )}
               </Typography>
 
-              {countInStock > 0 && inStock}
+              {/* {countInStock > 0 && inStock} */}
+
+              {countInStock > 0 && (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Typography>Quantity:</Typography>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <IconButton
+                      onClick={() => setQty(qty - 1)}
+                      disabled={qty === 1}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+
+                    <div>{qty}</div>
+
+                    <IconButton
+                      variant="contained"
+                      onClick={() => setQty(qty + 1)}
+                      disabled={qty === countInStock}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+              )}
 
               <Box mt={2}>
                 <Button
@@ -162,6 +190,7 @@ const MealDetailsPage = () => {
                   onClick={() =>
                     history.push(`/admin/cashier/${id}?qty=${qty}`)
                   }
+                  disabled={countInStock === 0}
                 >
                   Add to Cart
                 </Button>
