@@ -10,15 +10,7 @@ import {
   IconButton,
   Typography,
   TableHead,
-  CircularProgress,
-  Modal,
-  Fade,
-  Backdrop,
   TextField,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Alert,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,40 +19,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
-import { updateUser, getUserDetails } from "../../redux/actions/userActions";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 1,
-};
+import { useHistory } from "react-router-dom";
+import { Loader } from "../../components";
 
 const UserListPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [isModal, setIsModal] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const history = useHistory();
 
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userList);
-  const { user, loading: userLoading } = useSelector(
-    (state) => state.userDetails
-  );
   const { success: deleteSuccess } = useSelector((state) => state.userDelete);
-
-  const {
-    loading: updateLoading,
-    error: updateError,
-    success: updateSuccess,
-  } = useSelector((state) => state.userUpdate);
 
   //Change page
   const handleChangePage = (event, newPage) => {
@@ -79,125 +50,44 @@ const UserListPage = () => {
     }
   };
 
-  //Edit user
-  const handleEdit = (id) => {
-    setIsModal(true);
-    dispatch(getUserDetails(id));
-  };
+  //Filter user
 
-  //Edit submit
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
-
-    setIsModal(false);
+  const filterUser = (user) => {
+    if (searchTerm !== "") {
+      return Object.values(user)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    } else {
+      return user;
+    }
   };
 
   // render/re render user list
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch, deleteSuccess, updateSuccess, user]);
+  }, [dispatch, deleteSuccess]);
 
-  useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
-    }
-  }, [dispatch, user]);
+  console.log(loading);
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress color="secondary" />
-      </Box>
-    );
+  if (loading) return <Loader />;
 
   return (
     <>
-      <Modal
-        open={isModal}
-        onClose={() => setIsModal(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={isModal}>
-          <Box sx={style}>
-            <Typography variant="h4" component="h2">
-              Edit User
-            </Typography>
-
-            {updateError && <Alert severity="error">{updateError}</Alert>}
-
-            {userLoading ? (
-              "loading..."
-            ) : (
-              <Box
-                component="form"
-                mt={3}
-                sx={{
-                  "& > :not(style)": { my: 1, width: "100%" },
-                }}
-                onSubmit={handleSubmit}
-              >
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  color="secondary"
-                  value={name || ""}
-                  onChange={(e) => setName(e.target.value)}
-                />
-
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  color="secondary"
-                  value={email || ""}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      checked={isAdmin || false}
-                      onChange={(e) => setIsAdmin(e.target.checked)}
-                    />
-                  }
-                  label="Is Admin"
-                />
-
-                <Button
-                  variant="contained"
-                  type="submit"
-                  size="large"
-                  sx={{ height: "45px" }}
-                  disabled={updateLoading}
-                >
-                  UPDATE
-                </Button>
-              </Box>
-            )}
-          </Box>
-        </Fade>
-      </Modal>
-
       <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
+        <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
           User List
         </Typography>
+
+        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <TextField
+            label="Search..."
+            variant="standard"
+            color="secondary"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Box>
 
         <Paper sx={{ width: "100%", mb: 2 }}>
           <TableContainer>
@@ -214,6 +104,7 @@ const UserListPage = () => {
 
               <TableBody>
                 {users
+                  .filter((user) => filterUser(user))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -230,7 +121,11 @@ const UserListPage = () => {
                           {row.isAdmin ? <CheckIcon /> : <CloseIcon />}
                         </TableCell>
                         <TableCell>
-                          <IconButton onClick={() => handleEdit(row._id)}>
+                          <IconButton
+                            onClick={() =>
+                              history.push(`user-list/${row._id}/edit`)
+                            }
+                          >
                             <EditIcon />
                           </IconButton>
                           <IconButton onClick={() => handleDelete(row._id)}>

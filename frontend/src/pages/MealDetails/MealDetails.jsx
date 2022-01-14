@@ -187,9 +187,7 @@ const MealDetailsPage = () => {
                   variant="contained"
                   fullWidth
                   size="large"
-                  onClick={() =>
-                    history.push(`/admin/cashier/${id}?qty=${qty}`)
-                  }
+                  onClick={() => history.push(`/cart/${id}?qty=${qty}`)}
                   disabled={countInStock === 0}
                 >
                   Add to Cart

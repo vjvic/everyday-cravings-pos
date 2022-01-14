@@ -12,6 +12,9 @@ import Register from "./Register/Register";
 import UserList from "./UserList/UserList";
 import Home from "./Home/Home";
 import Category from "./Category/Category";
+import MealEdit from "./Meal/Edit/Edit";
+import UserEdit from "./UserList/Edit/Edit";
+import Cart from "./Cart/Cart";
 
 export {
   Dashboard,
@@ -28,4 +31,7 @@ export {
   UserList,
   Home,
   Category,
+  MealEdit,
+  UserEdit,
+  Cart,
 };

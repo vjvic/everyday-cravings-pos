@@ -19,6 +19,9 @@ import {
   UserList,
   Home,
   Category,
+  MealEdit,
+  UserEdit,
+  Cart,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -47,29 +50,27 @@ function App() {
         <Switch>
           <Layout>
             <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute path="/category/:category" component={Category} />
+            <PrivateRoute path="/meal/:id" component={MealDetails} />
+            <PrivateRoute path="/results/:keyword" component={Results} />
+            <PrivateRoute path="/cart/:id?" component={Cart} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/admin/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/admin/meals" component={Meals} />
             <PrivateRoute
               exact
-              path="/category/:category"
-              component={Category}
+              path="/admin/meals/:id?/edit"
+              component={MealEdit}
             />
-            <PrivateRoute exact path="/meal/:id" component={MealDetails} />
-            <PrivateRoute exact path="/results/:keyword" component={Results} />
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/admin/meals" component={Meals} />
-            <PrivateRoute exact path="/admin/menu" component={Menu} />
+            <PrivateRoute path="/admin/menu" component={Menu} />
             <PrivateRoute exact path="/admin/user-list" component={UserList} />
             <PrivateRoute
-              exact
-              path="/admin/cashier/:id?"
-              component={Cashier}
+              path="/admin/user-list/:id/edit"
+              component={UserEdit}
             />
-            <PrivateRoute exact path="/admin/receipt/:id" component={Receipt} />
-            <PrivateRoute
-              exact
-              path="/admin/sales-report"
-              component={SalesReport}
-            />
+            <PrivateRoute path="/admin/cashier/:id?" component={Cashier} />
+            <PrivateRoute path="/admin/receipt/:id" component={Receipt} />
+            <PrivateRoute path="/admin/sales-report" component={SalesReport} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>
