@@ -21,7 +21,7 @@ import { useParams, useLocation /* useHistory  */ } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
-import Item from "./Item";
+import Item from "./Item/Item";
 /* import { createOrder } from "../../redux/actions/orderAction"; */
 import { useHistory } from "react-router-dom";
 
@@ -214,7 +214,7 @@ const Cart = () => {
         </Box>
 
         <Grid container spacing={3}>
-          <Grid item sm={12} md={7} lg={7}>
+          <Grid item sm={12} md={7} lg={6}>
             {cartItems <= 0 ? noCart : cartItemsList}
           </Grid>
 
