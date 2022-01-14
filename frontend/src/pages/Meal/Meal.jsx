@@ -119,10 +119,12 @@ const MealsPage = () => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          sx={{ marginY: 3 }}
         >
-          <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
+          <Typography variant="h4" component="h1">
             Meal List
           </Typography>
+
           <Button
             variant="contained"
             startIcon={<AddIcon />}

@@ -98,7 +98,7 @@ const SalesReport = () => {
   return (
     <div>
       <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" component="h1">
+        <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
           Sales Report
         </Typography>
 

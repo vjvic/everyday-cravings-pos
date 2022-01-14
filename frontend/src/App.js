@@ -21,6 +21,7 @@ import {
   Category,
   MealEdit,
   UserEdit,
+  Cart,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -52,6 +53,7 @@ function App() {
             <PrivateRoute path="/category/:category" component={Category} />
             <PrivateRoute path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
+            <PrivateRoute path="/cart/:id?" component={Cart} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />

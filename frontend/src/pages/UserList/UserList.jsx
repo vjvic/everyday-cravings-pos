@@ -75,7 +75,7 @@ const UserListPage = () => {
   return (
     <>
       <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
+        <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
           User List
         </Typography>
 
