@@ -122,6 +122,16 @@ const MealDetailsPage = () => {
               {name}
             </Typography>
 
+            <Stack direction="row" alignItems="center" pb={1} spacing={1}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={meal.rating}
+                precision={0.5}
+                readOnly
+              />
+              <Typography variant="body2">{meal.numReviews} reviews</Typography>
+            </Stack>
+
             <Divider />
 
             <Typography variant="body">Price: &#8369; {price}</Typography>

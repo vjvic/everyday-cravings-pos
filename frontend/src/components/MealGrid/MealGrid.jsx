@@ -22,6 +22,7 @@ const MealGrid = ({ meals, text }) => {
       <Typography variant="h4" sx={{ marginY: 2 }}>
         {text}
       </Typography>
+
       <Grid container spacing={2}>
         {currentMeal.map((item) => (
           <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>

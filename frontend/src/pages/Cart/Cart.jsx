@@ -111,7 +111,7 @@ const Cart = () => {
     <Alert severity="info">
       No item{" "}
       <Typography variant="body2" color="inherit" component={Link} to="/">
-        Go to home
+        Go to Home
       </Typography>
     </Alert>
   );
