@@ -36,3 +36,8 @@ export const getAllMonthsOfYear = () => {
 
   return year;
 };
+
+//return all cart items total amount
+export const totalAmount = (cartItems) => {
+  return cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
+};

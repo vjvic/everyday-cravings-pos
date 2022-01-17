@@ -97,7 +97,7 @@ const MealDetailsPage = () => {
       </Box>
 
       <Grid container spacing={5}>
-        <Grid item sm={12} lg={6}>
+        <Grid item xs={12} sm={12} lg={6}>
           <div>
             <img
               src={image}
@@ -112,7 +112,7 @@ const MealDetailsPage = () => {
           </div>
         </Grid>
 
-        <Grid item sm={12} lg={3}>
+        <Grid item xs={12} sm={12} lg={3}>
           <Box
             sx={{
               "& > :not(style)": { my: 1, width: "100%" },
@@ -121,6 +121,16 @@ const MealDetailsPage = () => {
             <Typography variant="h3" component="h3">
               {name}
             </Typography>
+
+            <Stack direction="row" alignItems="center" pb={1} spacing={1}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={meal.rating}
+                precision={0.5}
+                readOnly
+              />
+              <Typography variant="body2">{meal.numReviews} reviews</Typography>
+            </Stack>
 
             <Divider />
 

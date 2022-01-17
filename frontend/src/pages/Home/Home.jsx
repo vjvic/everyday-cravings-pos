@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Hero from "./Hero/Hero";
-import { Alert } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getMealList, getTopMealList } from "../../redux/actions/mealAction";
 import { Loader } from "../../components";
@@ -28,15 +28,14 @@ const Home = () => {
     return <Alert severity="error">{mealTopError || error}</Alert>;
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <Hero />
-
       {/* Top rated */}
       <MealGrid meals={topMeal} text={"Top Rated"} />
 
       {/*  All meals */}
       <MealGrid meals={meals} text={"All Meals"} />
-    </div>
+    </Container>
   );
 };
 

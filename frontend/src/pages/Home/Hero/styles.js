@@ -7,6 +7,10 @@ export const HeroSection = styled("section")(({ theme }) => ({
   color: "#333",
   padding: theme.spacing(5, 6),
   marginBottom: theme.spacing(7),
+
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(3),
+  },
   /*  img: {
     display: "none",
   },
