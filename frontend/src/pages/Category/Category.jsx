@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getMealByCategory } from "../../redux/actions/mealAction";
 import { Loader } from "../../components";
-import { Alert, Box, Typography, Grid, capitalize } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Typography,
+  Grid,
+  capitalize,
+  Container,
+} from "@mui/material";
 import Item from "../../components/Meals/Item/Item";
 
 const Category = () => {
@@ -22,7 +29,7 @@ const Category = () => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <Box mb={3}>
         <Typography variant="h5">{capitalize(category)}</Typography>
       </Box>
@@ -39,7 +46,7 @@ const Category = () => {
             ))}
         </Grid>
       )}
-    </div>
+    </Container>
   );
 };
 

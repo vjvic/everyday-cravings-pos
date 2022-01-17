@@ -15,6 +15,7 @@ import Category from "./Category/Category";
 import MealEdit from "./Meal/Edit/Edit";
 import UserEdit from "./UserList/Edit/Edit";
 import Cart from "./Cart/Cart";
+import Checkout from "./Checkout/Checkout";
 
 export {
   Dashboard,
@@ -34,4 +35,5 @@ export {
   MealEdit,
   UserEdit,
   Cart,
+  Checkout,
 };

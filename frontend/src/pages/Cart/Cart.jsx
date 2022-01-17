@@ -4,8 +4,8 @@ import {
   Typography,
   Grid,
   Alert,
-  Card,
-  CardContent,
+  /*  Card,
+  CardContent, */
   Button,
   Divider,
   Modal,
@@ -16,6 +16,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Container,
+  Paper,
 } from "@mui/material";
 import { useParams, useLocation /* useHistory  */ } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +26,7 @@ import { Link } from "react-router-dom";
 import Item from "./Item/Item";
 /* import { createOrder } from "../../redux/actions/orderAction"; */
 import { useHistory } from "react-router-dom";
+import { totalAmount } from "../../utils/utils";
 
 const style = {
   position: "absolute",
@@ -57,10 +60,11 @@ const Cart = () => {
   );
 
   //Total amount
-  const totalAmount = cartItems.reduce(
+  /* const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.qty * item.price,
     0
-  );
+  ); */
+
   // Total Items
   const totalItem = cartItems.length;
 
@@ -68,7 +72,7 @@ const Cart = () => {
   const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   //change
-  const change = Math.abs(totalAmount - Number(paid));
+  /* const change = Math.abs(totalAmount - Number(paid)); */
 
   /*   const handlePayment = (e) => {
     e.preventDefault();
@@ -125,7 +129,7 @@ const Cart = () => {
   );
 
   return (
-    <>
+    <Container>
       <Modal
         open={isSave}
         onClose={() => setIsSave(false)}
@@ -143,12 +147,12 @@ const Cart = () => {
 
             <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
               <strong>Total Amount: </strong>
-              <span>&#8369; {totalAmount.toFixed(2)}</span>
+              {/*     <span>&#8369; {totalAmount.toFixed(2)}</span> */}
             </Typography>
             {Number(paid) >= totalAmount && (
               <Typography variant="body" omponent="p">
                 <strong>Total Change: </strong>
-                <span>&#8369; {change.toFixed(2)}</span>
+                {/*   <span>&#8369; {change.toFixed(2)}</span> */}
               </Typography>
             )}
 
@@ -214,52 +218,44 @@ const Cart = () => {
         </Box>
 
         <Grid container spacing={3}>
-          <Grid item sm={12} md={7} lg={6}>
+          <Grid item sm={12} md={7} lg={7}>
             {cartItems <= 0 ? noCart : cartItemsList}
           </Grid>
 
-          <Grid item xs={12} sm={12} md={5} lg={5}>
-            <Card>
-              <CardContent>
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  sx={{ paddingBottom: 2 }}
-                >
-                  Total ({totalItem}) Items
-                </Typography>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Paper variant="outlined" sx={{ padding: 2 }}>
+              {/*  <CardContent> */}
+              <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
+                Total ({totalItem}) Items
+              </Typography>
 
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  sx={{ paddingBottom: 2 }}
-                >
-                  Subtotal ({subTotal}) Items
-                </Typography>
+              <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
+                Subtotal ({subTotal}) Items
+              </Typography>
 
-                <Typography variant="body1">
-                  &#8369;
-                  {totalAmount.toFixed(2)}
-                </Typography>
+              <Typography variant="body1">
+                &#8369;
+                {totalAmount(cartItems).toFixed(2)}
+              </Typography>
 
-                <Divider />
+              <Divider />
 
-                <Button
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  sx={{ marginTop: 3 }}
-                  disabled={cartItems.length === 0}
-                  /* onClick={() => setIsSave(true)} */
-                >
-                  Checkout
-                </Button>
-              </CardContent>
-            </Card>
+              <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{ marginTop: 3 }}
+                disabled={cartItems.length === 0}
+                onClick={() => history.push("/checkout")}
+              >
+                Checkout
+              </Button>
+              {/*  </CardContent> */}
+            </Paper>
           </Grid>
         </Grid>
       </div>
-    </>
+    </Container>
   );
 };
 

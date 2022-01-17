@@ -22,6 +22,7 @@ import {
   MealEdit,
   UserEdit,
   Cart,
+  Checkout,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -36,6 +37,9 @@ const theme = createTheme({
       default: "#f9f9f9",
       paper: "#fff",
     },
+  },
+  stepper: {
+    iconColor: "green", // or logic to change color
   },
   shape: {
     borderRadius: 10,
@@ -54,6 +58,7 @@ function App() {
             <PrivateRoute path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
             <PrivateRoute path="/cart/:id?" component={Cart} />
+            <PrivateRoute path="/checkout" component={Checkout} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />
