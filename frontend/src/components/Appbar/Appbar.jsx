@@ -31,7 +31,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   const dispatch = useDispatch();
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  const { order } = useSelector((state) => state.orderDetails);
+  /*  const { order } = useSelector((state) => state.orderDetails); */
   const { cartItems } = useSelector((state) => state.cart);
 
   //Total cart items
@@ -66,11 +66,7 @@ const Appbar = ({ handleDrawerToggle }) => {
       </Box>
     );
 
-  if (
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === `/admin/receipt/${order ? order._id : " "}`
-  )
+  if (location.pathname === "/login" || location.pathname === "/register")
     return "";
 
   return (

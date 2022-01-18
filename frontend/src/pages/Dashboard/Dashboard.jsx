@@ -17,7 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrderList } from "../../redux/actions/orderAction";
+/* import { getOrderList } from "../../redux/actions/orderAction"; */
 import { getMealList } from "../../redux/actions/mealAction";
 import { format } from "date-fns";
 import { BarChart, Loader } from "../../components";
@@ -54,7 +54,7 @@ const DashboardPage = () => {
   } = useSelector((state) => state.mealList);
 
   useEffect(() => {
-    dispatch(getOrderList());
+    /*   dispatch(getOrderList()); */
     dispatch(getMealList());
   }, [dispatch]);
 

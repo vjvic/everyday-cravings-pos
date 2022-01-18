@@ -248,7 +248,7 @@ const Cart = () => {
                 disabled={cartItems.length === 0}
                 onClick={() => history.push("/checkout")}
               >
-                Checkout
+                Proceed To Checkout
               </Button>
               {/*  </CardContent> */}
             </Paper>

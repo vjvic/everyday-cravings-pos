@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderList } from "../../redux/actions/orderAction";
+/* import { getOrderList } from "../../redux/actions/orderAction"; */
 import { format } from "date-fns";
 import { Loader } from "../../components";
 
@@ -90,7 +90,7 @@ const SalesReport = () => {
   };
 
   useEffect(() => {
-    dispatch(getOrderList());
+    /*  dispatch(getOrderList()); */
   }, [dispatch]);
 
   if (loading) return <Loader />;

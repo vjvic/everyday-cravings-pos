@@ -8,6 +8,7 @@ import {
   Typography,
   Divider,
   Alert,
+  Container,
 } from "@mui/material";
 import { updateUser, getUserDetails } from "../../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,14 +67,12 @@ const Edit = () => {
   if (userLoading) return <Loader />;
 
   return (
-    <div>
+    <Container maxWidth="md">
       <Box
         component="form"
         mt={3}
         sx={{
           "& > :not(style)": { my: 1, width: "100%" },
-          maxWidth: 900,
-          margin: "auto",
         }}
         onSubmit={handleSubmit}
       >
@@ -119,7 +118,7 @@ const Edit = () => {
           UPDATE
         </Button>
       </Box>
-    </div>
+    </Container>
   );
 };
 

@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
 import Item from "./item";
-import { createOrder } from "../../redux/actions/orderAction";
+/* import { createOrder } from "../../redux/actions/orderAction"; */
 import { useHistory } from "react-router-dom";
 
 const style = {
@@ -73,7 +73,7 @@ const Cashier = () => {
   const handlePayment = (e) => {
     e.preventDefault();
 
-    const orders = {
+    /* const orders = {
       totalItem,
       subTotal,
       customerName: customerName.toLowerCase(),
@@ -82,10 +82,10 @@ const Cashier = () => {
       totalAmount,
       paymentType,
       date: new Date(),
-    };
+    }; */
 
     if (customerName && paid >= totalAmount && paymentType) {
-      dispatch(createOrder(orders));
+      /* dispatch(createOrder(orders)); */
     }
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Box,
@@ -8,17 +8,53 @@ import {
   Paper,
   Container,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { totalAmount } from "../../utils/utils";
+import { createOrder } from "../../redux/actions/orderAction";
+import { useHistory } from "react-router-dom";
+import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
 
 const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { shippingAddress } = useSelector((state) => state.cartAddress);
+  const { paymentMethod } = useSelector((state) => state.cartPaymentMethod);
+  const {
+    loading,
+    success,
+    order: orderItem,
+  } = useSelector((state) => state.orderCreate);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const { address, city, province, postalCode } = shippingAddress;
 
   const totalCart = cartItems.length;
   const totalItems = totalAmount(cartItems);
   //static shipping value
   const shipping = 80;
   const total = totalItems + shipping;
+
+  const handlePlaceOrder = () => {
+    const orders = {
+      orderItems: cartItems,
+      shippingAddress,
+      paymentMethod,
+      shippingPrice: shipping,
+      totalPrice: total,
+    };
+
+    dispatch(createOrder(orders));
+
+    console.log(orders);
+  };
+
+  useEffect(() => {
+    if (success && orderItem) {
+      history.push(`orders/${orderItem._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [success, history, orderItem, dispatch]);
 
   return (
     <Container>
@@ -29,13 +65,13 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
               SHIPPING
             </Typography>
             <Typography variant="body1">
-              Address: 0898 Sulok st. Malolos Bulacan 3000
+              Address: {address}, {city}, {province} {postalCode}
             </Typography>
           </Box>
           <Divider />
           <Box my={2}>
             <Typography variant="h4" sx={{ paddingY: 1 }}>
-              PAYMENT METHOD
+              {paymentMethod}
             </Typography>
             <Typography variant="body1">Method: Cash on Delivery</Typography>
           </Box>
@@ -48,7 +84,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
 
             {/* <Grid container spacing={2}> */}
             {cartItems.map((item, i) => (
-              <>
+              <React.Fragment key={i}>
                 <Grid container key={item.meal} sx={{ paddingY: 1 }}>
                   <Grid item xs={3} lg={3}>
                     <img
@@ -69,7 +105,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
                 <Divider
                   sx={{ display: totalCart - 1 === i ? "none" : "block" }}
                 />
-              </>
+              </React.Fragment>
             ))}
             {/*   </Grid> */}
           </Box>
@@ -133,7 +169,12 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
             </Box>
             <Divider />
             <Box p={2}>
-              <Button variant="contained" fullWidth>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={handlePlaceOrder}
+                disabled={loading}
+              >
                 Place Order
               </Button>
             </Box>

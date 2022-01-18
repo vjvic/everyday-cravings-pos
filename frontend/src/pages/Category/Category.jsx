@@ -31,7 +31,7 @@ const Category = () => {
   return (
     <Container maxWidth="xl">
       <Box mb={3}>
-        <Typography variant="h5">{capitalize(category)}</Typography>
+        <Typography variant="h4">{capitalize(category)}</Typography>
       </Box>
 
       {meals <= 0 ? (
