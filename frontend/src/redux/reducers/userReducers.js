@@ -25,13 +25,10 @@ import {
   USER_PROFILE_UPDATE_SUCCESS,
   USER_PROFILE_UPDATE_FAIL,
 } from "../constants/userConstants";
-
-const userInfoFromLocalStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
+import { getItemFromLocalStorage } from "../../utils/utils";
 
 export const userLoginReducer = (
-  state = { userInfo: userInfoFromLocalStorage },
+  state = { userInfo: getItemFromLocalStorage("userInfo") },
   action
 ) => {
   switch (action.type) {

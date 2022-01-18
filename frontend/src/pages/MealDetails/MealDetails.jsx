@@ -22,6 +22,7 @@ import {
   Rating,
   IconButton,
   Stack,
+  Container,
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
@@ -89,7 +90,7 @@ const MealDetailsPage = () => {
   ); */
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <Box mb={3}>
         <Button color="inherit" onClick={() => history.push("/")}>
           Go Back
@@ -97,7 +98,7 @@ const MealDetailsPage = () => {
       </Box>
 
       <Grid container spacing={5}>
-        <Grid item xs={12} sm={12} lg={6}>
+        <Grid item xs={12} sm={12} lg={5}>
           <div>
             <img
               src={image}
@@ -118,7 +119,7 @@ const MealDetailsPage = () => {
               "& > :not(style)": { my: 1, width: "100%" },
             }}
           >
-            <Typography variant="h3" component="h3">
+            <Typography variant="h4" component="h3">
               {name}
             </Typography>
 
@@ -289,7 +290,7 @@ const MealDetailsPage = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   );
 };
 

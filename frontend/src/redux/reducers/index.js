@@ -18,12 +18,12 @@ import {
   userUpdateReducer,
   userUpdateProfileReducer,
 } from "./userReducers";
+import { orderCreateReducer } from "./orderReducer";
 import {
-  orderListReducer,
-  orderCreateReducer,
-  orderDetailsReducer,
-} from "./orderReducer";
-import { cartReducer } from "./cartReducers";
+  cartReducer,
+  cartAddressReducer,
+  cartPaymentMethodReducer,
+} from "./cartReducers";
 
 const reducers = combineReducers({
   mealList: mealListReducer,
@@ -35,6 +35,8 @@ const reducers = combineReducers({
   mealCreateReviews: mealCreateReviewsReducer,
   mealTop: mealTopListReducer,
   cart: cartReducer,
+  cartPaymentMethod: cartPaymentMethodReducer,
+  cartAddress: cartAddressReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userList: userListReducer,
@@ -42,9 +44,7 @@ const reducers = combineReducers({
   userUpdate: userUpdateReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
-  orderList: orderListReducer,
   orderCreate: orderCreateReducer,
-  orderDetails: orderDetailsReducer,
 });
 
 export default reducers;

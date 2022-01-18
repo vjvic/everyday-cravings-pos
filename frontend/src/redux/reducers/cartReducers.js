@@ -1,12 +1,13 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
-
-//Get cart item from  local storage
-const cartItemsFromLocalStorage = localStorage.getItem("cartItems")
-  ? JSON.parse(localStorage.getItem("cartItems"))
-  : [];
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_SHIPPING_ADDRESS,
+} from "../constants/cartConstants";
+import { getItemFromLocalStorage } from "../../utils/utils";
 
 export const cartReducer = (
-  state = { cartItems: cartItemsFromLocalStorage },
+  state = { cartItems: getItemFromLocalStorage("cartItems") },
   action
 ) => {
   switch (action.type) {
@@ -38,6 +39,30 @@ export const cartReducer = (
         cartItems: state.cartItems.filter((x) => x.meal !== action.payload),
       };
 
+    default:
+      return state;
+  }
+};
+
+export const cartAddressReducer = (
+  state = { shippingAddress: getItemFromLocalStorage("shippingAddress") },
+  action
+) => {
+  switch (action.type) {
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return { shippingAddress: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const cartPaymentMethodReducer = (
+  state = { paymentMethod: getItemFromLocalStorage("paymentMethod") },
+  action
+) => {
+  switch (action.type) {
+    case CART_SAVE_PAYMENT_METHOD:
+      return { paymentMethod: action.payload };
     default:
       return state;
   }

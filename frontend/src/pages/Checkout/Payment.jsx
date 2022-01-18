@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   FormControl,
@@ -8,8 +8,31 @@ import {
   Box,
   Button,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { savePaymentMethod } from "../../redux/actions/cartAction";
 
 const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
+  const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
+
+  const { paymentMethod: method } = useSelector(
+    (state) => state.cartPaymentMethod
+  );
+
+  const dispatch = useDispatch();
+
+  const handleSubmitPayment = () => {
+    if (paymentMethod) {
+      dispatch(savePaymentMethod(paymentMethod));
+      handleNext();
+    }
+  };
+
+  useEffect(() => {
+    if (method) {
+      setPaymentMethod(method);
+    }
+  }, [method]);
+
   return (
     <div>
       <Typography variant="h4" sx={{ paddingBottom: 2 }}>
@@ -24,15 +47,15 @@ const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
           "& > :not(style)": { my: 1 },
           maxWidth: 900,
         }}
+        onSubmit={handleSubmitPayment}
       >
         <FormControl component="fieldset">
           <RadioGroup
-            aria-label="gender"
-            defaultValue="cod"
-            name="radio-buttons-group"
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
           >
             <FormControlLabel
-              value="cod"
+              value="Cash on Delivery"
               control={<Radio color="secondary" />}
               label="Cash on Delivery"
             />
@@ -50,7 +73,7 @@ const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
 
-          <Button variant="contained" onClick={handleNext}>
+          <Button type="submit" variant="contained" /* onClick={handleNext} */>
             {activeStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
         </Box>

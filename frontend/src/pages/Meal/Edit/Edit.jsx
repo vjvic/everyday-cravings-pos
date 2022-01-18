@@ -11,6 +11,7 @@ import {
   MenuItem,
   Stack,
   Alert,
+  Container,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -139,116 +140,119 @@ const Edit = () => {
   if (mealLoading) return <Loader />;
 
   return (
-    <Box
-      component="form"
-      mt={3}
-      sx={{
-        "& > :not(style)": { my: 1 },
-        maxWidth: 900,
-        margin: "auto",
-      }}
-      onSubmit={handleEditSubmit}
-    >
-      <Typography variant="h4"> {isEdit ? "Edit Meal" : "Add Meal"}</Typography>
-      <Divider />
-
-      {updateError ||
-        (mealCreateError && (
-          <Alert severity="error">{updateError || mealCreateError}</Alert>
-        ))}
-      {mealError && <Alert severity="error">{mealError}</Alert>}
-      {uploadError && <Alert severity="error">{uploadError}</Alert>}
-
-      <TextField
-        label="Meal Name"
-        variant="outlined"
-        color="secondary"
-        value={name || ""}
-        onChange={(e) => setName(e.target.value)}
-        fullWidth
-      />
-
-      <TextField
-        label="Price"
-        variant="outlined"
-        color="secondary"
-        type="number"
-        value={price || ""}
-        onChange={(e) => setPrice(e.target.value)}
-        fullWidth
-      />
-
-      <TextField
-        label="Image"
-        variant="outlined"
-        color="secondary"
-        value={image || ""}
-        onChange={(e) => setImage(e.target.value)}
-        fullWidth
-      />
-
-      <Button
-        variant="contained"
-        component="label"
-        disabled={uploading}
-        startIcon={<FileUploadIcon />}
+    <Container maxWidth="md">
+      <Box
+        component="form"
+        mt={3}
+        sx={{
+          "& > :not(style)": { my: 1 },
+        }}
+        onSubmit={handleEditSubmit}
       >
-        Upload File
-        <input type="file" hidden onChange={uploadFileHandler} />
-      </Button>
+        <Typography variant="h4">
+          {" "}
+          {isEdit ? "Edit Meal" : "Add Meal"}
+        </Typography>
+        <Divider />
 
-      <Stack direction="row" spacing={2}>
-        <FormControl fullWidth color="secondary">
-          <InputLabel>Category</InputLabel>
-          <Select
-            defaultValue={category || ""}
-            value={category || ""}
-            label="Category"
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"].map(
-              (c, index) => (
-                <MenuItem key={index} value={c.toLowerCase()}>
-                  {c}
-                </MenuItem>
-              )
-            )}
-          </Select>
-        </FormControl>
+        {updateError ||
+          (mealCreateError && (
+            <Alert severity="error">{updateError || mealCreateError}</Alert>
+          ))}
+        {mealError && <Alert severity="error">{mealError}</Alert>}
+        {uploadError && <Alert severity="error">{uploadError}</Alert>}
 
         <TextField
-          label="Count In Stock"
+          label="Meal Name"
+          variant="outlined"
+          color="secondary"
+          value={name || ""}
+          onChange={(e) => setName(e.target.value)}
+          fullWidth
+        />
+
+        <TextField
+          label="Price"
           variant="outlined"
           color="secondary"
           type="number"
-          value={countInStock || ""}
-          onChange={(e) => setCountInstock(e.target.value)}
+          value={price || ""}
+          onChange={(e) => setPrice(e.target.value)}
           fullWidth
         />
-      </Stack>
 
-      <TextField
-        label="Description"
-        variant="outlined"
-        color="secondary"
-        multiline
-        rows={3}
-        value={description || ""}
-        onChange={(e) => setDescription(e.target.value)}
-        fullWidth
-      />
+        <TextField
+          label="Image"
+          variant="outlined"
+          color="secondary"
+          value={image || ""}
+          onChange={(e) => setImage(e.target.value)}
+          fullWidth
+        />
 
-      <Button
-        variant="contained"
-        type="submit"
-        size="large"
-        sx={{ height: "45px" }}
-        fullWidth
-        disabled={updateLoading || mealCreateLoading}
-      >
-        {isEdit ? "UPDATE" : "ADD"}
-      </Button>
-    </Box>
+        <Button
+          variant="contained"
+          component="label"
+          disabled={uploading}
+          startIcon={<FileUploadIcon />}
+        >
+          Upload File
+          <input type="file" hidden onChange={uploadFileHandler} />
+        </Button>
+
+        <Stack direction="row" spacing={2}>
+          <FormControl fullWidth color="secondary">
+            <InputLabel>Category</InputLabel>
+            <Select
+              defaultValue={category || ""}
+              value={category || ""}
+              label="Category"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"].map(
+                (c, index) => (
+                  <MenuItem key={index} value={c.toLowerCase()}>
+                    {c}
+                  </MenuItem>
+                )
+              )}
+            </Select>
+          </FormControl>
+
+          <TextField
+            label="Count In Stock"
+            variant="outlined"
+            color="secondary"
+            type="number"
+            value={countInStock || ""}
+            onChange={(e) => setCountInstock(e.target.value)}
+            fullWidth
+          />
+        </Stack>
+
+        <TextField
+          label="Description"
+          variant="outlined"
+          color="secondary"
+          multiline
+          rows={3}
+          value={description || ""}
+          onChange={(e) => setDescription(e.target.value)}
+          fullWidth
+        />
+
+        <Button
+          variant="contained"
+          type="submit"
+          size="large"
+          sx={{ height: "45px" }}
+          fullWidth
+          disabled={updateLoading || mealCreateLoading}
+        >
+          {isEdit ? "UPDATE" : "ADD"}
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

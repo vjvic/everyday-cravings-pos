@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import { capitalize } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+/* import { capitalize } from "@mui/material"; */
+import { /* useSelector, */ useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
-import { getOrderDetails } from "../../redux/actions/orderAction";
+/* import { getOrderDetails } from "../../redux/actions/orderAction"; */
 import styles from "./receipt.module.css";
-import { format } from "date-fns";
-import { Loader } from "../../components";
+/* import { format } from "date-fns";
+import { Loader } from "../../components"; */
 
 const Receipt = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { order, loading } = useSelector((state) => state.orderDetails);
+  /* const { order, loading } = useSelector((state) => state.orderDetails); */
 
   const handleBack = () => {
     dispatch({ type: ORDER_CREATE_RESET });
@@ -25,10 +25,10 @@ const Receipt = () => {
   };
 
   useEffect(() => {
-    dispatch(getOrderDetails(id));
+    /*  dispatch(getOrderDetails(id)); */
   }, [dispatch, id]);
 
-  if (loading) return <Loader />;
+  /* if (loading) return <Loader />; */
 
   return (
     <div>
@@ -44,7 +44,7 @@ const Receipt = () => {
             <th>Subtotal</th>
             <th>Date</th>
           </tr>
-          {order && (
+          {/*  {order && (
             <tr>
               <td>{capitalize(order.customerName)}</td>
               <td>{capitalize(order.paymentType)}</td>
@@ -55,7 +55,7 @@ const Receipt = () => {
               <td>{order.subTotal}</td>
               <td>{format(new Date(order.date), "P")}</td>
             </tr>
-          )}
+          )} */}
         </table>
       </div>
 

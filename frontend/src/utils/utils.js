@@ -5,6 +5,19 @@ export const setItemToLcalStorage = (name, value) => {
   localStorage.setItem(name, JSON.stringify(value));
 };
 
+//Get item from local storage
+export const getItemFromLocalStorage = (name) => {
+  if (name === "cartItems") {
+    return localStorage.getItem(name)
+      ? JSON.parse(localStorage.getItem(name))
+      : [];
+  } else {
+    return localStorage.getItem(name)
+      ? JSON.parse(localStorage.getItem(name))
+      : null;
+  }
+};
+
 const currentYear = format(new Date(), "yyyy");
 const currentDay = format(new Date(), "d");
 const currentMonth = format(new Date(), "M");

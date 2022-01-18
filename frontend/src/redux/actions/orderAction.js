@@ -2,17 +2,11 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
-  ORDER_DETAILS_FAIL,
-  ORDER_DETAILS_REQUEST,
-  ORDER_DETAILS_SUCCESS,
-  ORDER_LIST_FAIL,
-  ORDER_LIST_REQUEST,
-  ORDER_LIST_SUCCESS,
 } from "../constants/orderConstants";
 import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
 
-export const getOrderList = () => async (dispacth, getState) => {
+/* export const getOrderList = () => async (dispacth, getState) => {
   try {
     dispacth({ type: ORDER_LIST_REQUEST });
 
@@ -101,6 +95,44 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
         err.response && err.response.data.message
           ? err.response.data.message
           : err.message,
+    });
+  }
+};
+ */
+
+export const createOrder = (orders) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.post(`/api/orders`, { ...orders }, config);
+
+    dispatch({
+      type: ORDER_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_CREATE_FAIL,
+      payload: message,
     });
   }
 };
