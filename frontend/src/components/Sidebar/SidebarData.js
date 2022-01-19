@@ -14,6 +14,8 @@ import {
 } from "react-icons/md";
 import { GiCupcake } from "react-icons/gi";
 import { BiDrink } from "react-icons/bi";
+import { FiPackage } from "react-icons/fi";
+import { HiOutlineClipboardList } from "react-icons/hi";
 
 export const navItems = [
   {
@@ -46,6 +48,11 @@ export const navItems = [
     path: "/category/drinks",
     icon: <BiDrink />,
   },
+  {
+    text: "My Orders",
+    path: "/my-orders",
+    icon: <FiPackage />,
+  },
 ];
 
 export const navItemsAdmin = [
@@ -63,6 +70,11 @@ export const navItemsAdmin = [
     text: "User List",
     path: "/admin/user-list",
     icon: <PeopleAltIcon />,
+  },
+  {
+    text: "Order List",
+    path: "/admin/order-list",
+    icon: <HiOutlineClipboardList />,
   },
   {
     text: "Menu",

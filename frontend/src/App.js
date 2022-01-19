@@ -23,6 +23,9 @@ import {
   UserEdit,
   Cart,
   Checkout,
+  Order,
+  MyOrders,
+  OrderList,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -59,6 +62,8 @@ function App() {
             <PrivateRoute path="/results/:keyword" component={Results} />
             <PrivateRoute path="/cart/:id?" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
+            <PrivateRoute path="/orders/:id" component={Order} />
+            <PrivateRoute path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
             {/*   <PrivateRoute path="/admin/dashboard" component={Dashboard} /> */}
             <PrivateRoute exact path="/admin/meals" component={Meals} />
@@ -69,6 +74,7 @@ function App() {
             />
             <PrivateRoute path="/admin/menu" component={Menu} />
             <PrivateRoute exact path="/admin/user-list" component={UserList} />
+            <PrivateRoute path="/admin/order-list" component={OrderList} />
             <PrivateRoute
               path="/admin/user-list/:id/edit"
               component={UserEdit}

@@ -7,57 +7,66 @@ import {
   Divider,
   Paper,
   Container,
+  Alert,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import {
+  getOrderDetails,
+  updateOrderToDelivered,
+  updateOrderToPaid,
+} from "../../redux/actions/orderAction";
+import { Loader } from "../../components";
 import { totalAmount } from "../../utils/utils";
-import { createOrder } from "../../redux/actions/orderAction";
-import { useHistory } from "react-router-dom";
-import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
+import { format } from "date-fns";
 
-const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
-  const { cartItems } = useSelector((state) => state.cart);
-  const { shippingAddress } = useSelector((state) => state.cartAddress);
-  const { paymentMethod } = useSelector((state) => state.cartPaymentMethod);
-  const {
-    loading,
-    success,
-    order: orderItem,
-  } = useSelector((state) => state.orderCreate);
-
+const OrderSummary = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
+
+  const { loading, order: orderDets } = useSelector(
+    (state) => state.orderDetails
+  );
+
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  const { success: deliveredSuccess, error: deliveredError } = useSelector(
+    (state) => state.orderUpdateToDelivered
+  );
+  const { success: paidSuccess, error: paidError } = useSelector(
+    (state) => state.orderUpdateToPaid
+  );
+
+  useEffect(() => {
+    if (!orderDets || deliveredSuccess || paidSuccess) {
+      dispatch(getOrderDetails(id));
+    }
+    // eslint-disable-next-line
+  }, [dispatch, id, deliveredSuccess, paidSuccess]);
+
+  if (loading) return <Loader />;
+
+  const {
+    shippingAddress,
+    paymentMethod,
+    orderItems,
+    isDelivered,
+    isPaid,
+    deliveredAt,
+    paidAt,
+  } = orderDets;
 
   const { address, city, province, postalCode } = shippingAddress;
 
-  const totalCart = cartItems.length;
-  const totalItems = totalAmount(cartItems);
+  const totalCart = orderItems.length;
+  const totalItems = totalAmount(orderDets.orderItems);
   //static shipping value
   const shipping = 80;
   const total = totalItems + shipping;
 
-  const handlePlaceOrder = () => {
-    const orders = {
-      orderItems: cartItems,
-      shippingAddress,
-      paymentMethod,
-      shippingPrice: shipping,
-      totalPrice: total,
-    };
-
-    dispatch(createOrder(orders));
-
-    console.log(orders);
-  };
-
-  useEffect(() => {
-    if (success && orderItem) {
-      history.push(`orders/${orderItem._id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
-    }
-  }, [success, history, orderItem, dispatch]);
-
   return (
     <Container>
+      <Typography variant="h4">Order {id}</Typography>
       <Grid container spacing={3}>
         <Grid item lg={8}>
           <Box my={2}>
@@ -67,6 +76,16 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
             <Typography variant="body1">
               Address: {address}, {city}, {province} {postalCode}
             </Typography>
+            {isDelivered ? (
+              <Alert severity="success" sx={{ marginY: 2 }}>
+                Delivered At{" "}
+                {format(new Date(deliveredAt), "yyyy-MM-dd hh:mm:ssaaa")}
+              </Alert>
+            ) : (
+              <Alert severity="error" sx={{ marginY: 2 }}>
+                Not Delivered
+              </Alert>
+            )}
           </Box>
           <Divider />
           <Box my={2}>
@@ -74,6 +93,16 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
               Payment Method
             </Typography>
             <Typography variant="body1">Method: {paymentMethod}</Typography>
+
+            {isPaid ? (
+              <Alert severity="success" sx={{ marginY: 2 }}>
+                Paid At {format(new Date(paidAt), "yyyy-MM-dd hh:mm:ssaaa")}
+              </Alert>
+            ) : (
+              <Alert severity="error" sx={{ marginY: 2 }}>
+                Not Paid
+              </Alert>
+            )}
           </Box>
           <Divider />
 
@@ -82,8 +111,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
               ORDER ITEMS
             </Typography>
 
-            {/* <Grid container spacing={2}> */}
-            {cartItems.map((item, i) => (
+            {orderDets.orderItems.map((item, i) => (
               <React.Fragment key={i}>
                 <Grid container key={item.meal} sx={{ paddingY: 1 }}>
                   <Grid item xs={3} lg={3}>
@@ -107,11 +135,20 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
                 />
               </React.Fragment>
             ))}
-            {/*   </Grid> */}
           </Box>
         </Grid>
 
         <Grid item lg={4} sx={{ marginY: 2 }}>
+          {paidError && (
+            <Alert severity="error" sx={{ marginY: 2 }}>
+              {paidError}
+            </Alert>
+          )}
+          {deliveredError && (
+            <Alert severity="error" sx={{ marginY: 2 }}>
+              {deliveredError}
+            </Alert>
+          )}
           <Paper variant="outlined">
             <Box p={2}>
               <Typography variant="h4">ORDER SUMMARY</Typography>
@@ -167,30 +204,44 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
                 </Grid>
               </Grid>
             </Box>
-            <Divider />
-            <Box p={2}>
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={handlePlaceOrder}
-                disabled={loading}
-              >
-                Place Order
-              </Button>
-            </Box>
+            {userInfo.isAdmin && (
+              <>
+                <Divider />
+                <Box p={2}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    sx={{ marginBottom: 2 }}
+                    onClick={() => dispatch(updateOrderToDelivered(id))}
+                    disabled={isDelivered}
+                  >
+                    Mark As Delivered
+                  </Button>
+                  {/* Mark as paid if Cash on Delivery  */}
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() => dispatch(updateOrderToPaid(id))}
+                    disabled={isPaid}
+                  >
+                    Mark As Paid
+                  </Button>
+                </Box>
+              </>
+            )}
           </Paper>
         </Grid>
       </Grid>
 
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-        <Button
+        {/*    <Button
           color="inherit"
           disabled={activeStep === 0}
           onClick={handleBack}
           sx={{ mr: 1 }}
         >
           Back
-        </Button>
+        </Button> */}
         <Box sx={{ flex: "1 1 auto" }} />
 
         {/*   <Button color="primary" variant="contained" onClick={handleNext}>
