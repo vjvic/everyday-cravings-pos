@@ -5,7 +5,7 @@ import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
 import Layout from "./components/Layout/Layout";
 import {
-  /*  Dashboard, */
+  Dashboard,
   Login,
   Register,
   MealDetails,
@@ -65,7 +65,7 @@ function App() {
             <PrivateRoute path="/orders/:id" component={Order} />
             <PrivateRoute path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
-            {/*   <PrivateRoute path="/admin/dashboard" component={Dashboard} /> */}
+            <PrivateRoute path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />
             <PrivateRoute
               exact
