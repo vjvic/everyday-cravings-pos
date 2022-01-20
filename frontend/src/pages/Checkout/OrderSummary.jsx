@@ -88,7 +88,11 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
                 <Grid container key={item.meal} sx={{ paddingY: 1 }}>
                   <Grid item xs={3} lg={3}>
                     <img
-                      style={{ width: "50px" }}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                      }}
                       src={item.image}
                       alt={item.name}
                     />
