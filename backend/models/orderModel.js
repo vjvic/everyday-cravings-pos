@@ -51,6 +51,14 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
+    totalItems: {
+      type: Number,
+      required: true,
+    },
+    subtotal: {
+      type: Number,
+      required: true,
+    },
     isPaid: {
       type: Boolean,
       required: true,

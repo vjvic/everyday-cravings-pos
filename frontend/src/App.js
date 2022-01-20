@@ -5,7 +5,7 @@ import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
 import Layout from "./components/Layout/Layout";
 import {
-  /*  Dashboard, */
+  Dashboard,
   Login,
   Register,
   MealDetails,
@@ -15,7 +15,7 @@ import {
   /*  Cashier, */
   Menu,
   /*  Receipt, */
-  /* SalesReport, */
+  SalesReport,
   UserList,
   Home,
   Category,
@@ -23,6 +23,9 @@ import {
   UserEdit,
   Cart,
   Checkout,
+  Order,
+  MyOrders,
+  OrderList,
 } from "./pages";
 
 const secondary = "#DE8538";
@@ -59,8 +62,10 @@ function App() {
             <PrivateRoute path="/results/:keyword" component={Results} />
             <PrivateRoute path="/cart/:id?" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
+            <PrivateRoute path="/orders/:id" component={Order} />
+            <PrivateRoute path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
-            {/*   <PrivateRoute path="/admin/dashboard" component={Dashboard} /> */}
+            <PrivateRoute path="/admin/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/admin/meals" component={Meals} />
             <PrivateRoute
               exact
@@ -69,13 +74,14 @@ function App() {
             />
             <PrivateRoute path="/admin/menu" component={Menu} />
             <PrivateRoute exact path="/admin/user-list" component={UserList} />
+            <PrivateRoute path="/admin/order-list" component={OrderList} />
             <PrivateRoute
               path="/admin/user-list/:id/edit"
               component={UserEdit}
             />
             {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
             {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            {/* <PrivateRoute path="/admin/sales-report" component={SalesReport} /> */}
+            <PrivateRoute path="/admin/sales-report" component={SalesReport} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>

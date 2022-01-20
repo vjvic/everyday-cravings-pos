@@ -82,6 +82,8 @@ const createOrder = asyncHandler(async (req, res) => {
     shippingAddress,
     paymentMethod,
     shippingPrice,
+    totalItems,
+    subtotal,
     totalPrice,
   } = req.body;
 
@@ -96,6 +98,8 @@ const createOrder = asyncHandler(async (req, res) => {
       shippingAddress,
       paymentMethod,
       shippingPrice,
+      totalItems,
+      subtotal,
       totalPrice,
     });
 
@@ -124,7 +128,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 //@desc update order to paid
 //@route PUT /api/orders/:id/pay
-//@access Amin
+//@access Admin
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 

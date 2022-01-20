@@ -17,7 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-/* import { getOrderList } from "../../redux/actions/orderAction"; */
+import { getOrderList } from "../../redux/actions/orderAction";
 import { getMealList } from "../../redux/actions/mealAction";
 import { format } from "date-fns";
 import { BarChart, Loader } from "../../components";
@@ -54,21 +54,21 @@ const DashboardPage = () => {
   } = useSelector((state) => state.mealList);
 
   useEffect(() => {
-    /*   dispatch(getOrderList()); */
+    dispatch(getOrderList());
     dispatch(getMealList());
   }, [dispatch]);
 
   if (ordersLoading || mealsLoading) return <Loader />;
-  if (orders === undefined && meals === undefined) return "";
+  /* if (orders === undefined && meals === undefined) return ""; */
   if (ordersError || mealsError)
     return <Alert severity="error">{ordersError || mealsError}</Alert>;
 
   //Total amount
-  const amount = orders.map((order) => order.totalAmount);
+  const amount = orders.map((order) => order.totalPrice);
   const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
   //Total customers
-  const customer = orders.map((order) => order.customerName);
+  const customer = orders.map((order) => order.user.name);
   const uniqueCustomer = [...new Set(customer)];
   const totalCustomer = uniqueCustomer.length;
 
@@ -82,12 +82,12 @@ const DashboardPage = () => {
   const getRevenueToday = (time) => {
     const orderTime = orders
       .filter((order) => {
-        const orderDate = format(new Date(order.date), "HH P");
+        const orderDate = format(new Date(order.createdAt), "HH P");
         const dateNow = format(new Date(), "P");
 
         return orderDate === `${time} ${dateNow}`;
       })
-      .map((order) => order.totalAmount)
+      .map((order) => order.totalPrice)
       .reduce((acc, amount) => acc + amount, 0);
     return orderTime;
   };
@@ -96,12 +96,12 @@ const DashboardPage = () => {
   const getRevenueThisMonth = (day) => {
     const orderMonth = orders
       .filter((order) => {
-        const filterMonth = format(new Date(order.date), "d MM");
+        const filterMonth = format(new Date(order.createdAt), "d MM");
         const currentMonth = format(new Date(), "MM");
 
         return filterMonth === `${day} ${currentMonth}`;
       })
-      .map((order) => order.totalAmount)
+      .map((order) => order.totalPrice)
       .reduce((acc, amount) => acc + amount, 0);
 
     return orderMonth;
@@ -111,12 +111,12 @@ const DashboardPage = () => {
   const getRevenueThisYear = (month) => {
     const orderYear = orders
       .filter((order) => {
-        const filterYear = format(new Date(order.date), "MMM yyyy");
+        const filterYear = format(new Date(order.createdAt), "MMM yyyy");
         const currentYear = format(new Date(), "yyyy");
 
         return filterYear === `${month} ${currentYear}`;
       })
-      .map((order) => order.totalAmount)
+      .map((order) => order.totalPrice)
       .reduce((acc, amount) => acc + amount, 0);
 
     return orderYear;
@@ -126,12 +126,12 @@ const DashboardPage = () => {
   const getTotalRevenueToday = () => {
     const totalAmount = orders
       .filter((order) => {
-        const orderDate = format(new Date(order.date), "P");
+        const orderDate = format(new Date(order.createdAt), "P");
         const dateNow = format(new Date(), "P");
 
         return orderDate === dateNow;
       })
-      .map((order) => order.totalAmount)
+      .map((order) => order.totalPrice)
       .reduce((acc, amount) => acc + amount, 0);
 
     return totalAmount;
@@ -209,10 +209,10 @@ const DashboardPage = () => {
 
   //Get the total of occurence in array
   const topCustomer = orders.reduce((res, val) => {
-    if (res[val.customerName]) {
-      res[val.customerName]++;
+    if (res[val.user.name]) {
+      res[val.user.name]++;
     } else {
-      res[val.customerName] = 1;
+      res[val.user.name] = 1;
     }
     return res;
   }, {});
