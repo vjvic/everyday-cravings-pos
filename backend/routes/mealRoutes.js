@@ -9,6 +9,7 @@ import {
   createMealReviews,
   getMealByCategory,
   getTopMeal,
+  updateMealStock,
 } from "../controllers/mealController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
@@ -21,5 +22,5 @@ router
   .delete(protect, isAdmin, deleteMeal)
   .put(protect, isAdmin, updateMeal);
 router.get("/category/:category", getMealByCategory);
-
+router.put("/:id/updatestock", protect, updateMealStock);
 export default router;

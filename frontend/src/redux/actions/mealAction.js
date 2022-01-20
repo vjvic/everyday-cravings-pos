@@ -23,9 +23,13 @@ import {
   MEAL_TOP_SUCCESS,
   MEAL_TOP_REQUEST,
   MEAL_TOP_FAIL,
+  MEAL_UPDATE_STOCK_REQUEST,
+  MEAL_UPDATE_STOCK_SUCCESS,
+  MEAL_UPDATE_STOCK_FAIL,
 } from "../constants/mealConstants";
 import { logout } from "./userActions";
 import { mealApi } from "../../components";
+import { CART_ADD_ITEM } from "../constants/cartConstants";
 
 //Fetch meal list
 export const getMealList =
@@ -258,3 +262,58 @@ export const getTopMealList = () => async (dispatch) => {
     });
   }
 };
+
+//Update meal stock
+export const updateMealStock =
+  (mealID, countInStock) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: MEAL_UPDATE_STOCK_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await mealApi.put(
+        `/api/meals/${mealID}/updatestock`,
+        { countInStock },
+        config
+      );
+
+      dispatch({
+        type: MEAL_UPDATE_STOCK_SUCCESS,
+      });
+
+      dispatch({
+        type: CART_ADD_ITEM,
+        payload: {
+          meal: data._id,
+          name: data.name,
+          image: data.image,
+          price: data.price,
+          countInStock: data.countInStock,
+          qty: countInStock,
+        },
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: MEAL_UPDATE_STOCK_FAIL,
+        payload: message,
+      });
+    }
+  };

@@ -8,6 +8,7 @@ import {
   mealCreateReviewsReducer,
   mealCategoryReducer,
   mealTopListReducer,
+  mealUpdateStockReducer,
 } from "./mealReducers";
 import {
   userLoginReducer,
@@ -41,6 +42,7 @@ const reducers = combineReducers({
   mealUpdate: mealUpdateReducer,
   mealCreateReviews: mealCreateReviewsReducer,
   mealTop: mealTopListReducer,
+  mealUpdateStock: mealUpdateStockReducer,
   cart: cartReducer,
   cartPaymentMethod: cartPaymentMethodReducer,
   cartAddress: cartAddressReducer,

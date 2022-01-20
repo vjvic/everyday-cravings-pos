@@ -26,6 +26,9 @@ import {
   MEAL_TOP_REQUEST,
   MEAL_TOP_SUCCESS,
   MEAL_TOP_FAIL,
+  MEAL_UPDATE_STOCK_REQUEST,
+  MEAL_UPDATE_STOCK_SUCCESS,
+  MEAL_UPDATE_STOCK_FAIL,
 } from "../constants/mealConstants";
 
 export const mealListReducer = (state = { meals: [] }, action) => {
@@ -131,10 +134,22 @@ export const mealCreateReviewsReducer = (state = {}, action) => {
 export const mealTopListReducer = (state = { meals: [] }, action) => {
   switch (action.type) {
     case MEAL_TOP_REQUEST:
-      return { loading: true, meals: [] };
+      return { loading: true };
     case MEAL_TOP_SUCCESS:
       return { loading: false, meals: action.payload };
     case MEAL_TOP_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const mealUpdateStockReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MEAL_UPDATE_STOCK_REQUEST:
+      return { loading: true };
+    case MEAL_UPDATE_STOCK_SUCCESS:
+      return { loading: false, success: true };
+    case MEAL_UPDATE_STOCK_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
