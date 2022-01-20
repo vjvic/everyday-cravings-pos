@@ -13,6 +13,7 @@ import { totalAmount } from "../../utils/utils";
 import { createOrder } from "../../redux/actions/orderAction";
 import { useHistory } from "react-router-dom";
 import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
+import { updateMealStock } from "../../redux/actions/mealAction";
 
 const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -48,6 +49,10 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
     };
 
     dispatch(createOrder(orders));
+
+    cartItems.map((item) =>
+      dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+    );
 
     console.log(orders);
   };

@@ -139,6 +139,25 @@ const updateMeal = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Update meal stock
+//@route PUT /api/meals/:id
+//@access Private
+const updateMealStock = asyncHandler(async (req, res) => {
+  const { countInStock } = req.body;
+
+  const meal = await Meal.findById(req.params.id);
+
+  if (meal) {
+    meal.countInStock = countInStock;
+
+    const updatedMealStock = await meal.save();
+    res.json(updatedMealStock);
+  } else {
+    res.status(404);
+    throw Error("meal not found");
+  }
+});
+
 //@desc Create new review
 //@route PUT /api/meals/:id/reviews
 //@access Private
@@ -189,4 +208,5 @@ export {
   createMealReviews,
   getMealByCategory,
   getTopMeal,
+  updateMealStock,
 };

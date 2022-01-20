@@ -22,10 +22,10 @@ const Item = ({ item }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (qty === 0) {
+    if (qty === 0 || countInStock === 0) {
       dispatch(removeFromCart(meal));
     }
-  }, [dispatch, qty, meal]);
+  }, [dispatch, qty, meal, countInStock]);
 
   return (
     <CartItem /* sx={{ display: "flex", alignItems: "center", marginY: 2 }} */>
@@ -47,6 +47,9 @@ const Item = ({ item }) => {
           </Typography>
         </div>
         <Box sx={{ flexGrow: 1 }} />
+        {countInStock === 0 && (
+          <Typography sx={{ color: "red" }}>out of stock</Typography>
+        )}
         {countInStock > 0 && (
           <Stack direction="row" spacing={2} alignItems="center">
             <IconButton
@@ -61,7 +64,7 @@ const Item = ({ item }) => {
             <IconButton
               variant="contained"
               onClick={() => dispatch(addToCart(meal, qty + 1))}
-              disabled={qty === countInStock}
+              disabled={qty >= countInStock}
             >
               <AddIcon />
             </IconButton>
