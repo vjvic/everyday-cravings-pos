@@ -30,10 +30,11 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const { address, city, province, postalCode } = shippingAddress;
 
   const totalCart = cartItems.length;
-  const totalItems = totalAmount(cartItems);
+  const totalPriceItems = totalAmount(cartItems);
+  const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
   //static shipping value
   const shipping = 80;
-  const total = totalItems + shipping;
+  const total = totalPriceItems + shipping;
 
   const handlePlaceOrder = () => {
     const orders = {
@@ -41,6 +42,8 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
       shippingAddress,
       paymentMethod,
       shippingPrice: shipping,
+      totalItems: cartItems.length,
+      subtotal: subTotal,
       totalPrice: total,
     };
 
@@ -132,7 +135,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
                 <Grid item lg={6}>
                   {" "}
                   <Typography variant="body" component="div">
-                    &#8369; {totalItems.toFixed(2)}
+                    &#8369; {totalPriceItems.toFixed(2)}
                   </Typography>
                 </Grid>
               </Grid>

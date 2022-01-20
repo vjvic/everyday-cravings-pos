@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-/* import { getOrderList } from "../../redux/actions/orderAction"; */
+import { getOrderList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
 import { Loader } from "../../components";
 
@@ -43,12 +43,14 @@ const SalesReport = () => {
     setPage(0);
   };
 
-  const years = orders.map((order) => format(new Date(order.date), "yyyy"));
+  const years = orders.map((order) =>
+    format(new Date(order.createdAt), "yyyy")
+  );
   const uniqueYears = [...new Set(years)];
 
   console.log(uniqueYears);
-
-  /*   const filterDate = (filterDate) => {
+  /* 
+    const filterDate = (filterDate) => {
     const currentDay = format(new Date(), "d");
     const currentMonth = format(new Date(), "MM");
     const currentYear = format(new Date(), "yyyy");
@@ -70,7 +72,7 @@ const SalesReport = () => {
   const filterItem = (order) => {
     if (selectedYear && searchTerm !== "") {
       return (
-        format(new Date(order.date), "yyyy") === selectedYear &&
+        format(new Date(order.createdAt), "yyyy") === selectedYear &&
         /* filterDate(order.date) && */
         Object.values(order)
           .join(" ")
@@ -78,19 +80,22 @@ const SalesReport = () => {
           .includes(searchTerm.toLowerCase())
       );
     } else if (searchTerm !== "") {
-      return Object.values(order)
-        .join(" ")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      return (
+        Object.values(order)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        order.user.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     } else if (selectedYear) {
-      return format(new Date(order.date), "yyyy") === selectedYear;
+      return format(new Date(order.createdAt), "yyyy") === selectedYear;
     } else {
       return order;
     }
   };
 
   useEffect(() => {
-    /*  dispatch(getOrderList()); */
+    dispatch(getOrderList());
   }, [dispatch]);
 
   if (loading) return <Loader />;
@@ -158,14 +163,11 @@ const SalesReport = () => {
                   <TableCell></TableCell>
                   {[
                     "ID",
-                    "Customer Name",
-                    "Payment Type",
-                    "Total Amount",
-                    "Paid",
-                    "Change",
-                    "Total Item",
-                    "Subtotal",
+                    "User",
                     "Date",
+                    "Total Items",
+                    "Subtotal",
+                    "Total Price",
                   ].map((headCell) => (
                     <TableCell key={headCell}>{headCell}</TableCell>
                   ))}
@@ -186,28 +188,15 @@ const SalesReport = () => {
                         <TableCell component="th" id={labelId} scope="row">
                           {row._id}
                         </TableCell>
-                        <TableCell>{capitalize(row.customerName)}</TableCell>
-                        <TableCell>{capitalize(row.paymentType)}</TableCell>
+                        <TableCell>{capitalize(row.user.name)}</TableCell>
                         <TableCell>
-                          <Typography noWrap variant="body2">
-                            &#8369; {row.totalAmount.toFixed(2)}
-                          </Typography>
+                          {format(new Date(row.createdAt), "yyyy-MM-dd")}
                         </TableCell>
+                        <TableCell>{row.totalItems}</TableCell>
+                        <TableCell>{row.subtotal}</TableCell>
                         <TableCell>
-                          {" "}
-                          <Typography noWrap variant="body2">
-                            &#8369; {row.paid.toFixed(2)}
-                          </Typography>
+                          &#8369; {row.totalPrice.toFixed(2)}
                         </TableCell>
-                        <TableCell>
-                          {" "}
-                          <Typography noWrap variant="body2">
-                            &#8369; {row.change.toFixed(2)}
-                          </Typography>
-                        </TableCell>
-                        <TableCell>{row.totalItem}</TableCell>
-                        <TableCell>{row.subTotal}</TableCell>
-                        <TableCell>{format(new Date(row.date), "P")}</TableCell>
                       </TableRow>
                     );
                   })}

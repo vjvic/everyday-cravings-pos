@@ -15,7 +15,7 @@ import {
   /*  Cashier, */
   Menu,
   /*  Receipt, */
-  /* SalesReport, */
+  SalesReport,
   UserList,
   Home,
   Category,
@@ -81,7 +81,7 @@ function App() {
             />
             {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
             {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            {/* <PrivateRoute path="/admin/sales-report" component={SalesReport} /> */}
+            <PrivateRoute path="/admin/sales-report" component={SalesReport} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>
