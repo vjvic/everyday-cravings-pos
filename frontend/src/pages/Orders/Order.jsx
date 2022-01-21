@@ -38,7 +38,7 @@ const OrderSummary = () => {
   );
 
   useEffect(() => {
-    if (!orderDets || deliveredSuccess || paidSuccess) {
+    if (!orderDets || deliveredSuccess || paidSuccess || id) {
       dispatch(getOrderDetails(id));
     }
     // eslint-disable-next-line
