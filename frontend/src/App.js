@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
+import AdminRoute from "./components/Route/AdminRoute";
 import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
@@ -65,23 +66,20 @@ function App() {
             <PrivateRoute path="/orders/:id" component={Order} />
             <PrivateRoute path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/admin/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/admin/meals" component={Meals} />
-            <PrivateRoute
+            <AdminRoute path="/admin/dashboard" component={Dashboard} />
+            <AdminRoute exact path="/admin/meals" component={Meals} />
+            <AdminRoute
               exact
               path="/admin/meals/:id?/edit"
               component={MealEdit}
             />
-            <PrivateRoute path="/admin/menu" component={Menu} />
-            <PrivateRoute exact path="/admin/user-list" component={UserList} />
-            <PrivateRoute path="/admin/order-list" component={OrderList} />
-            <PrivateRoute
-              path="/admin/user-list/:id/edit"
-              component={UserEdit}
-            />
+            <AdminRoute path="/admin/menu" component={Menu} />
+            <AdminRoute exact path="/admin/user-list" component={UserList} />
+            <AdminRoute path="/admin/order-list" component={OrderList} />
+            <AdminRoute path="/admin/user-list/:id/edit" component={UserEdit} />
             {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
             {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            <PrivateRoute path="/admin/sales-report" component={SalesReport} />
+            <AdminRoute path="/admin/sales-report" component={SalesReport} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>
