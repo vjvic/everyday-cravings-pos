@@ -23,6 +23,7 @@ import {
   IconButton,
   Stack,
   Container,
+  Pagination,
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
@@ -34,6 +35,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 const MealDetailsPage = () => {
   const [reviewRating, setReviewRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [mealReviewPerpage] = useState(5);
 
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
@@ -41,6 +44,19 @@ const MealDetailsPage = () => {
   const { error: errorReviews, success: successReviews } = useSelector(
     (state) => state.mealCreateReviews
   );
+
+  const indexOfLastMealReview = currentPage * mealReviewPerpage;
+  const indexOfFirstMealReview = indexOfLastMealReview - mealReviewPerpage;
+  const currentMealReview = meal.reviews.slice(
+    indexOfFirstMealReview,
+    indexOfLastMealReview
+  );
+
+  //change page
+
+  const handleChangePage = (event, value) => {
+    setCurrentPage(value);
+  };
 
   const { name, image, countInStock, price } = meal;
 
@@ -215,11 +231,11 @@ const MealDetailsPage = () => {
             <Typography variant="h4" sx={{ paddingBottom: 2 }}>
               Reviews
             </Typography>
-            {meal.reviews.length === 0 && (
+            {currentMealReview.length === 0 && (
               <Alert severity="info">No Reviews</Alert>
             )}
             <Box as="ul" sx={{ listStyle: "none", padding: 0 }}>
-              {meal.reviews.map((review) => (
+              {currentMealReview.map((review) => (
                 <Box as="li" my={2} key={review._id}>
                   <Box display="flex" alignItems="center">
                     <strong>{review.name}</strong>
@@ -242,6 +258,12 @@ const MealDetailsPage = () => {
                   </Typography>
                 </Box>
               ))}
+              {meal.reviews.length > 5 && (
+                <Pagination
+                  count={Math.ceil(meal.reviews.length / mealReviewPerpage)}
+                  onChange={handleChangePage}
+                />
+              )}
             </Box>
           </Box>
 
