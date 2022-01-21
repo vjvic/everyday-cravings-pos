@@ -17,7 +17,7 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Loader } from "../../components";
 import { getMyOrders } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
@@ -61,6 +61,13 @@ const MyOrders = () => {
   if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
+
+  if (orders.length === 0)
+    return (
+      <Alert severity="warning">
+        No orders back to <Link to="/">Home</Link>
+      </Alert>
+    );
 
   return (
     <>
