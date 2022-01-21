@@ -12,6 +12,10 @@ import {
   TextField,
   Button,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +30,7 @@ const MyOrders = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
 
   const history = useHistory();
 
@@ -58,6 +63,24 @@ const MyOrders = () => {
     dispatch(getOrderList());
   }, [dispatch]);
 
+  const sortOrders = () => {
+    if (selectedValue === "Oldest Orders") {
+      return orders.sort((a, b) => {
+        var dateA = new Date(a.createdAt);
+        var dateB = new Date(b.createdAt);
+        return dateA - dateB;
+      });
+    } else if (selectedValue === "Recent Orders") {
+      return orders.sort((a, b) => {
+        var dateA = new Date(a.createdAt);
+        var dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      });
+    } else {
+      return orders;
+    }
+  };
+
   if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
@@ -70,6 +93,25 @@ const MyOrders = () => {
         </Typography>
 
         <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
+          <FormControl
+            color="secondary"
+            variant="standard"
+            sx={{ minWidth: 120, marginX: 2 }}
+          >
+            <InputLabel>Sort Orders</InputLabel>
+            <Select
+              value={selectedValue}
+              onChange={(e) => setSelectedValue(e.target.value)}
+              /* label="Filter" */
+            >
+              {["Oldest Orders", "Recent Orders"].map((c, index) => (
+                <MenuItem key={index} value={c}>
+                  {c}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <TextField
             label="Search..."
             variant="standard"
@@ -95,7 +137,7 @@ const MyOrders = () => {
               </TableHead>
 
               <TableBody>
-                {orders
+                {sortOrders()
                   .filter((order) => filterOrders(order))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
