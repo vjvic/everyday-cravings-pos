@@ -15,6 +15,13 @@ import { useHistory } from "react-router-dom";
 import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
 import { updateMealStock } from "../../redux/actions/mealAction";
 
+const fontSize = {
+  lg: 35,
+  md: 30,
+  sm: 28,
+  xs: 25,
+};
+
 const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const { cartItems } = useSelector((state) => state.cart);
   const { shippingAddress } = useSelector((state) => state.cartAddress);
@@ -69,7 +76,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
       <Grid container spacing={3}>
         <Grid item lg={8}>
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1 }}>
+            <Typography variant="h4" sx={{ paddingY: 1, fontSize }}>
               SHIPPING
             </Typography>
             <Typography variant="body1">
@@ -78,7 +85,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
           </Box>
           <Divider />
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1 }}>
+            <Typography variant="h4" sx={{ paddingY: 1, fontSize }}>
               Payment Method
             </Typography>
             <Typography variant="body1">Method: {paymentMethod}</Typography>
@@ -86,7 +93,10 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
           <Divider />
 
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1, marginBottom: 3 }}>
+            <Typography
+              variant="h4"
+              sx={{ paddingY: 1, marginBottom: 3, fontSize }}
+            >
               ORDER ITEMS
             </Typography>
 
@@ -123,10 +133,12 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
           </Box>
         </Grid>
 
-        <Grid item lg={4} sx={{ marginY: 2 }}>
+        <Grid item xs={12} lg={4} sx={{ marginY: 2 }}>
           <Paper variant="outlined">
             <Box p={2}>
-              <Typography variant="h4">ORDER SUMMARY</Typography>
+              <Typography variant="h4" sx={{ fontSize }}>
+                ORDER SUMMARY
+              </Typography>
             </Box>
             <Divider />
             <Box p={2}>

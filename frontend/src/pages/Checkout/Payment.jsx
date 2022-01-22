@@ -11,6 +11,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { savePaymentMethod } from "../../redux/actions/cartAction";
 
+const fontSize = {
+  lg: 35,
+  md: 30,
+  sm: 28,
+  xs: 25,
+};
+
 const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
 
@@ -35,7 +42,7 @@ const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
 
   return (
     <div>
-      <Typography variant="h4" sx={{ paddingBottom: 2 }}>
+      <Typography variant="h4" sx={{ paddingBottom: 2, fontSize }}>
         PAYMENT METHOD
       </Typography>
 

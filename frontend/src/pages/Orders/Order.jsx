@@ -20,6 +20,13 @@ import { Loader } from "../../components";
 import { totalAmount } from "../../utils/utils";
 import { format } from "date-fns";
 
+const fontSize = {
+  lg: 35,
+  md: 30,
+  sm: 28,
+  xs: 25,
+};
+
 const OrderSummary = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -66,11 +73,23 @@ const OrderSummary = () => {
 
   return (
     <Container>
-      <Typography variant="h4">Order {id}</Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          fontSize: {
+            lg: 30,
+            md: 25,
+            sm: 22,
+            xs: 20,
+          },
+        }}
+      >
+        Order {id}
+      </Typography>
       <Grid container spacing={3}>
         <Grid item lg={8}>
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1 }}>
+            <Typography variant="h4" sx={{ paddingY: 1, fontSize }}>
               SHIPPING
             </Typography>
             <Typography variant="body1">
@@ -89,7 +108,7 @@ const OrderSummary = () => {
           </Box>
           <Divider />
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1 }}>
+            <Typography variant="h4" sx={{ paddingY: 1, fontSize }}>
               Payment Method
             </Typography>
             <Typography variant="body1">Method: {paymentMethod}</Typography>
@@ -107,7 +126,10 @@ const OrderSummary = () => {
           <Divider />
 
           <Box my={2}>
-            <Typography variant="h4" sx={{ paddingY: 1, marginBottom: 3 }}>
+            <Typography
+              variant="h4"
+              sx={{ paddingY: 1, marginBottom: 3, fontSize }}
+            >
               ORDER ITEMS
             </Typography>
 
@@ -155,7 +177,9 @@ const OrderSummary = () => {
           )}
           <Paper variant="outlined">
             <Box p={2}>
-              <Typography variant="h4">ORDER SUMMARY</Typography>
+              <Typography variant="h4 " sx={{ fontSize }}>
+                ORDER SUMMARY
+              </Typography>
             </Box>
             <Divider />
             <Box p={2}>

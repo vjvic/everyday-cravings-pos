@@ -3,6 +3,13 @@ import { Typography, TextField, Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../../redux/actions/cartAction";
 
+const fontSize = {
+  lg: 35,
+  md: 30,
+  sm: 28,
+  xs: 25,
+};
+
 const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -32,7 +39,9 @@ const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
 
   return (
     <div>
-      <Typography variant="h4">SHIPPING</Typography>
+      <Typography variant="h4" sx={{ fontSize }}>
+        SHIPPING
+      </Typography>
 
       <Box
         component="form"

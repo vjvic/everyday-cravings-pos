@@ -10,7 +10,14 @@ export const HeroSection = styled("section")(({ theme }) => ({
 
   [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(3),
+    h2: {
+      fontSize: "2.5rem",
+    },
+    h3: {
+      fontSize: "1.6rem",
+    },
   },
+
   /*  img: {
     display: "none",
   },

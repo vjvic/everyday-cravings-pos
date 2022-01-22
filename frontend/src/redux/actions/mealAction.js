@@ -300,7 +300,7 @@ export const updateMealStock =
           image: data.image,
           price: data.price,
           countInStock: data.countInStock,
-          qty: countInStock,
+          qty: 0,
         },
       });
     } catch (error) {
