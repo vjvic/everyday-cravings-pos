@@ -108,8 +108,8 @@ const Appbar = ({ handleDrawerToggle }) => {
 
         <Box>
           <IconButton
+            sx={{ color: "#212121" }}
             size="large"
-            color="inherit"
             onClick={() => history.push("/cart")}
           >
             <Badge badgeContent={total} color="error">
@@ -124,7 +124,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               <React.Fragment>
                 <Button
                   endIcon={<ArrowDropDownIcon />}
-                  color="inherit"
+                  sx={{ color: "#212121" }}
                   {...bindTrigger(popupState)}
                 >
                   {userInfo.name}

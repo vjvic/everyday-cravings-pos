@@ -56,7 +56,6 @@ const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
           label="Address"
           variant="filled"
           fullWidth
-          color="secondary"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           required
@@ -66,7 +65,6 @@ const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
           label="City"
           variant="filled"
           fullWidth
-          color="secondary"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           required
@@ -76,7 +74,6 @@ const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
           label="Province"
           variant="filled"
           fullWidth
-          color="secondary"
           value={province}
           onChange={(e) => setProvince(e.target.value)}
           required
@@ -86,7 +83,6 @@ const Shipping = ({ activeStep, handleBack, handleNext, steps }) => {
           label="Postal Code"
           variant="filled"
           fullWidth
-          color="secondary"
           value={postalCode}
           onChange={(e) => setPostalCode(e.target.value)}
           required

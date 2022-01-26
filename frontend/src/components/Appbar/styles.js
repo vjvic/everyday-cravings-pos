@@ -7,6 +7,7 @@ export const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.grey[50],
   },
+  color: "#212121",
   boxShadow: "0 0 3px rgba(0,0,0,0.3)",
   marginRight: theme.spacing(2),
   marginLeft: 0,

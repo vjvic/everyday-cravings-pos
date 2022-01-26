@@ -84,7 +84,6 @@ const Edit = () => {
         <TextField
           label="Name"
           variant="outlined"
-          color="secondary"
           value={name || ""}
           onChange={(e) => setName(e.target.value)}
         />
@@ -92,7 +91,6 @@ const Edit = () => {
         <TextField
           label="Email"
           variant="outlined"
-          color="secondary"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -100,7 +98,6 @@ const Edit = () => {
         <FormControlLabel
           control={
             <Checkbox
-              color="secondary"
               checked={isAdmin || false}
               onChange={(e) => setIsAdmin(e.target.checked)}
             />

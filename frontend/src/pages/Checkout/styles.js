@@ -6,10 +6,10 @@ export const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   height: 22,
   alignItems: "center",
   ...(ownerState.active && {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   }),
   "& .QontoStepIcon-completedIcon": {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     zIndex: 1,
     fontSize: 18,
   },

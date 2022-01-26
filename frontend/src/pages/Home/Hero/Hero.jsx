@@ -27,7 +27,7 @@ const Hero = () => {
             components="span"
             variant="h3"
             fontWeight="bold"
-            sx={{ color: "secondary.main", letterSpacing: 6 }}
+            sx={{ color: "primary.main", letterSpacing: 6 }}
           >
             Cravings!
           </Typography>
@@ -38,7 +38,7 @@ const Hero = () => {
               size="large"
               sx={{
                 background: "#fff",
-                color: "secondary.main",
+                color: "primary.main",
                 "&.MuiButtonBase-root:hover": {
                   bgcolor: "#fff",
                 },

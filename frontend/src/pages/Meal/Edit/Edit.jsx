@@ -165,7 +165,6 @@ const Edit = () => {
         <TextField
           label="Meal Name"
           variant="outlined"
-          color="secondary"
           value={name || ""}
           onChange={(e) => setName(e.target.value)}
           fullWidth
@@ -174,7 +173,6 @@ const Edit = () => {
         <TextField
           label="Price"
           variant="outlined"
-          color="secondary"
           type="number"
           value={price || ""}
           onChange={(e) => setPrice(e.target.value)}
@@ -184,7 +182,6 @@ const Edit = () => {
         <TextField
           label="Image"
           variant="outlined"
-          color="secondary"
           value={image || ""}
           onChange={(e) => setImage(e.target.value)}
           fullWidth
@@ -201,7 +198,7 @@ const Edit = () => {
         </Button>
 
         <Stack direction="row" spacing={2}>
-          <FormControl fullWidth color="secondary">
+          <FormControl fullWidth>
             <InputLabel>Category</InputLabel>
             <Select
               defaultValue={category || ""}
@@ -222,7 +219,6 @@ const Edit = () => {
           <TextField
             label="Count In Stock"
             variant="outlined"
-            color="secondary"
             type="number"
             value={countInStock || ""}
             onChange={(e) => setCountInstock(e.target.value)}
@@ -233,7 +229,6 @@ const Edit = () => {
         <TextField
           label="Description"
           variant="outlined"
-          color="secondary"
           multiline
           rows={3}
           value={description || ""}

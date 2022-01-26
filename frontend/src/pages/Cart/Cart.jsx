@@ -169,7 +169,6 @@ const Cart = () => {
               <TextField
                 label="Customer Name"
                 variant="outlined"
-                color="secondary"
                 value={customerName || ""}
                 onChange={(e) => setCustomerName(e.target.value)}
               />
@@ -178,12 +177,11 @@ const Cart = () => {
                 label="Paid"
                 type="number"
                 variant="outlined"
-                color="secondary"
                 value={paid || ""}
                 onChange={(e) => setPaid(e.target.value)}
               />
 
-              <FormControl fullWidth color="secondary">
+              <FormControl fullWidth>
                 <InputLabel>Payment Type</InputLabel>
                 <Select
                   defaultValue={paymentType || ""}

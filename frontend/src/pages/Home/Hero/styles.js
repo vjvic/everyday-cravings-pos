@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 /* import { Typography } from "@mui/material"; */
 
 export const HeroSection = styled("section")(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.secondary.main,
   borderRadius: theme.shape.borderRadius,
   color: "#333",
   padding: theme.spacing(5, 6),

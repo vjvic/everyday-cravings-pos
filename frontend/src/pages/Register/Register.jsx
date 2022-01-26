@@ -84,7 +84,6 @@ const RegisterPage = () => {
               error={errors?.email?.message.length > 0}
               helperText={errors?.email?.message}
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}
@@ -97,7 +96,6 @@ const RegisterPage = () => {
               error={errors?.username?.message.length > 0}
               helperText={errors?.username?.message}
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}
@@ -111,7 +109,6 @@ const RegisterPage = () => {
               error={errors?.password?.message.length > 0}
               helperText={errors?.password?.message}
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}
@@ -125,7 +122,6 @@ const RegisterPage = () => {
               error={errors?.confirmPassword?.message.length > 0}
               helperText={errors?.confirmPassword?.message}
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}

@@ -29,11 +29,12 @@ import {
   OrderList,
 } from "./pages";
 
-const secondary = "#DE8538";
+const secondary = "#FFECC2";
+const primary = "#DE8538";
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#FFECC2" },
+    primary: { main: primary, contrastText: "#fff" },
     secondary: {
       main: secondary,
     },

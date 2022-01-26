@@ -63,7 +63,7 @@ const Payment = ({ activeStep, handleBack, handleNext, steps }) => {
           >
             <FormControlLabel
               value="Cash on Delivery"
-              control={<Radio color="secondary" />}
+              control={<Radio />}
               label="Cash on Delivery"
             />
           </RadioGroup>

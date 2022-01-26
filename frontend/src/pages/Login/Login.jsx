@@ -69,7 +69,6 @@ const LoginPage = () => {
               label="Email"
               fullWidth
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}
@@ -82,7 +81,6 @@ const LoginPage = () => {
               type="password"
               fullWidth
               variant="filled"
-              color="secondary"
               InputLabelProps={{
                 style: { color: "#888" },
               }}
