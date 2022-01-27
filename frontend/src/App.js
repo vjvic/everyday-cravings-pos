@@ -58,14 +58,14 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute path="/category/:category" component={Category} />
-            <PrivateRoute path="/meal/:id" component={MealDetails} />
+            <Route exact path="/" component={Home} />
+            <Route path="/category/:category" component={Category} />
+            <Route path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
-            <PrivateRoute path="/cart/:id?" component={Cart} />
+            <Route path="/cart/:id?" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
             <PrivateRoute path="/orders/:id" component={Order} />
-            <PrivateRoute path="/my-orders" component={MyOrders} />
+            <Route path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
             <AdminRoute path="/admin/dashboard" component={Dashboard} />
             <AdminRoute exact path="/admin/meals" component={Meals} />

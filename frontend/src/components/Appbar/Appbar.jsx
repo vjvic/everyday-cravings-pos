@@ -19,14 +19,14 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
-import { useLocation } from "react-router";
+/* import { useLocation } from "react-router"; */
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [keyword, setKeyword] = useState("");
 
   const history = useHistory();
-  const location = useLocation();
+  /* const location = useLocation(); */
 
   const dispatch = useDispatch();
 
@@ -66,8 +66,8 @@ const Appbar = ({ handleDrawerToggle }) => {
       </Box>
     );
 
-  if (location.pathname === "/login" || location.pathname === "/register")
-    return "";
+  /*   if (location.pathname === "/login" || location.pathname === "/register")
+    return ""; */
 
   return (
     <AppBar
@@ -118,7 +118,7 @@ const Appbar = ({ handleDrawerToggle }) => {
           </IconButton>
         </Box>
 
-        {userInfo && (
+        {userInfo ? (
           <PopupState variant="popover">
             {(popupState) => (
               <React.Fragment>
@@ -142,6 +142,14 @@ const Appbar = ({ handleDrawerToggle }) => {
               </React.Fragment>
             )}
           </PopupState>
+        ) : (
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => history.push("/login")}
+          >
+            login
+          </Button>
         )}
       </Toolbar>
     </AppBar>

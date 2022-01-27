@@ -32,6 +32,7 @@ const MyOrders = () => {
   const dispatch = useDispatch();
 
   const { loading, orders, error } = useSelector((state) => state.orderMyList);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   //Change page
   const handleChangePage = (event, newPage) => {
@@ -57,6 +58,13 @@ const MyOrders = () => {
   useEffect(() => {
     dispatch(getMyOrders());
   }, [dispatch]);
+
+  if (!userInfo)
+    return (
+      <Alert severity="info">
+        please <Link to="/login">signin</Link> to see your orders
+      </Alert>
+    );
 
   if (loading) return <Loader />;
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { TextField, Button, Typography, Alert, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import { useLocation, useHistory } from "react-router-dom";
+import { /*  useLocation, */ useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 });
 
 const RegisterPage = () => {
-  const location = useLocation();
+  /* const location = useLocation(); */
   const history = useHistory();
 
   const dispatch = useDispatch();
@@ -35,13 +35,11 @@ const RegisterPage = () => {
 
   const { userInfo, error } = useSelector((state) => state.userRegister);
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      history.push("/");
     }
-  }, [history, userInfo, redirect]);
+  }, [history, userInfo]);
 
   const onSubmit = (data, e) => {
     dispatch(userRegister(data.username, data.email, data.password));
@@ -133,12 +131,7 @@ const RegisterPage = () => {
 
             <Box>
               <Typography variant="body1">
-                Have an account?{" "}
-                <Link
-                  to={redirect ? `/register?redirect${redirect}` : "/login"}
-                >
-                  Login
-                </Link>
+                Have an account? <Link to={"/login"}>Login</Link>
               </Typography>
             </Box>
           </Box>
