@@ -10,6 +10,7 @@ import {
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
+  GridToolbarExport,
 } from "@mui/x-data-grid";
 
 const CustomToolbar = () => {
@@ -17,6 +18,7 @@ const CustomToolbar = () => {
     <GridToolbarContainer>
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
+      <GridToolbarExport />
       <GridToolbarDensitySelector />
     </GridToolbarContainer>
   );
@@ -28,17 +30,16 @@ const SalesReport = () => {
   const { orders, loading } = useSelector((state) => state.orderList);
 
   const columns = [
-    { field: "_id", headerName: "ID", flex: 1 },
+    { field: "_id", headerName: "ID", width: 250 },
     {
       field: "user",
       headerName: "User",
+      width: 100,
       valueGetter: (params) => params.row.user.name,
-      flex: 1,
     },
     {
       field: "createdAt",
       headerName: "Date",
-      flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -50,25 +51,24 @@ const SalesReport = () => {
     {
       field: "paymentMethod",
       headerName: "Payment Method",
-      flex: 1,
+      width: 150,
     },
     {
       field: "totalItems",
       headerName: "Total Items",
       type: "number",
-      flex: 1,
+      width: 100,
     },
     {
       field: "subtotal",
       headerName: "Subtotal",
       type: "number",
-      flex: 1,
+      width: 100,
     },
     {
       field: "totalPrice",
       headerName: "Total Price",
       type: "number",
-      flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -92,7 +92,7 @@ const SalesReport = () => {
         Sales Report
       </Typography>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 500, maxWidth: 950 }}>
         <DataGrid
           rows={orders}
           columns={columns}
@@ -100,24 +100,6 @@ const SalesReport = () => {
           components={{
             Toolbar: CustomToolbar,
           }}
-
-          /*  componentsProps={{
-          panel: {
-            sx: {
-              ".css-870lsu-MuiButtonBase-root-MuiButton-root": {
-                color: "dodgerblue",
-                fontSize: 20,
-                display: "none",
-              },
-              "& .MuiDataGrid-filterForm": {
-                bgcolor: "lightblue",
-              },
-              "& .MuiSwitch-input": {
-                backgroundColor: "red",
-              },
-            },
-          },
-        }} */
         />
       </div>
     </Container>

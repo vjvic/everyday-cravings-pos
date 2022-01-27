@@ -28,9 +28,8 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const activeColor = (path) => {
     return location.pathname === path ? "#F5F5F5" : null;
   };
-  /* 
-  if (location.pathname === "/login" || location.pathname === "/register")
-    return ""; */
+
+  /*   if (location.pathname === "/admin/sales-report/export") return ""; */
 
   const drawer = (
     <div>

@@ -80,7 +80,11 @@ function App() {
             <AdminRoute path="/admin/user-list/:id/edit" component={UserEdit} />
             {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
             {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            <AdminRoute path="/admin/sales-report" component={SalesReport} />
+            <AdminRoute
+              exact
+              path="/admin/sales-report"
+              component={SalesReport}
+            />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Layout>

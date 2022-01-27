@@ -26,7 +26,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   const [keyword, setKeyword] = useState("");
 
   const history = useHistory();
-  /* const location = useLocation(); */
+  /*  const location = useLocation(); */
 
   const dispatch = useDispatch();
 
@@ -66,8 +66,7 @@ const Appbar = ({ handleDrawerToggle }) => {
       </Box>
     );
 
-  /*   if (location.pathname === "/login" || location.pathname === "/register")
-    return ""; */
+  /*   if (location.pathname === "/admin/sales-report/export") return ""; */
 
   return (
     <AppBar
