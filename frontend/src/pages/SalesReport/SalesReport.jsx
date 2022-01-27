@@ -1,10 +1,26 @@
 import React, { useEffect } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
 import { Loader } from "../../components";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
 
 const SalesReport = () => {
   const dispatch = useDispatch();
@@ -16,12 +32,13 @@ const SalesReport = () => {
     {
       field: "user",
       headerName: "User",
-      flex: 1,
       valueGetter: (params) => params.row.user.name,
+      flex: 1,
     },
     {
       field: "createdAt",
       headerName: "Date",
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -29,6 +46,10 @@ const SalesReport = () => {
           </div>
         );
       },
+    },
+    {
+      field: "paymentMethod",
+      headerName: "Payment Method",
       flex: 1,
     },
     {
@@ -48,7 +69,6 @@ const SalesReport = () => {
       headerName: "Total Price",
       type: "number",
       flex: 1,
-
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -67,7 +87,7 @@ const SalesReport = () => {
   if (loading) return <Loader />;
 
   return (
-    <>
+    <Container>
       <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
         Sales Report
       </Typography>
@@ -78,9 +98,9 @@ const SalesReport = () => {
           columns={columns}
           getRowId={(row) => row._id}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: CustomToolbar,
           }}
-          componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
+
           /*  componentsProps={{
           panel: {
             sx: {
@@ -100,7 +120,7 @@ const SalesReport = () => {
         }} */
         />
       </div>
-    </>
+    </Container>
   );
 };
 

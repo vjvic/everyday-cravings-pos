@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Typography, Button, Alert } from "@mui/material";
+import { Typography, Button, Alert, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import CheckIcon from "@mui/icons-material/Check";
@@ -8,7 +8,24 @@ import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
 import { getOrderList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
 
 const MyOrders = () => {
   const history = useHistory();
@@ -111,7 +128,7 @@ const MyOrders = () => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <>
+    <Container>
       <Box sx={{ width: "100%" }}>
         <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
           Orders
@@ -124,12 +141,12 @@ const MyOrders = () => {
           columns={columns}
           getRowId={(row) => row._id}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: CustomToolbar,
           }}
           componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
         />
       </div>
-    </>
+    </Container>
   );
 };
 

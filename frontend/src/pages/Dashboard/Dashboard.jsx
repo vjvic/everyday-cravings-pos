@@ -357,11 +357,7 @@ const DashboardPage = () => {
                   </Typography>
                 </div>
 
-                <FormControl
-                  color="secondary"
-                  variant="standard"
-                  sx={{ minWidth: 120 }}
-                >
+                <FormControl variant="standard" sx={{ minWidth: 120 }}>
                   <InputLabel>Date Filters</InputLabel>
                   <Select
                     value={date}

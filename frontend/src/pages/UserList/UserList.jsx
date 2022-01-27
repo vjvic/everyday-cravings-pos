@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Typography, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,7 +8,23 @@ import CloseIcon from "@mui/icons-material/Close";
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
 
 const UserListPage = () => {
   const history = useHistory();
@@ -86,7 +102,7 @@ const UserListPage = () => {
   if (loading) return <Loader />;
 
   return (
-    <>
+    <Container>
       <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
         User List
       </Typography>
@@ -97,12 +113,12 @@ const UserListPage = () => {
           columns={columns}
           getRowId={(row) => row._id}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: CustomToolbar,
           }}
           componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
         />
       </div>
-    </>
+    </Container>
   );
 };
 

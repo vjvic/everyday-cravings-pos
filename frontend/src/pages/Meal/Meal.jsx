@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { IconButton, Typography, Button, Stack } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  Button,
+  Stack,
+  Container,
+  capitalize,
+} from "@mui/material";
 import { deleteMeal } from "../../redux/actions/mealAction";
 import { useDispatch, useSelector } from "react-redux";
 import { getMealList } from "../../redux/actions/mealAction";
@@ -8,7 +15,23 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { useHistory } from "react-router-dom";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarDensitySelector,
+} from "@mui/x-data-grid";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+    </GridToolbarContainer>
+  );
+};
 
 const MealsPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +60,16 @@ const MealsPage = () => {
       field: "name",
       headerName: "Meal Name",
       flex: 1,
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> {capitalize(params.row.category)}</div>
+        );
+      },
     },
     {
       field: "price",
@@ -87,7 +120,7 @@ const MealsPage = () => {
   if (mealsLoading) return <Loader />;
 
   return (
-    <>
+    <Container>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -113,12 +146,12 @@ const MealsPage = () => {
           columns={columns}
           getRowId={(row) => row._id}
           components={{
-            Toolbar: GridToolbar,
+            Toolbar: CustomToolbar,
           }}
           componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
         />
       </div>
-    </>
+    </Container>
   );
 };
 
