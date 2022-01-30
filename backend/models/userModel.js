@@ -21,6 +21,16 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isCashier: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    role: { type: String },
+    firtsName: { type: String },
+    lastName: { type: String },
+    contact: { type: String },
+    gender: { type: String },
   },
   {
     timeStamps: true,

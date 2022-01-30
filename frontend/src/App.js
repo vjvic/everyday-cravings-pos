@@ -15,7 +15,7 @@ import {
   Results,
   /*  Cashier, */
   Menu,
-  /*  Receipt, */
+  Receipt,
   SalesReport,
   UserList,
   Home,
@@ -27,6 +27,8 @@ import {
   Order,
   MyOrders,
   OrderList,
+  Suppliers,
+  Ingredient,
 } from "./pages";
 
 const secondary = "#FFECC2";
@@ -58,35 +60,33 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <Route exact path="/" component={Home} />
-            <Route path="/category/:category" component={Category} />
+            {/* <Route exact path="/" component={Home} /> */}
+            <Route path="/categories" component={Category} />
             <Route path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
-            <Route path="/cart/:id?" component={Cart} />
+            <Route exact path="/cashier/:id?" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
             <PrivateRoute path="/orders/:id" component={Order} />
             <Route path="/my-orders" component={MyOrders} />
             <PrivateRoute path="/profile" component={Profile} />
-            <AdminRoute path="/admin/dashboard" component={Dashboard} />
-            <AdminRoute exact path="/admin/meals" component={Meals} />
-            <AdminRoute
+            <PrivateRoute
               exact
-              path="/admin/meals/:id?/edit"
-              component={MealEdit}
+              path="/cashier/receipt/:id"
+              component={Receipt}
             />
-            <AdminRoute path="/admin/menu" component={Menu} />
-            <AdminRoute exact path="/admin/user-list" component={UserList} />
-            <AdminRoute path="/admin/order-list" component={OrderList} />
-            <AdminRoute path="/admin/user-list/:id/edit" component={UserEdit} />
-            {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
-            {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            <AdminRoute
-              exact
-              path="/admin/sales-report"
-              component={SalesReport}
-            />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
+            <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute exact path="/meals" component={Meals} />
+            <PrivateRoute exact path="/ingredients" component={Ingredient} />
+            <PrivateRoute exact path="/meals/:id?/edit" component={MealEdit} />
+            <PrivateRoute exact path="/menu" component={Menu} />
+            <PrivateRoute exact path="/user-list" component={UserList} />
+            <PrivateRoute exact path="/order-list" component={OrderList} />
+            <AdminRoute exact path="/user-list/:id/edit" component={UserEdit} />
+            {/*   <PrivateRoute path="/cashier/:id?" component={Cashier} /> */}
+            <PrivateRoute exact path="/suppliers" component={Suppliers} />
+            <PrivateRoute exact path="/sales-report" component={SalesReport} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
           </Layout>
         </Switch>
       </Router>

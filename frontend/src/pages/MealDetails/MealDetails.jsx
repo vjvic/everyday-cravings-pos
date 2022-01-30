@@ -31,6 +31,7 @@ import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { FaCashRegister } from "react-icons/fa";
 
 const MealDetailsPage = () => {
   const [reviewRating, setReviewRating] = useState(0);
@@ -214,10 +215,11 @@ const MealDetailsPage = () => {
                   variant="contained"
                   fullWidth
                   size="large"
-                  onClick={() => history.push(`/cart/${id}?qty=${qty}`)}
+                  onClick={() => history.push(`/cashier/${id}?qty=${qty}`)}
                   disabled={countInStock === 0}
+                  startIcon={<FaCashRegister />}
                 >
-                  Add to Cart
+                  Add to Cashier
                 </Button>
               </Box>
             </CardContent>

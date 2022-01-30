@@ -24,9 +24,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
 import Item from "./Item/Item";
-/* import { createOrder } from "../../redux/actions/orderAction"; */
+import { createOrderCashier } from "../../redux/actions/orderAction";
+import { updateMealStock } from "../../redux/actions/mealAction";
 import { useHistory } from "react-router-dom";
 import { totalAmount } from "../../utils/utils";
+import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants";
+import { BsFillBagCheckFill } from "react-icons/bs";
 
 const style = {
   position: "absolute",
@@ -47,51 +50,61 @@ const Cart = () => {
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
 
-  const [customerName, setCustomerName] = useState("");
+  /*  const [customerName, setCustomerName] = useState("");
   const [paid, setPaid] = useState("");
-  const [paymentType, setPaymentType] = useState("");
+  const [paymentType, setPaymentType] = useState(""); */
+  const [name, setName] = useState("");
+  const [orderType, setOrderType] = useState("");
 
   //Item quantity
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const { cartItems } = useSelector((state) => state.cart);
   const { success, loading, error, order } = useSelector(
-    (state) => state.orderCreate
+    (state) => state.orderCashierCreate
   );
 
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   //Total amount
-  /* const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.qty * item.price,
-    0
-  ); */
+  let totalPrice = totalAmount(cartItems);
 
   // Total Items
-  const totalItem = cartItems.length;
+  const totalItems = cartItems.length;
 
   //Subtotal
-  const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const subtotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
+  let discount = 0;
+
+  if (orderType === "foodpanda") {
+    discount = totalPrice * 0.15;
+    totalPrice = totalAmount(cartItems) - discount;
+  } else {
+    discount = 0;
+  }
 
   //change
-  /* const change = Math.abs(totalAmount - Number(paid)); */
+  /*  const change = Math.abs(totalAmount - Number(paid)); */
 
-  /*   const handlePayment = (e) => {
+  const handlePayment = (e) => {
     e.preventDefault();
 
     const orders = {
-      totalItem,
-      subTotal,
-      customerName: customerName.toLowerCase(),
-      paid: Number(paid),
-      change: change,
-      totalAmount,
-      paymentType,
-      date: new Date(),
+      name,
+      orderType,
+      totalItems,
+      subtotal,
+      discount,
+      totalPrice,
     };
 
-    if (customerName && paid >= totalAmount && paymentType) {
-      dispatch(createOrder(orders));
-    }
-  }; */
+    dispatch(createOrderCashier(orders));
+
+    cartItems.map((item) =>
+      dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+    );
+  };
 
   useEffect(() => {
     if (id) {
@@ -102,14 +115,14 @@ const Cart = () => {
   useEffect(() => {
     if (success) {
       setIsSave(false);
-      setCustomerName("");
-      setPaid("");
-      setPaymentType("");
+      setName("");
+      setOrderType("");
       if (order._id) {
-        history.push(`/admin/receipt/${order._id}`);
+        history.push(`/cashier/receipt/${order._id}`);
+        dispatch({ type: ORDER_CASHIER_CREATE_RESET });
       }
     }
-  }, [success, history, order]);
+  }, [success, history, order, dispatch]);
 
   const noCart = (
     <Alert severity="info">
@@ -146,13 +159,14 @@ const Cart = () => {
             </Typography>
 
             <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
-              <strong>Total Amount: </strong>
-              {/*     <span>&#8369; {totalAmount.toFixed(2)}</span> */}
+              <strong>Total Price: </strong>
+              <span>&#8369; {totalPrice.toFixed(2)}</span>
             </Typography>
-            {Number(paid) >= totalAmount && (
-              <Typography variant="body" omponent="p">
-                <strong>Total Change: </strong>
-                {/*   <span>&#8369; {change.toFixed(2)}</span> */}
+
+            {orderType === "foodpanda" && (
+              <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
+                <strong>Discount: </strong>
+                <span>15%</span>
               </Typography>
             )}
 
@@ -169,28 +183,20 @@ const Cart = () => {
               <TextField
                 label="Customer Name"
                 variant="outlined"
-                value={customerName || ""}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-
-              <TextField
-                label="Paid"
-                type="number"
-                variant="outlined"
-                value={paid || ""}
-                onChange={(e) => setPaid(e.target.value)}
+                value={name || ""}
+                onChange={(e) => setName(e.target.value)}
               />
 
               <FormControl fullWidth>
-                <InputLabel>Payment Type</InputLabel>
+                <InputLabel>Order Type</InputLabel>
                 <Select
-                  defaultValue={paymentType || ""}
-                  value={paymentType || ""}
+                  defaultValue={orderType || ""}
+                  value={orderType || ""}
                   label="Payment Type"
-                  onChange={(e) => setPaymentType(e.target.value)}
+                  onChange={(e) => setOrderType(e.target.value)}
                 >
-                  <MenuItem value="cash">Cash</MenuItem>
-                  <MenuItem value="credit-card">Credit Card</MenuItem>
+                  <MenuItem value="dine-in">Dine-in</MenuItem>
+                  <MenuItem value="foodpanda">Food Panda</MenuItem>
                 </Select>
               </FormControl>
 
@@ -199,6 +205,7 @@ const Cart = () => {
                 type="submit"
                 size="large"
                 sx={{ height: "45px" }}
+                onClick={handlePayment}
                 disabled={loading}
               >
                 Save payment
@@ -210,7 +217,7 @@ const Cart = () => {
       <div>
         <Box mb={5}>
           <Typography variant="h4" component="h1" sx={{ marginBottom: 2 }}>
-            Cart Items
+            Cashier
           </Typography>
           <Divider />
         </Box>
@@ -224,11 +231,11 @@ const Cart = () => {
             <Paper variant="outlined" sx={{ padding: 2 }}>
               {/*  <CardContent> */}
               <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
-                Total ({totalItem}) Items
+                Total ({totalItems}) Items
               </Typography>
 
               <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
-                Subtotal ({subTotal}) Items
+                Subtotal ({subtotal}) Items
               </Typography>
 
               <Typography variant="body1">
@@ -238,7 +245,7 @@ const Cart = () => {
 
               <Divider />
 
-              <Button
+              {/*   <Button
                 fullWidth
                 variant="contained"
                 size="large"
@@ -247,7 +254,21 @@ const Cart = () => {
                 onClick={() => history.push("/checkout")}
               >
                 Proceed To Checkout
-              </Button>
+              </Button> */}
+
+              {userInfo && userInfo.isCashier && (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  sx={{ marginTop: 3 }}
+                  disabled={cartItems.length === 0}
+                  onClick={() => setIsSave(true)}
+                  startIcon={<BsFillBagCheckFill />}
+                >
+                  Checkout
+                </Button>
+              )}
               {/*  </CardContent> */}
             </Paper>
           </Grid>

@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { IconButton, Typography, Container } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  Container,
+  Stack,
+  Button,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
+import AddIcon from "@mui/icons-material/Add";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -69,6 +76,18 @@ const UserListPage = () => {
       },
     },
     {
+      field: "isCashier",
+      headerName: "Cashier",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {params.row.isCashier ? <CheckIcon /> : <CloseIcon />}
+          </div>
+        );
+      },
+    },
+    {
       field: "action",
       headerName: "",
       flex: 1,
@@ -103,9 +122,24 @@ const UserListPage = () => {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
-        User List
-      </Typography>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ marginY: 3 }}
+      >
+        <Typography variant="h4" component="h1">
+          User
+        </Typography>
+
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          /* onClick={() => history.push("meals/edit")} */
+        >
+          Add User
+        </Button>
+      </Stack>
 
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid

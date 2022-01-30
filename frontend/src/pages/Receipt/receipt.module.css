@@ -19,6 +19,10 @@
   margin-right: 0.5rem;
 }
 
+#printableTable {
+  display: block;
+}
+
 @media print {
   .hide {
     display: none;

@@ -19,14 +19,14 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
-/* import { useLocation } from "react-router"; */
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useLocation } from "react-router";
+import { FaCashRegister } from "react-icons/fa";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [keyword, setKeyword] = useState("");
 
   const history = useHistory();
-  /*  const location = useLocation(); */
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -51,6 +51,15 @@ const Appbar = ({ handleDrawerToggle }) => {
   const logoutHandler = () => {
     dispatch(logout());
   };
+
+  const { order } = useSelector((state) => state.orderCashierDetails);
+
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === `/cashier/receipt/${order ? order._id : " "}`
+  )
+    return "";
 
   if (loading)
     return (
@@ -109,10 +118,10 @@ const Appbar = ({ handleDrawerToggle }) => {
           <IconButton
             sx={{ color: "#212121" }}
             size="large"
-            onClick={() => history.push("/cart")}
+            onClick={() => history.push("/cashier")}
           >
             <Badge badgeContent={total} color="error">
-              <ShoppingCartIcon />
+              <FaCashRegister />
             </Badge>
           </IconButton>
         </Box>

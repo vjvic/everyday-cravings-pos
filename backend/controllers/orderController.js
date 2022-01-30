@@ -1,4 +1,5 @@
 import Order from "../models/orderModel.js";
+import OrderCashier from "../models/orderCashierModel.js";
 import asyncHandler from "express-async-handler";
 //@desc Fetch all orders
 //@route GET /api/orders
@@ -180,6 +181,51 @@ const getAllOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+//Cashier side
+
+//@desc Create new order(cashier)
+//@route POST /api/orders/cashier
+//@access Private
+
+const createOrderCashier = asyncHandler(async (req, res) => {
+  const { name, orderType, totalItems, subtotal, discount, totalPrice } =
+    req.body;
+
+  const order = new OrderCashier({
+    name,
+    orderType,
+    totalItems,
+    subtotal,
+    discount,
+    totalPrice,
+  });
+
+  const createOrder = await order.save();
+  res.status(201).json(createOrder);
+});
+
+//@desc Get all order (cashier)
+//@route GET /api/orders/cashier
+//@access Private
+const getAllOrderCashier = asyncHandler(async (req, res) => {
+  const orders = await OrderCashier.find({});
+
+  res.json(orders);
+});
+
+//@desc Get order by id(cashier)
+//@route GET /api/orders/cashier/:id
+//@access Private
+const getOrderCashierById = asyncHandler(async (req, res) => {
+  const order = await OrderCashier.findById(req.params.id);
+
+  if (order) {
+    res.json(order);
+  } else {
+    throw new Error("Order not found");
+  }
+});
+
 export {
   createOrder,
   getOrderById,
@@ -187,4 +233,7 @@ export {
   updateOrderToDelivered,
   getUserOrders,
   getAllOrders,
+  createOrderCashier,
+  getOrderCashierById,
+  getAllOrderCashier,
 };

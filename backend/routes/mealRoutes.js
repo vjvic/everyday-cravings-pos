@@ -11,16 +11,16 @@ import {
   getTopMeal,
   updateMealStock,
 } from "../controllers/mealController.js";
-import { protect, isAdmin } from "../middleware/authMiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 router.get("/top", getTopMeal);
-router.route("/").get(getMeal).post(protect, isAdmin, createMeal);
+router.route("/").get(getMeal).post(protect, createMeal);
 router.route("/:id/reviews").post(protect, createMealReviews);
 router
   .route("/:id")
   .get(getMealById)
-  .delete(protect, isAdmin, deleteMeal)
-  .put(protect, isAdmin, updateMeal);
+  .delete(protect, deleteMeal)
+  .put(protect, updateMeal);
 router.get("/category/:category", getMealByCategory);
 router.put("/:id/updatestock", protect, updateMealStock);
 export default router;

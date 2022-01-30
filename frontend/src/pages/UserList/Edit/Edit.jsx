@@ -24,6 +24,7 @@ const Edit = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isCashier, setIsCashier] = useState(false);
 
   const {
     loading: updateLoading,
@@ -40,7 +41,7 @@ const Edit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateUser({ _id: id, name, email, isAdmin }));
+    dispatch(updateUser({ _id: id, name, email, isAdmin, isCashier }));
   };
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const Edit = () => {
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
+      setIsCashier(user.isCashier);
     }
   }, [dispatch, user]);
 
@@ -103,6 +105,16 @@ const Edit = () => {
             />
           }
           label="Is Admin"
+        />
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isCashier || false}
+              onChange={(e) => setIsCashier(e.target.checked)}
+            />
+          }
+          label="Is Cashier"
         />
 
         <Button

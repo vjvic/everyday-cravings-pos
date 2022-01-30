@@ -19,6 +19,8 @@ import Checkout from "./Checkout/Checkout";
 import Order from "./Orders/Order";
 import MyOrders from "./Orders/MyOrders";
 import OrderList from "./Orders/OrderList";
+import Suppliers from "./Suppliers/Suppliers";
+import Ingredient from "./Ingredient/Ingredient";
 
 export {
   Dashboard,
@@ -42,4 +44,6 @@ export {
   Order,
   MyOrders,
   OrderList,
+  Suppliers,
+  Ingredient,
 };

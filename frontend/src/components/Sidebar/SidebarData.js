@@ -3,22 +3,25 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 /* import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { FaCashRegister } from "react-icons/fa"; */
-import HomeIcon from "@mui/icons-material/Home";
+/* import HomeIcon from "@mui/icons-material/Home"; */
 /* import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HistoryIcon from "@mui/icons-material/History"; */
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import {
+/* import {
   MdBreakfastDining,
   MdLunchDining,
   MdDinnerDining,
 } from "react-icons/md";
 import { GiCupcake } from "react-icons/gi";
 import { BiDrink } from "react-icons/bi";
-import { FiPackage } from "react-icons/fi";
-import { HiOutlineClipboardList } from "react-icons/hi";
+import { FiPackage } from "react-icons/fi"; */
+/* import { HiOutlineClipboardList } from "react-icons/hi"; */
+import { MdCategory } from "react-icons/md";
+import { GiFactory } from "react-icons/gi";
+import { GiMeat } from "react-icons/gi";
 
 export const navItems = [
-  {
+  /*  {
     text: "Home",
     path: "/",
     icon: <HomeIcon />,
@@ -52,10 +55,60 @@ export const navItems = [
     text: "My Orders",
     path: "/my-orders",
     icon: <FiPackage />,
+  }, */
+  {
+    text: "Dashboard",
+    path: "/",
+    icon: <DashboardIcon />,
+  },
+  {
+    text: "Meals",
+    path: "/meals",
+    icon: <ListAltIcon />,
+  },
+  {
+    text: "Categories",
+    path: "/categories",
+    icon: <MdCategory />,
+  },
+  {
+    text: "Ingredients",
+    path: "/ingredients",
+    icon: <GiMeat />,
+  },
+  {
+    text: "Users",
+    path: "/user-list",
+    icon: <PeopleAltIcon />,
+  },
+  /*   {
+    text: "Order ",
+    path: "/order-list",
+    icon: <HiOutlineClipboardList />,
+  }, */
+  {
+    text: "Suppliers ",
+    path: "/suppliers",
+    icon: <GiFactory />,
+  },
+  /*   {
+    text: "Menu",
+    path: "/admin/menu",
+    icon: <MenuBookIcon />,
+  },
+  {
+    text: "Cashier",
+    path: "/admin/cashier",
+    icon: <FaCashRegister />,
+  }, */
+  {
+    text: "Sales Report",
+    path: "/sales-report",
+    icon: <AssessmentIcon />,
   },
 ];
 
-export const navItemsAdmin = [
+/* export const navItemsAdmin = [
   {
     text: "Dashboard",
     path: "/admin/dashboard",
@@ -75,8 +128,8 @@ export const navItemsAdmin = [
     text: "Order List",
     path: "/admin/order-list",
     icon: <HiOutlineClipboardList />,
-  },
-  /*   {
+  }, */
+/*   {
     text: "Menu",
     path: "/admin/menu",
     icon: <MenuBookIcon />,
@@ -86,12 +139,12 @@ export const navItemsAdmin = [
     path: "/admin/cashier",
     icon: <FaCashRegister />,
   }, */
-  {
+/*  {
     text: "Sales Report",
     path: "/admin/sales-report",
     icon: <AssessmentIcon />,
   },
-];
+]; */
 
 /* export const category = [
 

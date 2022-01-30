@@ -9,7 +9,7 @@ import {
   Drawer,
   Box,
 } from "@mui/material";
-import { navItems, navItemsAdmin } from "./SidebarData";
+import { navItems } from "./SidebarData";
 import { useHistory, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -30,6 +30,14 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   };
 
   /*   if (location.pathname === "/admin/sales-report/export") return ""; */
+  const { order } = useSelector((state) => state.orderCashierDetails);
+
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === `/cashier/receipt/${order ? order._id : " "}`
+  )
+    return "";
 
   const drawer = (
     <div>
@@ -64,6 +72,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
       </Box>
       <Divider />
       <List>
+        {/* User navitems */}
         {navItems.map((item) => (
           <ListItem
             button
@@ -77,25 +86,6 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
-
-        {userInfo && userInfo.isAdmin && <Divider />}
-
-        {userInfo &&
-          userInfo.isAdmin &&
-          navItemsAdmin.map((item) => (
-            <ListItem
-              button
-              key={item.text}
-              onClick={() => history.push(item.path)}
-              /* className={location.pathname === item.path ? classes.active : null} */
-              sx={{
-                backgroundColor: activeColor(item.path),
-              }}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
       </List>
     </div>
   );
