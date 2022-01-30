@@ -6,7 +6,7 @@ const supplierSchema = mongoose.Schema(
     contact: { type: String, required: true },
     address: { type: String, required: true },
     type: { type: String, required: true },
-    isActve: { type: String, required: true },
+    isActive: { type: String, required: true },
   },
   {
     timeStamps: true,

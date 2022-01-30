@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 import {
   createIngredient,
   getAllIngredient,
@@ -11,12 +11,12 @@ import {
 
 router
   .route("/")
-  .post(protect, createIngredient)
+  .post(protect, admin, createIngredient)
   .get(protect, getAllIngredient);
 router
   .route("/:id")
   .get(protect, getSupplierById)
-  .delete(protect, deleteIngredient)
-  .put(protect, updateIngredient);
+  .delete(protect, admin, deleteIngredient)
+  .put(protect, admin, updateIngredient);
 
 export default router;

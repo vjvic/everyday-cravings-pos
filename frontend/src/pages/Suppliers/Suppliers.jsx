@@ -17,8 +17,12 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { getSupplierList } from "../../redux/actions/supplierAction";
+import {
+  deleteSupplier,
+  getSupplierList,
+} from "../../redux/actions/supplierAction";
 import { Loader } from "../../components";
+import { useHistory } from "react-router-dom";
 
 const CustomToolbar = () => {
   return (
@@ -29,9 +33,15 @@ const CustomToolbar = () => {
 };
 
 const Supplier = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const { loading, supplier } = useSelector((state) => state.supplierList);
+  const { success: deleteSuccess } = useSelector(
+    (state) => state.supplierDelete
+  );
+
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   const columns = [
     {
@@ -85,11 +95,15 @@ const Supplier = () => {
         return (
           <div className="rowitem">
             <IconButton
-            /*  onClick={() => history.push(`meals/${params.row._id}/edit`)} */
+              onClick={() => history.push(`/suppliers/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
             >
               <EditIcon />
             </IconButton>
-            <IconButton /* onClick={() => handleDelete(params.row._id)} */>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -98,9 +112,16 @@ const Supplier = () => {
     },
   ];
 
+  //Delete Meal
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteSupplier(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getSupplierList());
-  }, [dispatch]);
+  }, [dispatch, deleteSuccess]);
 
   if (loading) return <Loader />;
 
@@ -119,7 +140,8 @@ const Supplier = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          /* onClick={() => history.push("meals/edit")} */
+          onClick={() => history.push("/suppliers/edit")}
+          disabled={userInfo.role !== "admin"}
         >
           Add Supplier
         </Button>

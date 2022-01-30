@@ -256,13 +256,13 @@ const Cart = () => {
                 Proceed To Checkout
               </Button> */}
 
-              {userInfo && userInfo.isCashier && (
+              {userInfo && (
                 <Button
                   fullWidth
                   variant="contained"
                   size="large"
                   sx={{ marginTop: 3 }}
-                  disabled={cartItems.length === 0}
+                  disabled={cartItems.length === 0 || userInfo.role === "user"}
                   onClick={() => setIsSave(true)}
                   startIcon={<BsFillBagCheckFill />}
                 >

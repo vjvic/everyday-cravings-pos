@@ -17,8 +17,12 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredientList } from "../../redux/actions/ingredientAction";
+import {
+  getIngredientList,
+  deleteIngredient,
+} from "../../redux/actions/ingredientAction";
 import { Loader } from "../../components";
+import { useHistory } from "react-router-dom";
 
 const CustomToolbar = () => {
   return (
@@ -29,9 +33,13 @@ const CustomToolbar = () => {
 };
 
 const Ingredient = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const { loading, ingredient } = useSelector((state) => state.ingredientList);
+  const { success } = useSelector((state) => state.ingredientDelete);
+
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   const columns = [
     {
@@ -87,11 +95,17 @@ const Ingredient = () => {
         return (
           <div className="rowitem">
             <IconButton
-            /*  onClick={() => history.push(`meals/${params.row._id}/edit`)} */
+              onClick={() =>
+                history.push(`/ingredients/${params.row._id}/edit`)
+              }
+              disabled={userInfo.role !== "admin"}
             >
               <EditIcon />
             </IconButton>
-            <IconButton /* onClick={() => handleDelete(params.row._id)} */>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -100,9 +114,16 @@ const Ingredient = () => {
     },
   ];
 
+  //Delete Meal
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteIngredient(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getIngredientList());
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   if (loading) return <Loader />;
 
@@ -121,7 +142,8 @@ const Ingredient = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          /* onClick={() => history.push("meals/edit")} */
+          onClick={() => history.push("ingredients/edit")}
+          disabled={userInfo.role !== "admin"}
         >
           Add Ingredient
         </Button>

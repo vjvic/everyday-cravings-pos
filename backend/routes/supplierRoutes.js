@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 import {
   createSupplier,
   getAllSupplier,
@@ -9,11 +9,14 @@ import {
   getSupplierById,
 } from "../controllers/supplierController.js";
 
-router.route("/").post(protect, createSupplier).get(protect, getAllSupplier);
+router
+  .route("/")
+  .post(protect, admin, createSupplier)
+  .get(protect, getAllSupplier);
 router
   .route("/:id")
-  .get(protect, getSupplierById)
-  .delete(protect, deleteSupplier)
-  .put(protect, updateSupplier);
+  .get(protect, admin, getSupplierById)
+  .delete(protect, admin, deleteSupplier)
+  .put(protect, admin, updateSupplier);
 
 export default router;

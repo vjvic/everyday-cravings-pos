@@ -16,7 +16,10 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoryList } from "../../redux/actions/categoryAction";
+import {
+  getCategoryList,
+  deleteCategory,
+} from "../../redux/actions/categoryAction";
 import { Loader } from "../../components";
 import { useHistory } from "react-router-dom";
 
@@ -33,6 +36,18 @@ const Category = () => {
   const dispatch = useDispatch();
 
   const { loading, category } = useSelector((state) => state.categoryList);
+  const { success: deleteSuccess } = useSelector(
+    (state) => state.categoryDelete
+  );
+
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  //Delete Meal
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure")) {
+      dispatch(deleteCategory(id));
+    }
+  };
 
   const columns = [
     {
@@ -53,10 +68,14 @@ const Category = () => {
           <div className="rowitem">
             <IconButton
               onClick={() => history.push(`categories/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
             >
               <EditIcon />
             </IconButton>
-            <IconButton /* onClick={() => handleDelete(params.row._id)} */>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -67,7 +86,7 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(getCategoryList());
-  }, [dispatch]);
+  }, [dispatch, deleteSuccess]);
 
   if (loading) return <Loader />;
 
@@ -87,6 +106,7 @@ const Category = () => {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => history.push("/categories/edit")}
+          disabled={userInfo.role !== "admin"}
         >
           Add Category
         </Button>

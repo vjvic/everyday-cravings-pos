@@ -30,6 +30,8 @@ import {
   Suppliers,
   Ingredient,
   CategoryEdit,
+  IngredientEdit,
+  SupplierEdit,
 } from "./pages";
 
 const secondary = "#FFECC2";
@@ -83,13 +85,27 @@ function App() {
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute exact path="/meals" component={Meals} />
             <PrivateRoute exact path="/ingredients" component={Ingredient} />
+            <PrivateRoute
+              exact
+              path="/ingredients/:id?/edit"
+              component={IngredientEdit}
+            />
             <PrivateRoute exact path="/meals/:id?/edit" component={MealEdit} />
             <PrivateRoute exact path="/menu" component={Menu} />
             <PrivateRoute exact path="/user-list" component={UserList} />
             <PrivateRoute exact path="/order-list" component={OrderList} />
-            <AdminRoute exact path="/user-list/:id/edit" component={UserEdit} />
+            <PrivateRoute
+              exact
+              path="/user-list/:id/edit"
+              component={UserEdit}
+            />
             {/*   <PrivateRoute path="/cashier/:id?" component={Cashier} /> */}
             <PrivateRoute exact path="/suppliers" component={Suppliers} />
+            <PrivateRoute
+              exact
+              path="/suppliers/:id?/edit"
+              component={SupplierEdit}
+            />
             <PrivateRoute exact path="/sales-report" component={SalesReport} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />

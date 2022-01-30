@@ -17,7 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrderList } from "../../redux/actions/orderAction";
+import { getOrderCashierList } from "../../redux/actions/orderAction";
 import { getMealList } from "../../redux/actions/mealAction";
 import { format } from "date-fns";
 import { BarChart, Loader } from "../../components";
@@ -46,7 +46,7 @@ const DashboardPage = () => {
     orders,
     loading: ordersLoading,
     error: ordersError,
-  } = useSelector((state) => state.orderList);
+  } = useSelector((state) => state.orderCashierList);
   const {
     meals,
     loading: mealsLoading,
@@ -54,7 +54,7 @@ const DashboardPage = () => {
   } = useSelector((state) => state.mealList);
 
   useEffect(() => {
-    dispatch(getOrderList());
+    dispatch(getOrderCashierList());
     dispatch(getMealList());
   }, [dispatch]);
 
@@ -68,7 +68,7 @@ const DashboardPage = () => {
   const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
   //Total customers
-  const customer = orders.map((order) => order.user.name);
+  const customer = orders.map((order) => order.name);
   const uniqueCustomer = [...new Set(customer)];
   const totalCustomer = uniqueCustomer.length;
 
@@ -208,19 +208,19 @@ const DashboardPage = () => {
   ];
 
   //Get the total of occurence in array
-  const topCustomer = orders.reduce((res, val) => {
+  /*  const topCustomer = orders.reduce((res, val) => {
     if (res[val.user.name]) {
       res[val.user.name]++;
     } else {
       res[val.user.name] = 1;
     }
     return res;
-  }, {});
+  }, {}); */
 
   //Sort by the highest
-  const sortName = Object.entries(topCustomer)
+  /*   const sortName = Object.entries(topCustomer)
     .sort((a, b) => b[1] - a[1])
-    .map((v) => v[0]);
+    .map((v) => v[0]); */
 
   //Return text based on selected date
   const dateText = () => {
@@ -289,95 +289,57 @@ const DashboardPage = () => {
         </Grid>
       </div>
 
-      <Grid container spacing={2} sx={{ marginTop: 5, padding: 1 }}>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
-          {sortName.length <= 0 ? (
-            " "
-          ) : (
-            <Card>
-              <CardContent>
-                <Typography variant="h5" component="h3" fontWeight="bold">
-                  Top Customer
-                </Typography>
-
-                <List>
-                  {sortName.slice(0, 5).map((top, index) => (
-                    <ListItem key={index}>
-                      <ListItemIcon>#{index + 1}</ListItemIcon>
-
-                      <ListItemText primary={capitalize(top)} />
-                    </ListItem>
-                  ))}
-                </List>
-              </CardContent>
-            </Card>
-          )}
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={sortName <= 0 ? 12 : 9}
-          lg={sortName <= 0 ? 12 : 9}
-        >
-          <Card>
-            <CardContent>
-              <Box
-                mb={2}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+      <Card sx={{ marginTop: 4 }}>
+        <CardContent>
+          <Box
+            mb={2}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <Typography
+                variant="h5"
+                component="h3"
+                fontWeight="bold"
+                sx={{ marginTop: 5 }}
               >
-                <div>
-                  <Typography
-                    variant="h5"
-                    component="h3"
-                    fontWeight="bold"
-                    sx={{ marginTop: 5 }}
-                  >
-                    Revenue
+                Revenue
+              </Typography>
+
+              <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+                Total revenue for {dateText()}:{" "}
+                {mealsLoading || ordersLoading ? (
+                  "loading..."
+                ) : (
+                  <Typography variant="body" sx={{ color: "green" }}>
+                    &#8369; {getTotalRevenue().toFixed(2)}
                   </Typography>
+                )}
+              </Typography>
+            </div>
 
-                  <Typography
-                    variant="body"
-                    component="p"
-                    sx={{ marginTop: 1 }}
-                  >
-                    Total revenue for {dateText()}:{" "}
-                    {mealsLoading || ordersLoading ? (
-                      "loading..."
-                    ) : (
-                      <Typography variant="body" sx={{ color: "green" }}>
-                        &#8369; {getTotalRevenue().toFixed(2)}
-                      </Typography>
-                    )}
-                  </Typography>
-                </div>
+            <FormControl variant="standard" sx={{ minWidth: 120 }}>
+              <InputLabel>Date Filters</InputLabel>
+              <Select
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                label="Date Filters"
+              >
+                {["Today", "This Month", "This Year"].map((d, index) => (
+                  <MenuItem key={index} value={d}>
+                    {d}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
 
-                <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                  <InputLabel>Date Filters</InputLabel>
-                  <Select
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    label="Date Filters"
-                  >
-                    {["Today", "This Month", "This Year"].map((d, index) => (
-                      <MenuItem key={index} value={d}>
-                        {d}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-
-              <BarChart revenueData={selectedDate(date)} date={date} />
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+          <BarChart revenueData={selectedDate(date)} date={date} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

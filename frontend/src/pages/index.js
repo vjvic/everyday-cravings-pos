@@ -22,6 +22,8 @@ import OrderList from "./Orders/OrderList";
 import Suppliers from "./Suppliers/Suppliers";
 import Ingredient from "./Ingredient/Ingredient";
 import CategoryEdit from "./Category/Edit/Edit";
+import IngredientEdit from "./Ingredient/Edit/Edit";
+import SupplierEdit from "./Suppliers/Edit/Edit";
 
 export {
   Dashboard,
@@ -48,4 +50,6 @@ export {
   Suppliers,
   Ingredient,
   CategoryEdit,
+  IngredientEdit,
+  SupplierEdit,
 };

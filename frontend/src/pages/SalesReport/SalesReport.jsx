@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
 import { Typography, Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderList } from "../../redux/actions/orderAction";
+import { getOrderCashierList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
 import { Loader } from "../../components";
 import {
   DataGrid,
   GridToolbarContainer,
-  GridToolbarColumnsButton,
+  /*   GridToolbarColumnsButton, */
   GridToolbarFilterButton,
-  GridToolbarDensitySelector,
+  /*   GridToolbarDensitySelector, */
   GridToolbarExport,
 } from "@mui/x-data-grid";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
+      {/*  <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
       <GridToolbarExport />
-      <GridToolbarDensitySelector />
+      {/*   <GridToolbarDensitySelector /> */}
     </GridToolbarContainer>
   );
 };
@@ -27,15 +27,14 @@ const CustomToolbar = () => {
 const SalesReport = () => {
   const dispatch = useDispatch();
 
-  const { orders, loading } = useSelector((state) => state.orderList);
+  const { orders, loading } = useSelector((state) => state.orderCashierList);
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 250 },
+    /* { field: "_id", headerName: "ID", width: 250 }, */
     {
-      field: "user",
-      headerName: "User",
-      width: 100,
-      valueGetter: (params) => params.row.user.name,
+      field: "name",
+      headerName: "Customer Name",
+      width: 140,
     },
     {
       field: "createdAt",
@@ -49,8 +48,8 @@ const SalesReport = () => {
       },
     },
     {
-      field: "paymentMethod",
-      headerName: "Payment Method",
+      field: "orderType",
+      headerName: "Order Type",
       width: 150,
     },
     {
@@ -62,6 +61,12 @@ const SalesReport = () => {
     {
       field: "subtotal",
       headerName: "Subtotal",
+      type: "number",
+      width: 100,
+    },
+    {
+      field: "discount",
+      headerName: "Discount",
       type: "number",
       width: 100,
     },
@@ -81,7 +86,7 @@ const SalesReport = () => {
   ];
 
   useEffect(() => {
-    dispatch(getOrderList());
+    dispatch(getOrderCashierList());
   }, [dispatch]);
 
   if (loading) return <Loader />;

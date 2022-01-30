@@ -43,6 +43,8 @@ const MealsPage = () => {
 
   const { success: deleteSuccess } = useSelector((state) => state.mealDelete);
 
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   //Delete Meal
   const handleDelete = (id) => {
     if (window.confirm("Are you sure")) {
@@ -100,10 +102,14 @@ const MealsPage = () => {
           <div className="rowitem">
             <IconButton
               onClick={() => history.push(`meals/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
             >
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => handleDelete(params.row._id)}>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -135,6 +141,7 @@ const MealsPage = () => {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => history.push("meals/edit")}
+          disabled={userInfo.role !== "admin"}
         >
           Add Meal
         </Button>

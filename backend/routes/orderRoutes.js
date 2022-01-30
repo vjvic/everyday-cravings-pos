@@ -12,7 +12,7 @@ import {
   getOrderCashierById,
   getAllOrderCashier,
 } from "../controllers/orderController.js";
-import { protect, isAdmin } from "../middleware/authMiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 //cashier
 

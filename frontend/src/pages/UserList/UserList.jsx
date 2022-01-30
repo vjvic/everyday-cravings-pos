@@ -5,6 +5,7 @@ import {
   Container,
   Stack,
   Button,
+  capitalize,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -39,6 +40,7 @@ const UserListPage = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userList);
   const { success: deleteSuccess } = useSelector((state) => state.userDelete);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   //Delete user
   const handleDelete = (id) => {
@@ -64,25 +66,13 @@ const UserListPage = () => {
       flex: 1,
     },
     {
-      field: "isAdmin",
-      headerName: "Admin",
+      field: "role",
+      headerName: "Role",
       flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">
-            {params.row.isAdmin ? <CheckIcon /> : <CloseIcon />}
-          </div>
-        );
-      },
-    },
-    {
-      field: "isCashier",
-      headerName: "Cashier",
-      flex: 1,
-      renderCell: (params) => {
-        return (
-          <div className="rowitem">
-            {params.row.isCashier ? <CheckIcon /> : <CloseIcon />}
+            {params.row.role && capitalize(params.row.role)}
           </div>
         );
       },
@@ -99,10 +89,14 @@ const UserListPage = () => {
           <div className="rowitem">
             <IconButton
               onClick={() => history.push(`user-list/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
             >
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => handleDelete(params.row._id)}>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -135,7 +129,8 @@ const UserListPage = () => {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          /* onClick={() => history.push("meals/edit")} */
+          onClick={() => history.push("/user-list/edit")}
+          disabled={userInfo.role !== "admin"}
         >
           Add User
         </Button>

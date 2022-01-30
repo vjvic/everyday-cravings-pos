@@ -39,4 +39,22 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-export { protect, isAdmin };
+const admin = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as admin");
+  }
+};
+
+const cashier = (req, res, next) => {
+  if (req.user && req.user.role === "cashier") {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as cashier");
+  }
+};
+
+export { protect, isAdmin, admin, cashier };

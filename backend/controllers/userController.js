@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
       isCashier: user.isCashier,
       token: generateToken(user._id),
@@ -37,6 +38,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
       isCashier: user.isCashier,
     });
@@ -66,6 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
       isCashier: user.isCashier,
       token: generateToken(user._id),
@@ -96,6 +99,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updateUser._id,
       name: updateUser.name,
       email: updateUser.email,
+      role: updateUser.role,
       isAdmin: updateUser.isAdmin,
       isCashier: updateUser.isCashier,
       token: generateToken(updateUser._id),
@@ -138,6 +142,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.role = req.body.role;
     user.isAdmin = req.body.isAdmin;
     user.isCashier = req.body.isCashier;
 
@@ -147,6 +152,7 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      role: updatedUser.role,
       isAdmin: updatedUser.isAdmin,
       isCashier: updatedUser.isCashier,
     });

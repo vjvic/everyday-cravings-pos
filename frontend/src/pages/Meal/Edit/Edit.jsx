@@ -28,6 +28,7 @@ import {
   MEAL_CREATE_RESET,
   MEAL_UPDATE_RESET,
 } from "../../../redux/constants/mealConstants";
+import { getCategoryList } from "../../../redux/actions/categoryAction";
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -62,6 +63,8 @@ const Edit = () => {
     loading: updateLoading,
     error: updateError,
   } = useSelector((state) => state.mealUpdate);
+
+  const { category: categoryList } = useSelector((state) => state.categoryList);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -137,6 +140,10 @@ const Edit = () => {
     }
   }, [createSuccess, updateSuccess, history, dispatch]);
 
+  useEffect(() => {
+    dispatch(getCategoryList());
+  }, [dispatch]);
+
   if (mealLoading) return <Loader />;
 
   return (
@@ -206,13 +213,12 @@ const Edit = () => {
               label="Category"
               onChange={(e) => setCategory(e.target.value)}
             >
-              {["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"].map(
-                (c, index) => (
-                  <MenuItem key={index} value={c.toLowerCase()}>
-                    {c}
+              {categoryList &&
+                categoryList.map((c, index) => (
+                  <MenuItem key={index} value={c.category.toLowerCase()}>
+                    {c.category}
                   </MenuItem>
-                )
-              )}
+                ))}
             </Select>
           </FormControl>
 

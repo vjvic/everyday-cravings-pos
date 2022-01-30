@@ -3,12 +3,16 @@ import { Box } from "@mui/system";
 import {
   TextField,
   Button,
-  FormControlLabel,
-  Checkbox,
+  /*  FormControlLabel,
+  Checkbox, */
   Typography,
   Divider,
   Alert,
   Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { updateUser, getUserDetails } from "../../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +29,7 @@ const Edit = () => {
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isCashier, setIsCashier] = useState(false);
+  const [role, setRole] = useState("user");
 
   const {
     loading: updateLoading,
@@ -41,13 +46,14 @@ const Edit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateUser({ _id: id, name, email, isAdmin, isCashier }));
+    dispatch(updateUser({ _id: id, name, email, role, isAdmin, isCashier }));
   };
 
   useEffect(() => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
+      setRole(user.role);
       setIsAdmin(user.isAdmin);
       setIsCashier(user.isCashier);
     }
@@ -55,7 +61,7 @@ const Edit = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      history.push("/admin/user-list");
+      history.push("/user-list");
       dispatch({ type: USER_UPDATE_RESET });
     }
   }, [history, updateSuccess, dispatch]);
@@ -97,6 +103,22 @@ const Edit = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        <FormControl fullWidth>
+          <InputLabel>Role</InputLabel>
+          <Select
+            defaultValue={role || ""}
+            value={role || ""}
+            label="Role"
+            onChange={(e) => setRole(e.target.value)}
+          >
+            {["User", "Cashier", "Admin"].map((c, index) => (
+              <MenuItem key={index} value={c.toLowerCase()}>
+                {c}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* 
         <FormControlLabel
           control={
             <Checkbox
@@ -115,7 +137,7 @@ const Edit = () => {
             />
           }
           label="Is Cashier"
-        />
+        /> */}
 
         <Button
           variant="contained"
