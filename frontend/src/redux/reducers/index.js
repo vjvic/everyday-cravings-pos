@@ -35,6 +35,27 @@ import {
   cartAddressReducer,
   cartPaymentMethodReducer,
 } from "./cartReducers";
+import {
+  categoryListReducer,
+  categoryDeleteReducer,
+  categoryCreateReducer,
+  categoryUpdateReducer,
+  categoryDetailsReducer,
+} from "./categoryReducers";
+import {
+  ingredientListReducer,
+  ingredientDeleteReducer,
+  ingredientCreateReducer,
+  ingredientUpdateReducer,
+  ingredientDetailsReducer,
+} from "./ingredientReducer";
+import {
+  supplierListReducer,
+  supplierDeleteReducer,
+  supplierCreateReducer,
+  supplierUpdateReducer,
+  supplierDetailsReducer,
+} from "./supplierReducer";
 
 const reducers = combineReducers({
   mealList: mealListReducer,
@@ -46,9 +67,11 @@ const reducers = combineReducers({
   mealCreateReviews: mealCreateReviewsReducer,
   mealTop: mealTopListReducer,
   mealUpdateStock: mealUpdateStockReducer,
+
   cart: cartReducer,
   cartPaymentMethod: cartPaymentMethodReducer,
   cartAddress: cartAddressReducer,
+
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userList: userListReducer,
@@ -56,6 +79,7 @@ const reducers = combineReducers({
   userUpdate: userUpdateReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderMyList: orderMyListReducer,
@@ -65,6 +89,24 @@ const reducers = combineReducers({
   orderCashierCreate: orderCashierCreateReducer,
   orderCashierList: orderCashierListReducer,
   orderCashierDetails: orderCashierDetailsReducer,
+
+  categoryList: categoryListReducer,
+  categoryUpdate: categoryUpdateReducer,
+  categoryCreate: categoryCreateReducer,
+  categoryDelete: categoryDeleteReducer,
+  categoryDetails: categoryDetailsReducer,
+
+  ingredientList: ingredientListReducer,
+  ingredientUpdate: ingredientUpdateReducer,
+  ingredientCreate: ingredientCreateReducer,
+  ingredientDelete: ingredientDeleteReducer,
+  ingredientDetails: ingredientDetailsReducer,
+
+  supplierList: supplierListReducer,
+  supplierUpdate: supplierUpdateReducer,
+  supplierCreate: supplierCreateReducer,
+  supplierDelete: supplierDeleteReducer,
+  supplierDetails: supplierDetailsReducer,
 });
 
 export default reducers;

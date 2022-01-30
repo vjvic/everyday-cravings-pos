@@ -6,11 +6,13 @@ import {
   getAllSupplier,
   deleteSupplier,
   updateSupplier,
+  getSupplierById,
 } from "../controllers/supplierController.js";
 
 router.route("/").post(protect, createSupplier).get(protect, getAllSupplier);
 router
   .route("/:id")
+  .get(protect, getSupplierById)
   .delete(protect, deleteSupplier)
   .put(protect, updateSupplier);
 

@@ -5,6 +5,9 @@ import {
   SUPPLIER_DELETE_FAIL,
   SUPPLIER_DELETE_REQUEST,
   SUPPLIER_DELETE_SUCCESS,
+  SUPPLIER_DETAILS_FAIL,
+  SUPPLIER_DETAILS_REQUEST,
+  SUPPLIER_DETAILS_SUCCESS,
   SUPPLIER_FAIL,
   SUPPLIER_REQUEST,
   SUPPLIER_SUCCESS,
@@ -134,10 +137,20 @@ export const updateSupplier = (supplier) => async (dispatch, getState) => {
   }
 };
 
-export const getSupplierList = () => async (dispatch) => {
+export const getSupplierList = () => async (dispatch, getState) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
   try {
     dispatch({ type: SUPPLIER_REQUEST });
-    const { data } = await mealApi.get(`/api/supplier`);
+    const { data } = await mealApi.get(`/api/supplier`, config);
 
     dispatch({ type: SUPPLIER_SUCCESS, payload: data });
   } catch (err) {
@@ -147,6 +160,43 @@ export const getSupplierList = () => async (dispatch) => {
         err.response && err.response.data.message
           ? err.response.data.message
           : err.message,
+    });
+  }
+};
+
+export const getSupplierDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SUPPLIER_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.get(`/api/supplier/${id}`, config);
+
+    dispatch({
+      type: SUPPLIER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: SUPPLIER_DETAILS_FAIL,
+      payload: message,
     });
   }
 };

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   IconButton,
   Typography,
   Button,
   Stack,
   Container,
+  capitalize,
+  Chip,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,26 +14,37 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   DataGrid,
   GridToolbarContainer,
-  GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { getSupplierList } from "../../redux/actions/supplierAction";
+import { Loader } from "../../components";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
     </GridToolbarContainer>
   );
 };
 
-const Suppliers = () => {
+const Supplier = () => {
+  const dispatch = useDispatch();
+
+  const { loading, supplier } = useSelector((state) => state.supplierList);
+
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
+      field: "name",
+      headerName: "Supplier Name",
+      flex: 1,
+      renderCell: (params) => {
+        return <div className="rowitem">{capitalize(params.row.name)}</div>;
+      },
+    },
+    {
+      field: "contact",
+      headerName: "Contact",
       flex: 1,
     },
     {
@@ -40,15 +53,34 @@ const Suppliers = () => {
       flex: 1,
     },
     {
-      field: "balance",
-      headerName: "Balance",
+      field: "type",
+      headerName: "Supplier Type",
       flex: 1,
+      renderCell: (params) => {
+        return <div className="rowitem">{capitalize(params.row.type)}</div>;
+      },
     },
-
+    {
+      field: "isActive",
+      headerName: "Active",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {params.row.isActive ? (
+              <Chip label="Active" color="success" />
+            ) : (
+              <Chip label="Inactive" color="error" />
+            )}
+          </div>
+        );
+      },
+    },
     {
       field: "action",
       headerName: "Action",
       flex: 1,
+      sortable: false,
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -65,6 +97,12 @@ const Suppliers = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    dispatch(getSupplierList());
+  }, [dispatch]);
+
+  if (loading) return <Loader />;
 
   return (
     <Container>
@@ -83,19 +121,15 @@ const Suppliers = () => {
           startIcon={<AddIcon />}
           /* onClick={() => history.push("meals/edit")} */
         >
-          Add Suppliers
+          Add Supplier
         </Button>
       </Stack>
 
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={[
-            { id: 1, name: "John", address: "Test", balance: 100 },
-            { id: 2, name: "John", address: "Test", balance: 100 },
-            { id: 3, name: "John", address: "Test", balance: 100 },
-          ]}
+          rows={supplier}
           columns={columns}
-          getRowId={(row) => row.id}
+          getRowId={(row) => row._id}
           components={{
             Toolbar: CustomToolbar,
           }}
@@ -106,4 +140,4 @@ const Suppliers = () => {
   );
 };
 
-export default Suppliers;
+export default Supplier;

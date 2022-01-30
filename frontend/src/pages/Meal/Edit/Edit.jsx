@@ -131,7 +131,7 @@ const Edit = () => {
 
   useEffect(() => {
     if (createSuccess || updateSuccess) {
-      history.push("/admin/meals");
+      history.push("/meals");
       dispatch({ type: MEAL_CREATE_RESET });
       dispatch({ type: MEAL_UPDATE_RESET });
     }

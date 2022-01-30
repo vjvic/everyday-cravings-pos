@@ -5,6 +5,9 @@ import {
   INGREDIENT_DELETE_FAIL,
   INGREDIENT_DELETE_REQUEST,
   INGREDIENT_DELETE_SUCCESS,
+  INGREDIENT_DETAILS_FAIL,
+  INGREDIENT_DETAILS_REQUEST,
+  INGREDIENT_DETAILS_SUCCESS,
   INGREDIENT_FAIL,
   INGREDIENT_REQUEST,
   INGREDIENT_SUCCESS,
@@ -134,10 +137,20 @@ export const updateIngredient = (ingredient) => async (dispatch, getState) => {
   }
 };
 
-export const getIngredientList = () => async (dispatch) => {
+export const getIngredientList = () => async (dispatch, getState) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
   try {
     dispatch({ type: INGREDIENT_REQUEST });
-    const { data } = await mealApi.get(`/api/INGREDIENT`);
+    const { data } = await mealApi.get(`/api/INGREDIENT`, config);
 
     dispatch({ type: INGREDIENT_SUCCESS, payload: data });
   } catch (err) {
@@ -147,6 +160,43 @@ export const getIngredientList = () => async (dispatch) => {
         err.response && err.response.data.message
           ? err.response.data.message
           : err.message,
+    });
+  }
+};
+
+export const getIngredientDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: INGREDIENT_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.get(`/api/ingredient/${id}`, config);
+
+    dispatch({
+      type: INGREDIENT_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: INGREDIENT_DETAILS_FAIL,
+      payload: message,
     });
   }
 };

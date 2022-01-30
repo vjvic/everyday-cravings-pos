@@ -5,6 +5,9 @@ import {
   CATEGORY_DELETE_FAIL,
   CATEGORY_DELETE_REQUEST,
   CATEGORY_DELETE_SUCCESS,
+  CATEGORY_DETAILS_FAIL,
+  CATEGORY_DETAILS_REQUEST,
+  CATEGORY_DETAILS_SUCCESS,
   CATEGORY_FAIL,
   CATEGORY_REQUEST,
   CATEGORY_SUCCESS,
@@ -15,7 +18,7 @@ import {
 import { mealApi } from "../../components";
 import { logout } from "./userActions";
 
-export const createCategory = (name) => async (dispatch, getState) => {
+export const createCategory = (category) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CATEGORY_CREATE_REQUEST,
@@ -31,7 +34,11 @@ export const createCategory = (name) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await mealApi.post(`/api/category`, { name }, config);
+    const { data } = await mealApi.post(
+      `/api/category`,
+      { ...category },
+      config
+    );
 
     dispatch({
       type: CATEGORY_CREATE_SUCCESS,
@@ -130,10 +137,20 @@ export const updateCategory = (meal) => async (dispatch, getState) => {
   }
 };
 
-export const getCategoryList = () => async (dispatch) => {
+export const getCategoryList = () => async (dispatch, getState) => {
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userInfo.token}`,
+    },
+  };
+
   try {
     dispatch({ type: CATEGORY_REQUEST });
-    const { data } = await mealApi.get(`/api/category`);
+    const { data } = await mealApi.get(`/api/category`, config);
 
     dispatch({ type: CATEGORY_SUCCESS, payload: data });
   } catch (err) {
@@ -143,6 +160,43 @@ export const getCategoryList = () => async (dispatch) => {
         err.response && err.response.data.message
           ? err.response.data.message
           : err.message,
+    });
+  }
+};
+
+export const getCategoryDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: CATEGORY_DETAILS_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.get(`/api/category/${id}`, config);
+
+    dispatch({
+      type: CATEGORY_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: CATEGORY_DETAILS_FAIL,
+      payload: message,
     });
   }
 };

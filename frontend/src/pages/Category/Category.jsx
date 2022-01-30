@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -13,37 +13,46 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   DataGrid,
   GridToolbarContainer,
-  GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategoryList } from "../../redux/actions/categoryAction";
+import { Loader } from "../../components";
+import { useHistory } from "react-router-dom";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
     </GridToolbarContainer>
   );
 };
 
 const Category = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { loading, category } = useSelector((state) => state.categoryList);
+
   const columns = [
     {
-      field: "name",
-      headerName: "Name",
+      field: "category",
+      headerName: "Category",
       flex: 1,
+      renderCell: (params) => {
+        return <div className="rowitem">{capitalize(params.row.category)}</div>;
+      },
     },
     {
       field: "action",
       headerName: "Action",
       flex: 1,
+      sortable: false,
       renderCell: (params) => {
         return (
           <div className="rowitem">
             <IconButton
-            /*  onClick={() => history.push(`meals/${params.row._id}/edit`)} */
+              onClick={() => history.push(`categories/${params.row._id}/edit`)}
             >
               <EditIcon />
             </IconButton>
@@ -56,6 +65,12 @@ const Category = () => {
     },
   ];
 
+  useEffect(() => {
+    dispatch(getCategoryList());
+  }, [dispatch]);
+
+  if (loading) return <Loader />;
+
   return (
     <Container>
       <Stack
@@ -65,13 +80,13 @@ const Category = () => {
         sx={{ marginY: 3 }}
       >
         <Typography variant="h4" component="h1">
-          Category
+          Categories
         </Typography>
 
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          /* onClick={() => history.push("meals/edit")} */
+          onClick={() => history.push("/categories/edit")}
         >
           Add Category
         </Button>
@@ -79,13 +94,9 @@ const Category = () => {
 
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={[
-            { id: 1, name: "Breakfast" },
-            { id: 2, name: "Lunch" },
-            { id: 3, name: "Dinner" },
-          ]}
+          rows={category}
           columns={columns}
-          getRowId={(row) => row.id}
+          getRowId={(row) => row._id}
           components={{
             Toolbar: CustomToolbar,
           }}

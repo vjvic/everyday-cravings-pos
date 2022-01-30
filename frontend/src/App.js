@@ -18,7 +18,7 @@ import {
   Receipt,
   SalesReport,
   UserList,
-  Home,
+  /* Home, */
   Category,
   MealEdit,
   UserEdit,
@@ -29,6 +29,7 @@ import {
   OrderList,
   Suppliers,
   Ingredient,
+  CategoryEdit,
 } from "./pages";
 
 const secondary = "#FFECC2";
@@ -61,7 +62,12 @@ function App() {
         <Switch>
           <Layout>
             {/* <Route exact path="/" component={Home} /> */}
-            <Route path="/categories" component={Category} />
+            <PrivateRoute exact path="/categories" component={Category} />
+            <PrivateRoute
+              exact
+              path="/categories/:id?/edit"
+              component={CategoryEdit}
+            />
             <Route path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
             <Route exact path="/cashier/:id?" component={Cart} />

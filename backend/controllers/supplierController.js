@@ -5,9 +5,15 @@ import Supplier from "../models/supplierModel.js";
 //@route POST /api/supplier
 //@access Private/admin
 const createSupplier = asyncHandler(async (req, res) => {
-  const { name, contact, address, type } = req.body;
+  const { name, contact, address, type, isActive } = req.body;
 
-  const supplier = await Supplier.create({ name, contact, address, type });
+  const supplier = await Supplier.create({
+    name,
+    contact,
+    address,
+    type,
+    isActive,
+  });
 
   if (supplier) {
     res.json({
@@ -15,6 +21,7 @@ const createSupplier = asyncHandler(async (req, res) => {
       contact: supplier.contact,
       address: supplier.address,
       type: supplier.type,
+      isActive: supplier.isActive,
     });
   } else {
     throw new Error("Supplier not found");
@@ -50,7 +57,7 @@ const deleteSupplier = asyncHandler(async (req, res) => {
 //@route PUT /api/supplier/:id
 //@access Private/Admin
 const updateSupplier = asyncHandler(async (req, res) => {
-  const { name, contact, address, type } = req.body;
+  const { name, contact, address, type, isActive } = req.body;
 
   const supplier = await Supplier.findById(req.params.id);
 
@@ -59,6 +66,7 @@ const updateSupplier = asyncHandler(async (req, res) => {
     supplier.contact = contact;
     supplier.address = address;
     supplier.type = type;
+    supplier.isActive = isActive;
 
     const updatedSupplier = await supplier.save();
     res.json(updatedSupplier);
@@ -68,4 +76,24 @@ const updateSupplier = asyncHandler(async (req, res) => {
   }
 });
 
-export { createSupplier, getAllSupplier, deleteSupplier, updateSupplier };
+//@desc Get supplier by ID
+//@route GET /api/supplier/:id
+//@access Private/Admin
+const getSupplierById = asyncHandler(async (req, res) => {
+  const supplier = await Supplier.findById(req.params.id);
+
+  if (supplier) {
+    res.json(supplier);
+  } else {
+    res.status(404);
+    throw new Error("Supplier not found");
+  }
+});
+
+export {
+  createSupplier,
+  getAllSupplier,
+  deleteSupplier,
+  updateSupplier,
+  getSupplierById,
+};

@@ -23,7 +23,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const location = useLocation();
 
   /*   const { order } = useSelector((state) => state.orderDetails); */
-  const { userInfo } = useSelector((state) => state.userLogin);
+  /*  const { userInfo } = useSelector((state) => state.userLogin); */
 
   const activeColor = (path) => {
     return location.pathname === path ? "#F5F5F5" : null;
