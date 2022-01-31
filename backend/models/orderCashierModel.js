@@ -12,6 +12,19 @@ const orderCashierSchema = mongoose.Schema(
     change: { type: Number, default: 0 },
     paymentType: { type: String, required: true },
     paid: { type: Number, default: 0 },
+    orderItems: [
+      {
+        name: { type: String, required: true },
+        qty: { type: Number, required: true },
+        image: { type: String, required: true },
+        price: { type: Number, required: true },
+        meal: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "Meal",
+        },
+      },
+    ],
   },
   {
     timestamps: true,

@@ -108,6 +108,7 @@ const Cart = () => {
       change: change(),
       paymentType,
       paid,
+      orderItems: cartItems,
     };
 
     dispatch(createOrderCashier(orders));
@@ -116,6 +117,8 @@ const Cart = () => {
       dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
     );
   };
+
+  console.log(cartItems);
 
   useEffect(() => {
     if (id) {
