@@ -8,6 +8,7 @@ import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { uniqueID } from "../../utils/utils";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -42,7 +43,8 @@ const RegisterPage = () => {
   }, [history, userInfo]);
 
   const onSubmit = (data, e) => {
-    dispatch(userRegister(data.username, data.email, data.password));
+    const id = uniqueID();
+    dispatch(userRegister(data.username, data.email, data.password, id));
 
     e.target.reset();
   };

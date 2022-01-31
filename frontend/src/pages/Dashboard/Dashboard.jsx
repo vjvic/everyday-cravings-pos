@@ -15,6 +15,7 @@ import {
   Select,
   InputLabel,
   MenuItem,
+  Container,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderCashierList } from "../../redux/actions/orderAction";
@@ -247,7 +248,7 @@ const DashboardPage = () => {
   console.log(getTotalRevenue());
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <Typography variant="h4" component="h1" sx={{ marginY: 5 }}>
         Dashboard
       </Typography>
@@ -340,7 +341,7 @@ const DashboardPage = () => {
           <BarChart revenueData={selectedDate(date)} date={date} />
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 };
 

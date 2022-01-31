@@ -70,9 +70,9 @@ function App() {
               path="/categories/:id?/edit"
               component={CategoryEdit}
             />
-            <Route path="/meal/:id" component={MealDetails} />
+            <PrivateRoute path="/meal/:id" component={MealDetails} />
             <PrivateRoute path="/results/:keyword" component={Results} />
-            <Route exact path="/cashier/:id?" component={Cart} />
+            <PrivateRoute exact path="/cashier/:id?" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
             <PrivateRoute path="/orders/:id" component={Order} />
             <Route path="/my-orders" component={MyOrders} />

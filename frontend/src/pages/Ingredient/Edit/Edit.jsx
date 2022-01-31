@@ -29,6 +29,7 @@ import {
   INGREDIENT_CREATE_RESET,
   INGREDIENT_UPDATE_RESET,
 } from "../../../redux/constants/ingredientConstants";
+import { uniqueID } from "../../../utils/utils";
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -82,6 +83,7 @@ const Edit = () => {
     } else {
       dispatch(
         createIngredient({
+          id: uniqueID(),
           name: name.toLowerCase(),
           qty: qty,
           supplier: supplier,

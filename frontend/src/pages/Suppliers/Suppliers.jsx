@@ -45,6 +45,11 @@ const Supplier = () => {
 
   const columns = [
     {
+      field: "id",
+      headerName: "Supplier ID",
+      flex: 1,
+    },
+    {
       field: "name",
       headerName: "Supplier Name",
       flex: 1,
@@ -77,7 +82,7 @@ const Supplier = () => {
       renderCell: (params) => {
         return (
           <div className="rowitem">
-            {params.row.isActive ? (
+            {params.row.isActive === "true" ? (
               <Chip label="Active" color="success" />
             ) : (
               <Chip label="Inactive" color="error" />

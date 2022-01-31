@@ -5,9 +5,10 @@ import Supplier from "../models/supplierModel.js";
 //@route POST /api/supplier
 //@access Private/admin
 const createSupplier = asyncHandler(async (req, res) => {
-  const { name, contact, address, type, isActive } = req.body;
+  const { name, contact, address, type, isActive, id } = req.body;
 
   const supplier = await Supplier.create({
+    id,
     name,
     contact,
     address,
@@ -17,6 +18,7 @@ const createSupplier = asyncHandler(async (req, res) => {
 
   if (supplier) {
     res.json({
+      id: supplier.id,
       name: supplier.name,
       contact: supplier.contact,
       address: supplier.address,

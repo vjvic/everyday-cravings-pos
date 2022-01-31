@@ -80,6 +80,7 @@ const deleteMeal = asyncHandler(async (req, res) => {
 //@access Private/Admin
 const createMeal = asyncHandler(async (req, res) => {
   const {
+    id,
     name,
     price,
     image,
@@ -90,6 +91,7 @@ const createMeal = asyncHandler(async (req, res) => {
   } = req.body;
 
   const meal = await Meal.create({
+    id,
     name,
     price,
     image,
@@ -101,6 +103,7 @@ const createMeal = asyncHandler(async (req, res) => {
 
   if (meal) {
     res.json({
+      id: meal.id,
       name: meal.name,
       price: meal.price,
       image: meal.image,

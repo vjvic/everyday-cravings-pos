@@ -29,6 +29,7 @@ import {
   MEAL_UPDATE_RESET,
 } from "../../../redux/constants/mealConstants";
 import { getCategoryList } from "../../../redux/actions/categoryAction";
+import { uniqueID } from "../../../utils/utils";
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -82,8 +83,9 @@ const Edit = () => {
         })
       );
     } else {
+      const id = uniqueID();
       dispatch(
-        createMeal(name, price, image, category, countInStock, description)
+        createMeal(name, price, image, category, countInStock, description, id)
       );
     }
   };

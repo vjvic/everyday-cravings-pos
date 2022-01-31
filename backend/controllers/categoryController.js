@@ -5,12 +5,12 @@ import Category from "../models/categoryModel.js";
 //@route POST /api/category
 //@access Private/admin
 const createCategory = asyncHandler(async (req, res) => {
-  const { category } = req.body;
+  const { category, id } = req.body;
 
-  const categoryCreated = await Category.create({ category });
+  const categoryCreated = await Category.create({ category, id });
 
   if (category) {
-    res.json({ category: categoryCreated.category });
+    res.json({ category: categoryCreated.category, id: categoryCreated.id });
   } else {
     throw new Error("Category not found");
   }

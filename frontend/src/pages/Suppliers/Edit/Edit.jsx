@@ -28,6 +28,7 @@ import {
   SUPPLIER_CREATE_RESET,
   SUPPLIER_UPDATE_RESET,
 } from "../../../redux/constants/supplierConstants";
+import { uniqueID } from "../../../utils/utils";
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -77,6 +78,7 @@ const Edit = () => {
     } else {
       dispatch(
         createSupplier({
+          id: uniqueID(),
           name: name.toLowerCase(),
           contact: contact,
           address: address,

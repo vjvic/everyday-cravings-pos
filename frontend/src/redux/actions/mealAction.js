@@ -126,7 +126,7 @@ export const deleteMeal = (id) => async (dispatch, getState) => {
 };
 
 export const createMeal =
-  (name, price, image, category, countInStock, description) =>
+  (name, price, image, category, countInStock, description, id) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -145,7 +145,7 @@ export const createMeal =
 
       const { data } = await mealApi.post(
         `/api/meals`,
-        { name, price, image, category, countInStock, description },
+        { name, price, image, category, countInStock, description, id },
         config
       );
 

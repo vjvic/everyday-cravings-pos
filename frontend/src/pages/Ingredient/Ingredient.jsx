@@ -43,6 +43,11 @@ const Ingredient = () => {
 
   const columns = [
     {
+      field: "id",
+      headerName: "Ingredient ID",
+      flex: 1,
+    },
+    {
       field: "name",
       headerName: "Ingredient Name",
       flex: 1,

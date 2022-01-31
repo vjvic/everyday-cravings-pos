@@ -54,8 +54,8 @@ const MealsPage = () => {
 
   const columns = [
     {
-      field: "_id",
-      headerName: "ID",
+      field: "id",
+      headerName: "User ID",
       flex: 1,
     },
     {

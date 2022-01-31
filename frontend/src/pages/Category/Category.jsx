@@ -51,6 +51,11 @@ const Category = () => {
 
   const columns = [
     {
+      field: "id",
+      headerName: "Category ID",
+      flex: 1,
+    },
+    {
       field: "category",
       headerName: "Category",
       flex: 1,

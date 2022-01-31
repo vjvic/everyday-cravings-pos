@@ -30,6 +30,7 @@ import { useHistory } from "react-router-dom";
 import { totalAmount } from "../../utils/utils";
 import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants";
 import { BsFillBagCheckFill } from "react-icons/bs";
+import { uniqueID } from "../../utils/utils";
 
 const style = {
   position: "absolute",
@@ -91,6 +92,7 @@ const Cart = () => {
     e.preventDefault();
 
     const orders = {
+      id: uniqueID(),
       name,
       orderType,
       totalItems,

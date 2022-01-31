@@ -14,6 +14,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -52,7 +53,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route GET /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, id } = req.body;
 
   const userExist = await User.findOne({ email });
 
@@ -61,11 +62,12 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exist");
   }
 
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ name, email, password, id });
 
   if (user) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,

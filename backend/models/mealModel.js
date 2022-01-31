@@ -18,6 +18,7 @@ const reviewSchema = mongoose.Schema(
 
 const mealSchema = mongoose.Schema(
   {
+    id: { type: String, required: true },
     name: {
       type: String,
       required: true,

@@ -26,6 +26,7 @@ import {
   CATEGORY_CREATE_RESET,
   CATEGORY_UPDATE_RESET,
 } from "../../../redux/constants/categoryConstants";
+import { uniqueID } from "../../../utils/utils";
 
 const Edit = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -65,7 +66,9 @@ const Edit = () => {
         })
       );
     } else {
-      dispatch(createCategory({ category: categoryName.toLowerCase() }));
+      dispatch(
+        createCategory({ category: categoryName.toLowerCase(), id: uniqueID() })
+      );
     }
   };
 

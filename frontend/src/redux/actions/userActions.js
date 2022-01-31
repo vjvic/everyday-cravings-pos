@@ -71,7 +71,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: MEAL_UPDATE_RESET });
 };
 
-export const userRegister = (name, email, password) => async (dispatch) => {
+export const userRegister = (name, email, password, id) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -85,7 +85,7 @@ export const userRegister = (name, email, password) => async (dispatch) => {
 
     const { data } = await mealApi.post(
       "/api/users",
-      { name, email, password },
+      { name, email, password, id },
       config
     );
 

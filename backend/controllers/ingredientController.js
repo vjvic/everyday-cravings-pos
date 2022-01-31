@@ -5,7 +5,7 @@ import Ingredient from "../models/ingredientModel.js";
 //@route POST /api/ingredient
 //@access Private/admin
 const createIngredient = asyncHandler(async (req, res) => {
-  const { name, qty, measure, isActive, supplier, cost } = req.body;
+  const { name, qty, measure, isActive, supplier, cost, id } = req.body;
 
   const ingredient = await Ingredient.create({
     name,
@@ -14,10 +14,12 @@ const createIngredient = asyncHandler(async (req, res) => {
     supplier,
     isActive,
     cost,
+    id,
   });
 
   if (ingredient) {
     res.json({
+      id: ingredient.id,
       name: ingredient.name,
       qty: ingredient.qty,
       supplier: ingredient.supplier,

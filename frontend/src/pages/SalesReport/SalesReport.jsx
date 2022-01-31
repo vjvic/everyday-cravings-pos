@@ -30,7 +30,7 @@ const SalesReport = () => {
   const { orders, loading } = useSelector((state) => state.orderCashierList);
 
   const columns = [
-    /* { field: "_id", headerName: "ID", width: 250 }, */
+    { field: "id", headerName: "ID", width: 150 },
     {
       field: "name",
       headerName: "Customer Name",

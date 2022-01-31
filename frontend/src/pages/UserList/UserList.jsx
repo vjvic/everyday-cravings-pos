@@ -3,8 +3,8 @@ import {
   IconButton,
   Typography,
   Container,
-  Stack,
-  Button,
+  /* Stack,
+  Button, */
   capitalize,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close"; */
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
-import AddIcon from "@mui/icons-material/Add";
+/* import AddIcon from "@mui/icons-material/Add"; */
 import {
   DataGrid,
   GridToolbarContainer,
@@ -51,7 +51,7 @@ const UserListPage = () => {
 
   const columns = [
     {
-      field: "_id",
+      field: "id",
       headerName: "ID",
       flex: 1,
     },
@@ -116,25 +116,9 @@ const UserListPage = () => {
 
   return (
     <Container>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ marginY: 3 }}
-      >
-        <Typography variant="h4" component="h1">
-          User
-        </Typography>
-
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => history.push("/user-list/edit")}
-          disabled={userInfo.role !== "admin"}
-        >
-          Add User
-        </Button>
-      </Stack>
+      <Typography variant="h4" component="h1" sx={{ my: 4 }}>
+        User
+      </Typography>
 
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid

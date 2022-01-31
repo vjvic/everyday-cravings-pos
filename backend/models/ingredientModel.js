@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const ingredientSchema = mongoose.Schema(
   {
+    id: { type: String, required: true },
     name: { type: String, required: true },
     qty: { type: Number, required: true },
     supplier: { type: String, required: true },
