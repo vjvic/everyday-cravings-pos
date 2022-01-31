@@ -127,8 +127,8 @@ const Cart = () => {
   const noCart = (
     <Alert severity="info">
       No item{" "}
-      <Typography variant="body2" color="inherit" component={Link} to="/">
-        Go to Home
+      <Typography variant="body2" color="inherit" component={Link} to="/menu">
+        Go to Menu
       </Typography>
     </Alert>
   );

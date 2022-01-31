@@ -10,8 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+/* import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close"; */
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";

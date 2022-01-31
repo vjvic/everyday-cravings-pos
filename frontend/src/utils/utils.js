@@ -54,3 +54,9 @@ export const getAllMonthsOfYear = () => {
 export const totalAmount = (cartItems) => {
   return cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
 };
+
+//Unique id
+
+export const uniqueID = () => {
+  return Math.floor(Math.random() * Date.now());
+};

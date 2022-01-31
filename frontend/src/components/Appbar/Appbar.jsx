@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React /* , { useState } */ from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -11,8 +11,8 @@ import {
   Badge,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import SearchIcon from "@mui/icons-material/Search";
-import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
+/* import SearchIcon from "@mui/icons-material/Search";
+import { Search, SearchIconWrapper, StyledInputBase } from "./styles"; */
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -23,7 +23,7 @@ import { useLocation } from "react-router";
 import { FaCashRegister } from "react-icons/fa";
 
 const Appbar = ({ handleDrawerToggle }) => {
-  const [keyword, setKeyword] = useState("");
+  /* const [keyword, setKeyword] = useState(""); */
 
   const history = useHistory();
   const location = useLocation();
@@ -39,14 +39,14 @@ const Appbar = ({ handleDrawerToggle }) => {
 
   const drawerWidth = 240;
 
-  const handleSearch = (e) => {
+  /*  const handleSearch = (e) => {
     e.preventDefault();
 
     if (keyword) {
       history.push("/results/" + keyword);
       setKeyword("");
     }
-  };
+  }; */
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -99,7 +99,7 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        <form onSubmit={handleSearch}>
+        {/*  <form onSubmit={handleSearch}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -110,7 +110,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               onChange={(e) => setKeyword(e.target.value)}
             />
           </Search>
-        </form>
+        </form> */}
 
         <Box sx={{ flexGrow: 1 }} />
 

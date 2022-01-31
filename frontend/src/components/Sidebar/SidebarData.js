@@ -19,6 +19,8 @@ import { FiPackage } from "react-icons/fi"; */
 import { MdCategory } from "react-icons/md";
 import { GiFactory } from "react-icons/gi";
 import { GiMeat } from "react-icons/gi";
+import { BiFoodMenu } from "react-icons/bi";
+import { FaCashRegister } from "react-icons/fa";
 
 export const navItems = [
   /*  {
@@ -90,6 +92,16 @@ export const navItems = [
     text: "Suppliers ",
     path: "/suppliers",
     icon: <GiFactory />,
+  },
+  {
+    text: "Menu ",
+    path: "/menu",
+    icon: <BiFoodMenu />,
+  },
+  {
+    text: "Cashier",
+    path: "/cashier",
+    icon: <FaCashRegister />,
   },
   /*   {
     text: "Menu",

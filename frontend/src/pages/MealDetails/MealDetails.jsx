@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMealDetails,
-  creatMealReview,
+  /*   creatMealReview, */
 } from "../../redux/actions/mealAction";
 import { useParams } from "react-router";
 import { Box } from "@mui/system";
@@ -18,46 +18,46 @@ import {
   Select,
   MenuItem,
   InputLabel, */
-  TextField,
-  Rating,
+  /*  TextField,
+  Rating, */
   IconButton,
   Stack,
   Container,
-  Pagination,
+  /*   Pagination, */
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
 import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom"; */
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { FaCashRegister } from "react-icons/fa";
 
 const MealDetailsPage = () => {
-  const [reviewRating, setReviewRating] = useState(0);
-  const [comment, setComment] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [mealReviewPerpage] = useState(5);
+  /*   const [reviewRating, setReviewRating] = useState(0);
+  const [comment, setComment] = useState(""); */
+  /*   const [currentPage, setCurrentPage] = useState(1); */
+  /*   const [mealReviewPerpage] = useState(5); */
 
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
-  const { userInfo } = useSelector((state) => state.userLogin);
-  const { error: errorReviews, success: successReviews } = useSelector(
+  /*  const { userInfo } = useSelector((state) => state.userLogin); */
+  /*   const { error: errorReviews, success: successReviews } = useSelector(
     (state) => state.mealCreateReviews
-  );
+  ); */
 
-  const indexOfLastMealReview = currentPage * mealReviewPerpage;
-  const indexOfFirstMealReview = indexOfLastMealReview - mealReviewPerpage;
-  const currentMealReview = meal.reviews.slice(
+  /*   const indexOfLastMealReview = currentPage * mealReviewPerpage;
+  const indexOfFirstMealReview = indexOfLastMealReview - mealReviewPerpage; */
+  /* const currentMealReview = meal.reviews.slice(
     indexOfFirstMealReview,
     indexOfLastMealReview
   );
-
+ */
   //change page
 
-  const handleChangePage = (event, value) => {
+  /*  const handleChangePage = (event, value) => {
     setCurrentPage(value);
-  };
+  }; */
 
   const { name, image, countInStock, price } = meal;
 
@@ -66,7 +66,7 @@ const MealDetailsPage = () => {
   const { id } = useParams();
   const history = useHistory();
 
-  const handleReview = (e) => {
+  /*   const handleReview = (e) => {
     e.preventDefault();
     console.log(reviewRating, comment);
     dispatch(
@@ -75,12 +75,12 @@ const MealDetailsPage = () => {
         rating: reviewRating,
       })
     );
-  };
+  }; */
 
   useEffect(() => {
     dispatch(getMealDetails(id));
     dispatch({ type: MEAL_CREATE_REVIEW_RESET });
-  }, [dispatch, id, successReviews]);
+  }, [dispatch, id]);
 
   if (loading) return <Loader />;
 
@@ -140,7 +140,7 @@ const MealDetailsPage = () => {
               {name}
             </Typography>
 
-            <Stack direction="row" alignItems="center" pb={1} spacing={1}>
+            {/*   <Stack direction="row" alignItems="center" pb={1} spacing={1}>
               <Rating
                 name="half-rating-read"
                 defaultValue={meal.rating}
@@ -148,7 +148,7 @@ const MealDetailsPage = () => {
                 readOnly
               />
               <Typography variant="body2">{meal.numReviews} reviews</Typography>
-            </Stack>
+            </Stack> */}
 
             <Divider />
 
@@ -227,7 +227,7 @@ const MealDetailsPage = () => {
         </Grid>
       </Grid>
 
-      <Grid container sx={{ marginTop: 2 }}>
+      {/*     <Grid container sx={{ marginTop: 2 }}>
         <Grid item xs={12} sm={12} lg={4}>
           <Box mb={2}>
             <Typography variant="h4" sx={{ paddingBottom: 2 }}>
@@ -313,7 +313,7 @@ const MealDetailsPage = () => {
             )}
           </Box>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };
