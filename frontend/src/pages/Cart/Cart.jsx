@@ -51,9 +51,9 @@ const Cart = () => {
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
 
-  /*  const [customerName, setCustomerName] = useState("");
-  const [paid, setPaid] = useState("");
-  const [paymentType, setPaymentType] = useState(""); */
+  /*  const [customerName, setCustomerName] = useState(""); */
+  const [paid, setPaid] = useState(0);
+  const [paymentType, setPaymentType] = useState("");
   const [name, setName] = useState("");
   const [orderType, setOrderType] = useState("");
 
@@ -86,7 +86,13 @@ const Cart = () => {
   }
 
   //change
-  /*  const change = Math.abs(totalAmount - Number(paid)); */
+  const change = () => {
+    if (paid) {
+      return Math.abs(totalPrice - Number(paid));
+    } else {
+      return 0;
+    }
+  };
 
   const handlePayment = (e) => {
     e.preventDefault();
@@ -99,6 +105,9 @@ const Cart = () => {
       subtotal,
       discount,
       totalPrice,
+      change: change(),
+      paymentType,
+      paid,
     };
 
     dispatch(createOrderCashier(orders));
@@ -172,6 +181,13 @@ const Cart = () => {
               </Typography>
             )}
 
+            {paid > totalPrice && (
+              <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
+                <strong>Change: </strong>
+                <span>&#8369; {change().toFixed(2)}</span>
+              </Typography>
+            )}
+
             {error && <Alert severity="error">{error}</Alert>}
 
             <Box
@@ -201,6 +217,27 @@ const Cart = () => {
                   <MenuItem value="foodpanda">Food Panda</MenuItem>
                 </Select>
               </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel>Payment Type</InputLabel>
+                <Select
+                  defaultValue={paymentType || ""}
+                  value={paymentType || ""}
+                  label="Payment Type"
+                  onChange={(e) => setPaymentType(e.target.value)}
+                >
+                  <MenuItem value="cash">Cash</MenuItem>
+                  <MenuItem value="credit">Credit</MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                label="Paid"
+                variant="outlined"
+                type="number"
+                value={paid || ""}
+                onChange={(e) => setPaid(e.target.value)}
+              />
 
               <Button
                 variant="contained"

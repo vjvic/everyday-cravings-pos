@@ -7,8 +7,11 @@ const orderCashierSchema = mongoose.Schema(
     orderType: { type: String, required: true },
     totalItems: { type: Number, required: true },
     subtotal: { type: Number, required: true },
-    discount: { type: Number, required: true },
+    discount: { type: Number, required: true, default: 0 },
     totalPrice: { type: Number, required: true },
+    change: { type: Number, default: 0 },
+    paymentType: { type: String, required: true },
+    paid: { type: Number, default: 0 },
   },
   {
     timestamps: true,

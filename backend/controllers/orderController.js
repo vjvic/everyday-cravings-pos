@@ -188,8 +188,18 @@ const getAllOrders = asyncHandler(async (req, res) => {
 //@access Private
 
 const createOrderCashier = asyncHandler(async (req, res) => {
-  const { name, orderType, totalItems, subtotal, discount, totalPrice, id } =
-    req.body;
+  const {
+    name,
+    orderType,
+    totalItems,
+    subtotal,
+    discount,
+    totalPrice,
+    id,
+    change,
+    paymentType,
+    paid,
+  } = req.body;
 
   const order = new OrderCashier({
     id,
@@ -199,6 +209,9 @@ const createOrderCashier = asyncHandler(async (req, res) => {
     subtotal,
     discount,
     totalPrice,
+    change,
+    paymentType,
+    paid,
   });
 
   const createOrder = await order.save();

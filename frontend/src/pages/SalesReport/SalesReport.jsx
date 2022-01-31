@@ -30,11 +30,10 @@ const SalesReport = () => {
   const { orders, loading } = useSelector((state) => state.orderCashierList);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 150 },
+    { field: "id", headerName: "ID", width: 130 },
     {
       field: "name",
       headerName: "Customer Name",
-      width: 140,
     },
     {
       field: "createdAt",
@@ -50,25 +49,37 @@ const SalesReport = () => {
     {
       field: "orderType",
       headerName: "Order Type",
-      width: 150,
+    },
+    {
+      field: "paymentType",
+      headerName: "Payment Type",
+    },
+    {
+      field: "paid",
+      headerName: "Paid",
+      width: 55,
+    },
+    {
+      field: "change",
+      headerName: "Change",
+      width: 80,
+      type: "number",
     },
     {
       field: "totalItems",
       headerName: "Total Items",
       type: "number",
-      width: 100,
     },
     {
       field: "subtotal",
       headerName: "Subtotal",
       type: "number",
-      width: 100,
+      width: 80,
     },
     {
       field: "discount",
       headerName: "Discount",
       type: "number",
-      width: 100,
     },
     {
       field: "totalPrice",
@@ -97,7 +108,7 @@ const SalesReport = () => {
         Sales Report
       </Typography>
 
-      <div style={{ height: 500, maxWidth: 950 }}>
+      <div style={{ height: 500, maxWidth: "100%" }}>
         <DataGrid
           rows={orders}
           columns={columns}
