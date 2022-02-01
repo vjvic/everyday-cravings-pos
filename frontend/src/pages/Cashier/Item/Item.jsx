@@ -1,15 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  Box,
-  Typography,
-  /*  FormControl,
-  InputLabel,
-  Select,
-  MenuItem, */
-  Stack,
-} from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-/* import DeleteIcon from "@mui/icons-material/Delete"; */
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../../redux/actions/cartAction";
 import AddIcon from "@mui/icons-material/Add";
@@ -28,7 +19,7 @@ const Item = ({ item }) => {
   }, [dispatch, qty, meal, countInStock]);
 
   return (
-    <CartItem /* sx={{ display: "flex", alignItems: "center", marginY: 2 }} */>
+    <CartItem>
       <CartItemImg
         component="img"
         /* sx={{ width: 151, height: 100 }} */
@@ -71,28 +62,6 @@ const Item = ({ item }) => {
           </Stack>
         )}
       </CartItemContent>
-      {/* <Box sx={{ flex: 1 }} /> */}
-      {/*  <FormControl sx={{ marginX: 2 }} color="secondary">
-        <InputLabel>Qty</InputLabel>
-        <Select
-          value={qty}
-          onChange={(e) => dispatch(addToCart(meal, Number(e.target.value)))}
-          label="Qty"
-        >
-          {[...Array(countInStock).keys()].map((x) => (
-            <MenuItem key={x + 1} value={x + 1}>
-              {x + 1}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
-
-      {/* <IconButton
-        sx={{ marginRight: 2 }}
-        onClick={() => dispatch(removeFromCart(meal))}
-      >
-        <DeleteIcon />
-      </IconButton> */}
     </CartItem>
   );
 };

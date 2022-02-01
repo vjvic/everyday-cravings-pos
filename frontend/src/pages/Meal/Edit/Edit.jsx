@@ -14,9 +14,7 @@ import {
   Container,
   Paper,
   Grid,
-  /*  InputAdornment, */
   Modal,
-  /*  IconButton, */
   capitalize,
 } from "@mui/material";
 import { Box } from "@mui/system";

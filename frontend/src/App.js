@@ -3,7 +3,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
-/* import AdminRoute from "./components/Route/AdminRoute"; */
 import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
@@ -12,21 +11,14 @@ import {
   MealDetails,
   Meals,
   Profile,
-  Results,
-  /*  Cashier, */
   Menu,
   Receipt,
   SalesReport,
   UserList,
-  /* Home, */
   Category,
   MealEdit,
   UserEdit,
-  Cart,
-  Checkout,
-  Order,
-  MyOrders,
-  OrderList,
+  Cashier,
   Suppliers,
   Ingredient,
   CategoryEdit,
@@ -48,9 +40,6 @@ const theme = createTheme({
       paper: "#fff",
     },
   },
-  stepper: {
-    iconColor: "green", // or logic to change color
-  },
   shape: {
     borderRadius: 10,
   },
@@ -63,7 +52,6 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            {/* <Route exact path="/" component={Home} /> */}
             <PrivateRoute exact path="/categories" component={Category} />
             <PrivateRoute
               exact
@@ -71,11 +59,7 @@ function App() {
               component={CategoryEdit}
             />
             <PrivateRoute path="/meal/:id" component={MealDetails} />
-            <PrivateRoute path="/results/:keyword" component={Results} />
-            <PrivateRoute exact path="/cashier/:id?" component={Cart} />
-            <PrivateRoute path="/checkout" component={Checkout} />
-            <PrivateRoute path="/orders/:id" component={Order} />
-            <Route path="/my-orders" component={MyOrders} />
+            <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute
               exact
@@ -93,13 +77,11 @@ function App() {
             <PrivateRoute exact path="/meals/:id?/edit" component={MealEdit} />
             <PrivateRoute exact path="/menu" component={Menu} />
             <PrivateRoute exact path="/user-list" component={UserList} />
-            <PrivateRoute exact path="/order-list" component={OrderList} />
             <PrivateRoute
               exact
               path="/user-list/:id/edit"
               component={UserEdit}
             />
-            {/*   <PrivateRoute path="/cashier/:id?" component={Cashier} /> */}
             <PrivateRoute exact path="/suppliers" component={Suppliers} />
             <PrivateRoute
               exact

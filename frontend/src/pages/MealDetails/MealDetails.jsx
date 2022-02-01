@@ -14,50 +14,20 @@ import {
   Card,
   CardContent,
   Grid,
-  /*  FormControl,
-  Select,
-  MenuItem,
-  InputLabel, */
-  /*  TextField,
-  Rating, */
   IconButton,
   Stack,
   Container,
-  /*   Pagination, */
 } from "@mui/material";
 import { useHistory } from "react-router";
 import { Loader } from "../../components";
 import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
-/* import { Link } from "react-router-dom"; */
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { FaCashRegister } from "react-icons/fa";
 
 const MealDetailsPage = () => {
-  /*   const [reviewRating, setReviewRating] = useState(0);
-  const [comment, setComment] = useState(""); */
-  /*   const [currentPage, setCurrentPage] = useState(1); */
-  /*   const [mealReviewPerpage] = useState(5); */
-
   const dispatch = useDispatch();
   const { meal, loading, error } = useSelector((state) => state.mealDetails);
-  /*  const { userInfo } = useSelector((state) => state.userLogin); */
-  /*   const { error: errorReviews, success: successReviews } = useSelector(
-    (state) => state.mealCreateReviews
-  ); */
-
-  /*   const indexOfLastMealReview = currentPage * mealReviewPerpage;
-  const indexOfFirstMealReview = indexOfLastMealReview - mealReviewPerpage; */
-  /* const currentMealReview = meal.reviews.slice(
-    indexOfFirstMealReview,
-    indexOfLastMealReview
-  );
- */
-  //change page
-
-  /*  const handleChangePage = (event, value) => {
-    setCurrentPage(value);
-  }; */
 
   const { name, image, countInStock, price } = meal;
 
@@ -65,17 +35,6 @@ const MealDetailsPage = () => {
 
   const { id } = useParams();
   const history = useHistory();
-
-  /*   const handleReview = (e) => {
-    e.preventDefault();
-    console.log(reviewRating, comment);
-    dispatch(
-      creatMealReview(id, {
-        comment,
-        rating: reviewRating,
-      })
-    );
-  }; */
 
   useEffect(() => {
     dispatch(getMealDetails(id));
@@ -85,26 +44,6 @@ const MealDetailsPage = () => {
   if (loading) return <Loader />;
 
   if (error) return <Alert severity="error">{error}</Alert>;
-
-  /*   const inStock = (
-    <>
-      <Divider sx={{ marginY: 1 }} />
-      <FormControl fullWidth color="secondary">
-        <InputLabel>Quantity</InputLabel>
-        <Select
-          value={qty}
-          onChange={(e) => setQty(e.target.value)}
-          label="Quantity"
-        >
-          {[...Array(countInStock).keys()].map((x) => (
-            <MenuItem key={x + 1} value={x + 1}>
-              {x + 1}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
-  ); */
 
   return (
     <Container maxWidth="xl">
@@ -139,16 +78,6 @@ const MealDetailsPage = () => {
             <Typography variant="h4" component="h3">
               {name}
             </Typography>
-
-            {/*   <Stack direction="row" alignItems="center" pb={1} spacing={1}>
-              <Rating
-                name="half-rating-read"
-                defaultValue={meal.rating}
-                precision={0.5}
-                readOnly
-              />
-              <Typography variant="body2">{meal.numReviews} reviews</Typography>
-            </Stack> */}
 
             <Divider />
 
@@ -226,94 +155,6 @@ const MealDetailsPage = () => {
           </Card>
         </Grid>
       </Grid>
-
-      {/*     <Grid container sx={{ marginTop: 2 }}>
-        <Grid item xs={12} sm={12} lg={4}>
-          <Box mb={2}>
-            <Typography variant="h4" sx={{ paddingBottom: 2 }}>
-              Reviews
-            </Typography>
-            {currentMealReview.length === 0 && (
-              <Alert severity="info">No Reviews</Alert>
-            )}
-            <Box as="ul" sx={{ listStyle: "none", padding: 0 }}>
-              {currentMealReview.map((review) => (
-                <Box as="li" my={2} key={review._id}>
-                  <Box display="flex" alignItems="center">
-                    <strong>{review.name}</strong>
-                    <Rating
-                      name="half-rating-read"
-                      defaultValue={review.rating}
-                      precision={0.5}
-                      readOnly
-                    />
-                  </Box>
-                  <Typography variant="body2">
-                    {review.createdAt.substring(0, 10)}
-                  </Typography>
-                  <Typography
-                    component="p"
-                    variant="body"
-                    sx={{ paddingTop: 1 }}
-                  >
-                    {review.comment}
-                  </Typography>
-                </Box>
-              ))}
-              {meal.reviews.length > 5 && (
-                <Pagination
-                  count={Math.ceil(meal.reviews.length / mealReviewPerpage)}
-                  onChange={handleChangePage}
-                />
-              )}
-            </Box>
-          </Box>
-
-          <Box>
-            <Typography variant="h4" sx={{ paddingBottom: 1 }}>
-              Write a Review
-            </Typography>
-
-            {errorReviews && <Alert severity="error">{errorReviews}</Alert>}
-
-            {userInfo ? (
-              <form onSubmit={handleReview}>
-                <Rating
-                  value={reviewRating || 0}
-                  precision={0.5}
-                  onChange={(event, newValue) => {
-                    setReviewRating(newValue);
-                  }}
-                />
-                <div>
-                  <TextField
-                    label="Write a review"
-                    variant="outlined"
-                    color="secondary"
-                    multiline
-                    rows={3}
-                    value={comment || ""}
-                    onChange={(e) => setComment(e.target.value)}
-                    fullWidth
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  sx={{ marginTop: 2 }}
-                >
-                  Submit
-                </Button>
-              </form>
-            ) : (
-              <Alert severity="info">
-                Please <Link to="/login">signin </Link> to write a review
-              </Alert>
-            )}
-          </Box>
-        </Grid>
-      </Grid> */}
     </Container>
   );
 };

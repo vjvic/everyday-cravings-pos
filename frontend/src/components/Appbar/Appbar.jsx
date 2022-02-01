@@ -11,8 +11,6 @@ import {
   Badge,
 } from "@mui/material";
 import { Box } from "@mui/system";
-/* import SearchIcon from "@mui/icons-material/Search";
-import { Search, SearchIconWrapper, StyledInputBase } from "./styles"; */
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -23,30 +21,16 @@ import { useLocation } from "react-router";
 import { FaCashRegister } from "react-icons/fa";
 
 const Appbar = ({ handleDrawerToggle }) => {
-  /* const [keyword, setKeyword] = useState(""); */
-
   const history = useHistory();
   const location = useLocation();
-
   const dispatch = useDispatch();
-
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  /*  const { order } = useSelector((state) => state.orderDetails); */
   const { cartItems } = useSelector((state) => state.cart);
 
   //Total cart items
   const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const drawerWidth = 240;
-
-  /*  const handleSearch = (e) => {
-    e.preventDefault();
-
-    if (keyword) {
-      history.push("/results/" + keyword);
-      setKeyword("");
-    }
-  }; */
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -75,8 +59,6 @@ const Appbar = ({ handleDrawerToggle }) => {
       </Box>
     );
 
-  /*   if (location.pathname === "/admin/sales-report/export") return ""; */
-
   return (
     <AppBar
       position="fixed"
@@ -98,19 +80,6 @@ const Appbar = ({ handleDrawerToggle }) => {
         >
           <MenuIcon />
         </IconButton>
-
-        {/*  <form onSubmit={handleSearch}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search..."
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-          </Search>
-        </form> */}
 
         <Box sx={{ flexGrow: 1 }} />
 

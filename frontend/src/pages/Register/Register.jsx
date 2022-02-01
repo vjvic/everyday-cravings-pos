@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { TextField, Button, Typography, Alert, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import { /*  useLocation, */ useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
@@ -21,7 +21,6 @@ const schema = yup.object().shape({
 });
 
 const RegisterPage = () => {
-  /* const location = useLocation(); */
   const history = useHistory();
 
   const dispatch = useDispatch();

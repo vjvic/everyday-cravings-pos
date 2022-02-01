@@ -5,15 +5,13 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  /*  Stack,
-  Rating, */
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
 const Item = ({ item, favorite }) => {
-  const { name, image, category, price, _id /* , rating, numReviews */ } = item;
+  const { name, image, category, price, _id } = item;
 
   const history = useHistory();
 
@@ -50,16 +48,6 @@ const Item = ({ item, favorite }) => {
       />
 
       <CardContent>
-        {/*  <Stack direction="row" alignItems="center" pb={1} spacing={1}>
-          <Rating
-            name="half-rating-read"
-            defaultValue={rating}
-            precision={0.5}
-            readOnly
-          />
-          <Typography variant="body2">{numReviews} reviews</Typography>
-        </Stack> */}
-
         <Box
           sx={{
             display: "flex",

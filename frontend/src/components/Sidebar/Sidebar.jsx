@@ -22,14 +22,10 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const history = useHistory();
   const location = useLocation();
 
-  /*   const { order } = useSelector((state) => state.orderDetails); */
-  /*  const { userInfo } = useSelector((state) => state.userLogin); */
-
   const activeColor = (path) => {
     return location.pathname === path ? "#F5F5F5" : null;
   };
 
-  /*   if (location.pathname === "/admin/sales-report/export") return ""; */
   const { order } = useSelector((state) => state.orderCashierDetails);
 
   if (

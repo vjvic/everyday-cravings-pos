@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Container, Button, Typography, Divider } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-/* import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants"; */
 import { getOrderCashierDetails } from "../../redux/actions/orderAction";
 import styles from "./receipt.module.css";
 import { format } from "date-fns";
@@ -18,7 +17,6 @@ const Receipt = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const handleBack = () => {
-    /* dispatch({ type: ORDER_CREATE_RESET }); */
     history.push("/cashier");
   };
 
@@ -34,31 +32,6 @@ const Receipt = () => {
 
   return (
     <Container maxWidth="xs">
-      {/*  <div className={styles.container}>
-        <table>
-          <tr>
-            <th>Customer Name</th>
-            <th>Order Type</th>
-            <th>Total Items</th>
-            <th>Subtotal</th>
-            <th>Discount</th>
-            <th>total Price</th>
-            <th>Date</th>
-          </tr>
-          {order && (
-            <tr>
-              <td>{capitalize(order.name)}</td>
-              <td>{capitalize(order.orderType)}</td>
-              <td>{order.totalItems}</td>
-              <td>{order.subtotal}</td>
-              <td>&#8369; {order.discount.toFixed(2)}</td>
-              <td>&#8369; {order.totalPrice.toFixed(2)}</td>
-              <td>{format(new Date(order.createdAt), "yyyy-MM-dd")}</td>
-            </tr>
-          )}
-        </table>
-      </div> */}
-
       <Box sx={{ textAlign: "center", marginBottom: 6 }}>
         <Typography>{"Everyday Cravings".toUpperCase()}</Typography>
         <Typography>{"Desta Malolos Bulacan".toUpperCase()}</Typography>

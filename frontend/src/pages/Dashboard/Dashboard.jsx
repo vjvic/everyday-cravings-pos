@@ -5,11 +5,6 @@ import {
   Grid,
   Card,
   CardContent,
-  /*  capitalize,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText, */
   Alert,
   FormControl,
   Select,
@@ -208,21 +203,6 @@ const DashboardPage = () => {
     },
   ];
 
-  //Get the total of occurence in array
-  /*  const topCustomer = orders.reduce((res, val) => {
-    if (res[val.user.name]) {
-      res[val.user.name]++;
-    } else {
-      res[val.user.name] = 1;
-    }
-    return res;
-  }, {}); */
-
-  //Sort by the highest
-  /*   const sortName = Object.entries(topCustomer)
-    .sort((a, b) => b[1] - a[1])
-    .map((v) => v[0]); */
-
   //Return text based on selected date
   const dateText = () => {
     if (date === "Today") {
@@ -244,8 +224,6 @@ const DashboardPage = () => {
       return revenueThisYear.reduce((acc, amount) => acc + amount, 0);
     }
   };
-
-  console.log(getTotalRevenue());
 
   return (
     <Container maxWidth="xl">
