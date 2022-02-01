@@ -14,10 +14,14 @@ import {
   INGREDIENT_FAIL,
   INGREDIENT_REMOVE_ITEM,
   INGREDIENT_REQUEST,
+  INGREDIENT_RESET_ITEM,
   INGREDIENT_SUCCESS,
   INGREDIENT_UPDATE_FAIL,
   INGREDIENT_UPDATE_REQUEST,
   INGREDIENT_UPDATE_RESET,
+  INGREDIENT_UPDATE_STOCK_FAIL,
+  INGREDIENT_UPDATE_STOCK_REQUEST,
+  INGREDIENT_UPDATE_STOCK_SUCCESS,
   INGREDIENT_UPDATE_SUCCESS,
 } from "../constants/ingredientConstants";
 
@@ -128,7 +132,21 @@ export const ingredientItemsReducer = (state = { ingredients: [] }, action) => {
           (x) => x.ingredient !== action.payload
         ),
       };
+    case INGREDIENT_RESET_ITEM:
+      return { ingredients: [] };
+    default:
+      return state;
+  }
+};
 
+export const ingredientUpdateStockReducer = (state = {}, action) => {
+  switch (action.type) {
+    case INGREDIENT_UPDATE_STOCK_REQUEST:
+      return { loading: true };
+    case INGREDIENT_UPDATE_STOCK_SUCCESS:
+      return { loading: false, success: true };
+    case INGREDIENT_UPDATE_STOCK_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

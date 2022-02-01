@@ -143,6 +143,7 @@ export const mealTopListReducer = (state = { meals: [] }, action) => {
       return state;
   }
 };
+
 export const mealUpdateStockReducer = (state = {}, action) => {
   switch (action.type) {
     case MEAL_UPDATE_STOCK_REQUEST:

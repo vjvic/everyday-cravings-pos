@@ -39,10 +39,12 @@ import { uniqueID } from "../../../utils/utils";
 import {
   getIngredientList,
   removeFromMealIngredient,
+  updateIngredientStock,
 } from "../../../redux/actions/ingredientAction";
 import AddIcon from "@mui/icons-material/Add";
 /* import RemoveIcon from "@mui/icons-material/Remove"; */
 import IngredientItem from "./IngredientItem";
+import { INGREDIENT_RESET_ITEM } from "../../../redux/constants/ingredientConstants";
 
 const style = {
   position: "absolute",
@@ -117,6 +119,11 @@ const Edit = () => {
       dispatch(
         createMeal(name, price, image, category, countInStock, description, id)
       );
+
+      ingredients.map((ing) =>
+        dispatch(updateIngredientStock(ing.ingredient, ing.qty - ing.qtyInMeal))
+      );
+      dispatch({ type: INGREDIENT_RESET_ITEM });
     }
   };
 
@@ -275,14 +282,18 @@ const Edit = () => {
           fullWidth
         />
 
-        <Box sx={{ display: "flex" }}>
-          <Typography variant="h5" sx={{ paddingRight: 3 }}>
-            Add Ingredients
-          </Typography>
-          <Button variant="contained" onClick={() => setOpen(true)}>
-            <AddIcon />
-          </Button>
-        </Box>
+        {isEdit ? (
+          ""
+        ) : (
+          <Box sx={{ display: "flex" }}>
+            <Typography variant="h5" sx={{ paddingRight: 3 }}>
+              Add Ingredients
+            </Typography>
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              <AddIcon />
+            </Button>
+          </Box>
+        )}
 
         <Modal open={open} onClose={() => setOpen(false)}>
           <Box sx={style}>

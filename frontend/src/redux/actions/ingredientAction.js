@@ -15,6 +15,9 @@ import {
   INGREDIENT_SUCCESS,
   INGREDIENT_UPDATE_FAIL,
   INGREDIENT_UPDATE_REQUEST,
+  INGREDIENT_UPDATE_STOCK_FAIL,
+  INGREDIENT_UPDATE_STOCK_REQUEST,
+  INGREDIENT_UPDATE_STOCK_SUCCESS,
   INGREDIENT_UPDATE_SUCCESS,
 } from "../constants/ingredientConstants";
 import { mealApi } from "../../components";
@@ -240,3 +243,46 @@ export const removeFromMealIngredient = (id) => (dispatch) => {
     payload: id,
   });
 };
+
+//Update ingredient stock
+export const updateIngredientStock =
+  (ingredientID, qty) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: INGREDIENT_UPDATE_STOCK_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await mealApi.put(
+        `/api/ingredient/${ingredientID}/updatestock`,
+        { qty },
+        config
+      );
+
+      dispatch({
+        type: INGREDIENT_UPDATE_STOCK_SUCCESS,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: INGREDIENT_UPDATE_STOCK_FAIL,
+        payload: message,
+      });
+    }
+  };

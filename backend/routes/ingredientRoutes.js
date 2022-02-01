@@ -7,6 +7,7 @@ import {
   deleteIngredient,
   updateIngredient,
   getIngredientById,
+  updateIngredientStock,
 } from "../controllers/ingredientController.js";
 
 router
@@ -18,5 +19,7 @@ router
   .get(protect, admin, getIngredientById)
   .delete(protect, admin, deleteIngredient)
   .put(protect, admin, updateIngredient);
+
+router.put("/:id/updatestock", protect, updateIngredientStock);
 
 export default router;

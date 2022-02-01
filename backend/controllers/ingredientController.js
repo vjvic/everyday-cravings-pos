@@ -95,10 +95,30 @@ const getIngredientById = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Update ingredient stock
+//@route PUT /api/ingredient/:id
+//@access Private
+const updateIngredientStock = asyncHandler(async (req, res) => {
+  const { qty } = req.body;
+
+  const ingredient = await Ingredient.findById(req.params.id);
+
+  if (ingredient) {
+    ingredient.qty = qty;
+
+    const updatedIngredientStock = await ingredient.save();
+    res.json(updatedIngredientStock);
+  } else {
+    res.status(404);
+    throw Error("Ingredient not found");
+  }
+});
+
 export {
   createIngredient,
   getAllIngredient,
   deleteIngredient,
   updateIngredient,
   getIngredientById,
+  updateIngredientStock,
 };
