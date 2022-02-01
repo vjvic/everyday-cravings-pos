@@ -12,6 +12,12 @@ import {
   Stack,
   Alert,
   Container,
+  Paper,
+  Grid,
+  /*  InputAdornment, */
+  Modal,
+  /*  IconButton, */
+  capitalize,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -30,6 +36,26 @@ import {
 } from "../../../redux/constants/mealConstants";
 import { getCategoryList } from "../../../redux/actions/categoryAction";
 import { uniqueID } from "../../../utils/utils";
+import {
+  getIngredientList,
+  removeFromMealIngredient,
+} from "../../../redux/actions/ingredientAction";
+import AddIcon from "@mui/icons-material/Add";
+/* import RemoveIcon from "@mui/icons-material/Remove"; */
+import IngredientItem from "./IngredientItem";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 1000,
+  height: 500,
+  bgcolor: "#f1f1f1",
+  boxShadow: 24,
+  borderRadius: 1,
+  p: 4,
+};
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -40,6 +66,8 @@ const Edit = () => {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+
+  const [open, setOpen] = useState(false);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -66,6 +94,8 @@ const Edit = () => {
   } = useSelector((state) => state.mealUpdate);
 
   const { category: categoryList } = useSelector((state) => state.categoryList);
+  const { ingredient } = useSelector((state) => state.ingredientList);
+  const { ingredients } = useSelector((state) => state.ingredientItems);
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
@@ -144,6 +174,7 @@ const Edit = () => {
 
   useEffect(() => {
     dispatch(getCategoryList());
+    dispatch(getIngredientList());
   }, [dispatch]);
 
   if (mealLoading) return <Loader />;
@@ -243,6 +274,55 @@ const Edit = () => {
           onChange={(e) => setDescription(e.target.value)}
           fullWidth
         />
+
+        <Box sx={{ display: "flex" }}>
+          <Typography variant="h5" sx={{ paddingRight: 3 }}>
+            Add Ingredients
+          </Typography>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            <AddIcon />
+          </Button>
+        </Box>
+
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <Box sx={style}>
+            <Typography variant="h5" sx={{ marginBottom: 1 }}>
+              Ingredients
+            </Typography>
+            <Grid container spacing={2}>
+              {ingredient.map((ing) => (
+                <IngredientItem key={ing._id} ing={ing} />
+              ))}
+            </Grid>
+          </Box>
+        </Modal>
+
+        <Grid container spacing={2}>
+          {ingredients.map((ing) => (
+            <Grid item lg={4} key={ing.ingredient}>
+              <Paper
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: 1,
+                  paddingX: 2,
+                }}
+              >
+                <div>
+                  {capitalize(ing.name)} {ing.qtyInMeal} {ing.measure}
+                </div>
+                <Button
+                  onClick={() =>
+                    dispatch(removeFromMealIngredient(ing.ingredient))
+                  }
+                >
+                  Remove
+                </Button>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
 
         <Button
           variant="contained"

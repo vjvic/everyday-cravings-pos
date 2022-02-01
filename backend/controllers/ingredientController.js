@@ -84,7 +84,7 @@ const updateIngredient = asyncHandler(async (req, res) => {
 //@desc Get ingredient by ID
 //@route GET /api/ingredient/:id
 //@access Private/Admin
-const getSupplierById = asyncHandler(async (req, res) => {
+const getIngredientById = asyncHandler(async (req, res) => {
   const ingredient = await Ingredient.findById(req.params.id);
 
   if (ingredient) {
@@ -100,5 +100,5 @@ export {
   getAllIngredient,
   deleteIngredient,
   updateIngredient,
-  getSupplierById,
+  getIngredientById,
 };

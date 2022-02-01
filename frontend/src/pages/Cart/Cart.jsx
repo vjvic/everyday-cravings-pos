@@ -118,8 +118,6 @@ const Cart = () => {
     );
   };
 
-  console.log(cartItems);
-
   useEffect(() => {
     if (id) {
       dispatch(addToCart(id, qty));

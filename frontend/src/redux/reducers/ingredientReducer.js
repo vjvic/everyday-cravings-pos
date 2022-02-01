@@ -1,4 +1,5 @@
 import {
+  INGREDIENT_ADD_ITEM,
   INGREDIENT_CREATE_FAIL,
   INGREDIENT_CREATE_REQUEST,
   INGREDIENT_CREATE_RESET,
@@ -11,6 +12,7 @@ import {
   INGREDIENT_DETAILS_RESET,
   INGREDIENT_DETAILS_SUCCESS,
   INGREDIENT_FAIL,
+  INGREDIENT_REMOVE_ITEM,
   INGREDIENT_REQUEST,
   INGREDIENT_SUCCESS,
   INGREDIENT_UPDATE_FAIL,
@@ -88,6 +90,45 @@ export const ingredientDetailsReducer = (
       return { loading: false, error: action.payload };
     case INGREDIENT_DETAILS_RESET:
       return { ingredient: {} };
+    default:
+      return state;
+  }
+};
+
+export const ingredientItemsReducer = (state = { ingredients: [] }, action) => {
+  switch (action.type) {
+    case INGREDIENT_ADD_ITEM:
+      const item = action.payload;
+
+      // Find the item in array
+      //return true if the item is in array
+      const existItem = state.ingredients.find(
+        (x) => x.ingredient === item.ingredient
+      );
+
+      if (existItem) {
+        //check if the item exist in array
+        return {
+          ...state,
+          ingredients: state.ingredients.map((x) =>
+            x.ingredient === existItem.ingredient ? item : x
+          ),
+        };
+      } else {
+        //Add the item in array if not exist
+        return {
+          ...state,
+          ingredients: [...state.ingredients, item],
+        };
+      }
+    case INGREDIENT_REMOVE_ITEM:
+      return {
+        ...state,
+        ingredients: state.ingredients.filter(
+          (x) => x.ingredient !== action.payload
+        ),
+      };
+
     default:
       return state;
   }

@@ -48,6 +48,7 @@ import {
   ingredientCreateReducer,
   ingredientUpdateReducer,
   ingredientDetailsReducer,
+  ingredientItemsReducer,
 } from "./ingredientReducer";
 import {
   supplierListReducer,
@@ -101,6 +102,7 @@ const reducers = combineReducers({
   ingredientCreate: ingredientCreateReducer,
   ingredientDelete: ingredientDeleteReducer,
   ingredientDetails: ingredientDetailsReducer,
+  ingredientItems: ingredientItemsReducer,
 
   supplierList: supplierListReducer,
   supplierUpdate: supplierUpdateReducer,

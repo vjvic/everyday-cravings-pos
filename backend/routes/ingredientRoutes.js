@@ -6,7 +6,7 @@ import {
   getAllIngredient,
   deleteIngredient,
   updateIngredient,
-  getSupplierById,
+  getIngredientById,
 } from "../controllers/ingredientController.js";
 
 router
@@ -15,7 +15,7 @@ router
   .get(protect, getAllIngredient);
 router
   .route("/:id")
-  .get(protect, getSupplierById)
+  .get(protect, admin, getIngredientById)
   .delete(protect, admin, deleteIngredient)
   .put(protect, admin, updateIngredient);
 

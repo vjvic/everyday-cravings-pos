@@ -1,4 +1,5 @@
 import {
+  INGREDIENT_ADD_ITEM,
   INGREDIENT_CREATE_FAIL,
   INGREDIENT_CREATE_REQUEST,
   INGREDIENT_CREATE_SUCCESS,
@@ -9,6 +10,7 @@ import {
   INGREDIENT_DETAILS_REQUEST,
   INGREDIENT_DETAILS_SUCCESS,
   INGREDIENT_FAIL,
+  INGREDIENT_REMOVE_ITEM,
   INGREDIENT_REQUEST,
   INGREDIENT_SUCCESS,
   INGREDIENT_UPDATE_FAIL,
@@ -199,4 +201,42 @@ export const getIngredientDetails = (id) => async (dispatch, getState) => {
       payload: message,
     });
   }
+};
+
+//
+
+export const addToMealIngredient =
+  (id, qtyInMeal) => async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await mealApi.get(`/api/ingredient/${id}`, config);
+
+    dispatch({
+      type: INGREDIENT_ADD_ITEM,
+      payload: {
+        ingredient: data._id,
+        id: data.id,
+        name: data.name,
+        qty: data.qty,
+        supplier: data.supplier,
+        measure: data.measure,
+        isActive: data.isActive,
+        qtyInMeal,
+      },
+    });
+  };
+
+export const removeFromMealIngredient = (id) => (dispatch) => {
+  dispatch({
+    type: INGREDIENT_REMOVE_ITEM,
+    payload: id,
+  });
 };
