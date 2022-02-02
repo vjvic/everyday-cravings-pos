@@ -32,11 +32,12 @@ const authUser = asyncHandler(async (req, res) => {
 //@route GET /api/users/profile
 //@access Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   if (user) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -85,7 +86,7 @@ const registerUser = asyncHandler(async (req, res) => {
 //@route PUT /api/users/profile
 //@access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   if (user) {
     user.name = req.body.name || user.name;
@@ -99,6 +100,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.json({
       _id: updateUser._id,
+      id: updateUser.id,
       name: updateUser.name,
       email: updateUser.email,
       role: updateUser.role,

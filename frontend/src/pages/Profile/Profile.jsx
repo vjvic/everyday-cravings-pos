@@ -30,10 +30,15 @@ const ProfilePage = () => {
   } = useSelector((state) => state.userUpdateProfile);
 
   useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+      setName(user.name);
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
     dispatch(getUserDetails("profile"));
-    setEmail(user.email);
-    setName(user.name);
-  }, [dispatch, user.email, user.name]);
+  }, [dispatch]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -54,8 +59,10 @@ const ProfilePage = () => {
           <Typography variant="h4">Profile</Typography>
         </Box>
 
-        {errorDetails && <Alert severity="error">{errorDetails}</Alert>}
-        {errorUpdate && <Alert severity="error">{errorUpdate}</Alert>}
+        {errorDetails && <Alert severity="error">Failed to fetch data</Alert>}
+        {errorUpdate && (
+          <Alert severity="error">Failed to update profile</Alert>
+        )}
         {successUpdate && <Alert severity="success">Update Success</Alert>}
 
         <Box
@@ -68,11 +75,10 @@ const ProfilePage = () => {
           onSubmit={handleUpdate}
         >
           <TextField
-            value={email}
+            value={email || ""}
             label="Email"
             fullWidth
             variant="filled"
-            color="secondary"
             onChange={(e) => setEmail(e.target.value)}
             InputLabelProps={{
               style: { color: "#888" },
@@ -80,11 +86,10 @@ const ProfilePage = () => {
           />
 
           <TextField
-            value={name}
+            value={name || ""}
             label="Name"
             fullWidth
             variant="filled"
-            color="secondary"
             onChange={(e) => setName(e.target.value)}
             InputLabelProps={{
               style: { color: "#888" },
@@ -97,7 +102,6 @@ const ProfilePage = () => {
             type="password"
             fullWidth
             variant="filled"
-            color="secondary"
             onChange={(e) => setPassword(e.target.value)}
             InputLabelProps={{
               style: { color: "#888" },
@@ -110,7 +114,6 @@ const ProfilePage = () => {
             type="password"
             fullWidth
             variant="filled"
-            color="secondary"
             error={errorPassword.length > 0}
             helperText={errorPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
