@@ -19,17 +19,15 @@ import { Loader } from "../../components";
 import {
   DataGrid,
   GridToolbarContainer,
-  GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  GridToolbarDensitySelector,
+  GridToolbarExport,
 } from "@mui/x-data-grid";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      <GridToolbarExport />
     </GridToolbarContainer>
   );
 };
@@ -79,7 +77,7 @@ const UserListPage = () => {
     },
     {
       field: "action",
-      headerName: "",
+      headerName: "Action",
       flex: 1,
       sortable: false,
       filter: false,

@@ -105,11 +105,13 @@ const Edit = () => {
         </Typography>
         <Divider />
 
-        {updateError ||
-          (categoryCreateError && (
-            <Alert severity="error">{updateError || categoryCreateError}</Alert>
-          ))}
-        {categoryError && <Alert severity="error">{categoryError}</Alert>}
+        {updateError && (
+          <Alert severity="error">Failed to update category</Alert>
+        )}
+        {categoryCreateError && (
+          <Alert severity="error">Failed to create category</Alert>
+        )}
+        {categoryError && <Alert severity="error">Failed to fetch data</Alert>}
 
         <TextField
           label="Category Name"

@@ -202,7 +202,7 @@ const Edit = () => {
 
         {updateError ||
           (mealCreateError && (
-            <Alert severity="error">{updateError || mealCreateError}</Alert>
+            <Alert severity="error">Failed to create Meal</Alert>
           ))}
         {mealError && <Alert severity="error">{mealError}</Alert>}
         {uploadError && <Alert severity="error">{uploadError}</Alert>}
@@ -254,7 +254,7 @@ const Edit = () => {
               {categoryList &&
                 categoryList.map((c, index) => (
                   <MenuItem key={index} value={c.category.toLowerCase()}>
-                    {c.category}
+                    {capitalize(c.category)}
                   </MenuItem>
                 ))}
             </Select>

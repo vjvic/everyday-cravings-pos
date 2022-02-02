@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Typography, Container } from "@mui/material";
+import { Typography, Container, capitalize } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderCashierList } from "../../redux/actions/orderAction";
 import { format } from "date-fns";
@@ -30,14 +30,16 @@ const SalesReport = () => {
   const { orders, loading } = useSelector((state) => state.orderCashierList);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 130 },
+    { field: "id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Customer Name",
+      flex: 1,
     },
     {
       field: "createdAt",
       headerName: "Date",
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">
@@ -49,42 +51,75 @@ const SalesReport = () => {
     {
       field: "orderType",
       headerName: "Order Type",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">{capitalize(params.row.orderType)}</div>
+        );
+      },
     },
     {
       field: "paymentType",
       headerName: "Payment Type",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">{capitalize(params.row.paymentType)}</div>
+        );
+      },
     },
     {
       field: "paid",
       headerName: "Paid",
-      width: 55,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> &#8369; {params.row.paid.toFixed(2)}</div>
+        );
+      },
     },
     {
       field: "change",
       headerName: "Change",
-      width: 80,
       type: "number",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> &#8369; {params.row.change.toFixed(2)}</div>
+        );
+      },
     },
     {
       field: "totalItems",
       headerName: "Total Items",
       type: "number",
+      flex: 1,
     },
     {
       field: "subtotal",
       headerName: "Subtotal",
       type: "number",
-      width: 80,
+      flex: 1,
     },
     {
       field: "discount",
       headerName: "Discount",
       type: "number",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {" "}
+            &#8369; {params.row.discount.toFixed(2)}
+          </div>
+        );
+      },
     },
     {
       field: "totalPrice",
       headerName: "Total Price",
       type: "number",
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="rowitem">

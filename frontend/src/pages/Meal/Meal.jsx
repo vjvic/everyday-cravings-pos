@@ -55,7 +55,7 @@ const MealsPage = () => {
   const columns = [
     {
       field: "id",
-      headerName: "User ID",
+      headerName: "Meal ID",
       flex: 1,
     },
     {
@@ -92,7 +92,7 @@ const MealsPage = () => {
     },
     {
       field: "action",
-      headerName: "",
+      headerName: "Action",
       flex: 1,
       sortable: false,
       filter: false,

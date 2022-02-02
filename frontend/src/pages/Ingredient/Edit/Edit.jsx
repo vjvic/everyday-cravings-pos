@@ -14,6 +14,7 @@ import {
   Container,
   FormControlLabel,
   Checkbox,
+  capitalize,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -143,13 +144,17 @@ const Edit = () => {
         </Typography>
         <Divider />
 
-        {updateError ||
-          (ingredientCreateError && (
-            <Alert severity="error">
-              {updateError || ingredientCreateError}
-            </Alert>
-          ))}
-        {ingredientError && <Alert severity="error">{ingredientError}</Alert>}
+        {updateError && (
+          <Alert severity="error"> Failed to update ingredient </Alert>
+        )}
+
+        {ingredientCreateError && (
+          <Alert severity="error"> Failed to create ingredient </Alert>
+        )}
+
+        {ingredientError && (
+          <Alert severity="error">Failed to fetch data</Alert>
+        )}
 
         <TextField
           label="Ingredient Name"
@@ -197,7 +202,7 @@ const Edit = () => {
             >
               {supplierList.map((c, index) => (
                 <MenuItem key={index} value={c.name.toLowerCase()}>
-                  {c.name}
+                  {capitalize(c.name)}
                 </MenuItem>
               ))}
             </Select>

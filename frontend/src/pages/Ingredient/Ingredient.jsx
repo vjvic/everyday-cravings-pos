@@ -15,6 +15,7 @@ import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarFilterButton,
+  GridToolbarExport,
 } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -28,6 +29,7 @@ const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
       <GridToolbarFilterButton />
+      <GridToolbarExport />
     </GridToolbarContainer>
   );
 };
@@ -69,11 +71,21 @@ const Ingredient = () => {
       field: "supplier",
       headerName: "Supplier",
       flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> {capitalize(params.row.supplier)}</div>
+        );
+      },
     },
     {
       field: "cost",
       headerName: "Cost",
       flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> &#8369; {params.row.cost.toFixed(2)}</div>
+        );
+      },
     },
     {
       field: "isActive",

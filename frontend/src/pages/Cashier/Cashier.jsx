@@ -53,6 +53,7 @@ const Cashier = () => {
   const [paymentType, setPaymentType] = useState("");
   const [name, setName] = useState("");
   const [orderType, setOrderType] = useState("");
+  const [paymentError, setPaymentError] = useState(false);
 
   //Item quantity
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
@@ -94,25 +95,30 @@ const Cashier = () => {
   const handlePayment = (e) => {
     e.preventDefault();
 
-    const orders = {
-      id: uniqueID(),
-      name,
-      orderType,
-      totalItems,
-      subtotal,
-      discount,
-      totalPrice,
-      change: change(),
-      paymentType,
-      paid,
-      orderItems: cartItems,
-    };
+    if (paid < totalPrice) {
+      setPaymentError(true);
+    } else {
+      setPaymentError(false);
+      const orders = {
+        id: uniqueID(),
+        name,
+        orderType,
+        totalItems,
+        subtotal,
+        discount,
+        totalPrice,
+        change: change(),
+        paymentType,
+        paid,
+        orderItems: cartItems,
+      };
 
-    dispatch(createOrderCashier(orders));
+      dispatch(createOrderCashier(orders));
 
-    cartItems.map((item) =>
-      dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
-    );
+      cartItems.map((item) =>
+        dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+      );
+    }
   };
 
   useEffect(() => {
@@ -201,9 +207,10 @@ const Cashier = () => {
                 variant="outlined"
                 value={name || ""}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
 
-              <FormControl fullWidth>
+              <FormControl fullWidth required>
                 <InputLabel>Order Type</InputLabel>
                 <Select
                   defaultValue={orderType || ""}
@@ -216,7 +223,7 @@ const Cashier = () => {
                 </Select>
               </FormControl>
 
-              <FormControl fullWidth>
+              <FormControl fullWidth required>
                 <InputLabel>Payment Type</InputLabel>
                 <Select
                   defaultValue={paymentType || ""}
@@ -230,11 +237,14 @@ const Cashier = () => {
               </FormControl>
 
               <TextField
+                error={paymentError}
+                helperText={paymentError && "Not enough"}
                 label="Paid"
                 variant="outlined"
                 type="number"
                 value={paid || ""}
                 onChange={(e) => setPaid(e.target.value)}
+                required
               />
 
               <Button
