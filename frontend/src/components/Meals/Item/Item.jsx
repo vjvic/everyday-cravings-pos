@@ -56,7 +56,7 @@ const Item = ({ item, favorite }) => {
           }}
         >
           {" "}
-          <Typography variant="h5">&#8369; {price}</Typography>
+          <Typography variant="h5">&#8369; {price.toFixed(2)}</Typography>
         </Box>
       </CardContent>
     </Card>

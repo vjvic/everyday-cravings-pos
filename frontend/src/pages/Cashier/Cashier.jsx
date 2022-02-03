@@ -302,7 +302,7 @@ const Cashier = () => {
                   onClick={() => setIsSave(true)}
                   startIcon={<BsFillBagCheckFill />}
                 >
-                  Checkout
+                  Payment
                 </Button>
               )}
               {/*  </CardContent> */}
