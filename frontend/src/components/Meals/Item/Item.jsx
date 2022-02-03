@@ -9,11 +9,15 @@ import {
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import { addToCart } from "../../../redux/actions/cartAction";
+import { useDispatch } from "react-redux";
 
 const Item = ({ item, favorite }) => {
-  const { name, image, category, price, _id } = item;
+  const { name, image, category, price, _id, countInStock } = item;
 
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   return (
     <Card>
@@ -29,7 +33,7 @@ const Item = ({ item, favorite }) => {
             to={`/meal/${_id}`}
             color="inherit"
             noWrap
-            variant="h5"
+            variant="h6"
             sx={{ textDecoration: "none" }}
           >
             {name}
@@ -40,11 +44,11 @@ const Item = ({ item, favorite }) => {
 
       <CardMedia
         component="img"
-        height="194"
+        height="120"
         image={image}
         alt={name}
         sx={{ cursor: "pointer" }}
-        onClick={() => history.push(`/meal/${_id}`)}
+        onClick={() => dispatch(addToCart(_id, 1))}
       />
 
       <CardContent>
@@ -56,7 +60,13 @@ const Item = ({ item, favorite }) => {
           }}
         >
           {" "}
-          <Typography variant="h5">&#8369; {price.toFixed(2)}</Typography>
+          {countInStock <= 0 ? (
+            <Typography variant="h6" sx={{ color: "red" }}>
+              Out of stock
+            </Typography>
+          ) : (
+            <Typography variant="h5">&#8369; {price.toFixed(2)}</Typography>
+          )}
         </Box>
       </CardContent>
     </Card>

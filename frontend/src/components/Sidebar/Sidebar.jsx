@@ -31,7 +31,8 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   if (
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname === `/cashier/receipt/${order ? order._id : " "}`
+    location.pathname === `/cashier/receipt/${order ? order._id : " "}` ||
+    location.pathname === `/cashier`
   )
     return "";
 

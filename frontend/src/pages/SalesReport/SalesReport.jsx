@@ -30,11 +30,22 @@ const SalesReport = () => {
   const { orders, loading } = useSelector((state) => state.orderCashierList);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
+    { field: "id", headerName: "Order ID", flex: 1 },
+    {
+      field: "user",
+      headerName: "Cashier Name",
+      flex: 1,
+      renderCell: (params) => {
+        return <div className="rowitem"> {capitalize(params.row.user)}</div>;
+      },
+    },
     {
       field: "name",
       headerName: "Customer Name",
       flex: 1,
+      renderCell: (params) => {
+        return <div className="rowitem"> {capitalize(params.row.name)}</div>;
+      },
     },
     {
       field: "createdAt",
@@ -44,6 +55,19 @@ const SalesReport = () => {
         return (
           <div className="rowitem">
             {format(new Date(params.row.createdAt), "yyyy-MM-dd")}
+          </div>
+        );
+      },
+    },
+    {
+      field: "time",
+      headerName: "Time",
+      flex: 1,
+      valueGetter: (params) => params.row.createdAt,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {format(new Date(params.row.createdAt), "hh:mm:ss aa")}
           </div>
         );
       },

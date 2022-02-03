@@ -16,10 +16,12 @@ import {
   Select,
   Container,
   Paper,
+  Card,
+  IconButton,
 } from "@mui/material";
 import { useParams, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/actions/cartAction";
+import { addToCart, removeFromCart } from "../../redux/actions/cartAction";
 import { Link } from "react-router-dom";
 import Item from "./Item/Item";
 import { createOrderCashier } from "../../redux/actions/orderAction";
@@ -29,6 +31,13 @@ import { totalAmount } from "../../utils/utils";
 import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { uniqueID } from "../../utils/utils";
+import { MealGrid } from "../../components";
+import { getMealList } from "../../redux/actions/mealAction";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { CART_RESET_ITEM } from "../../redux/constants/cartConstants";
+import CashierItem from "./CashierItem";
 
 const style = {
   position: "absolute",
@@ -62,6 +71,12 @@ const Cashier = () => {
   const { success, loading, error, order } = useSelector(
     (state) => state.orderCashierCreate
   );
+
+  const {
+    loading: mealsLoading,
+    meals,
+    error: mealsError,
+  } = useSelector((state) => state.mealList);
 
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -129,6 +144,7 @@ const Cashier = () => {
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: CART_RESET_ITEM });
       setIsSave(false);
       setName("");
       setOrderType("");
@@ -138,6 +154,10 @@ const Cashier = () => {
       }
     }
   }, [success, history, order, dispatch]);
+
+  useState(() => {
+    dispatch(getMealList());
+  }, []);
 
   const noCart = (
     <Alert severity="info">
@@ -157,7 +177,7 @@ const Cashier = () => {
   );
 
   return (
-    <Container>
+    <>
       <Modal
         open={isSave}
         onClose={() => setIsSave(false)}
@@ -261,56 +281,70 @@ const Cashier = () => {
           </Box>
         </Fade>
       </Modal>
-      <div>
-        <Box mb={5}>
-          <Typography variant="h4" component="h1" sx={{ marginBottom: 2 }}>
-            Cashier
-          </Typography>
-          <Divider />
-        </Box>
 
-        <Grid container spacing={3}>
-          <Grid item sm={12} md={7} lg={7}>
-            {cartItems <= 0 ? noCart : cartItemsList}
-          </Grid>
+      <Grid container sx={{ vh: "100%" }}>
+        <Grid item lg={9}>
+          {mealsLoading ? (
+            "loading..."
+          ) : (
+            <MealGrid meals={meals} text={"Menu"} />
+          )}
+        </Grid>
 
-          <Grid item xs={12} sm={12} md={4} lg={4}>
-            <Paper variant="outlined" sx={{ padding: 2 }}>
-              {/*  <CardContent> */}
-              <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
-                Total ({totalItems}) Items
+        <Grid item lg={3}>
+          <Paper
+            sx={{
+              height: "80vh",
+              padding: 2,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box sx={{ overflowY: "auto" }}>
+              <Typography variant="h4" sx={{ paddingBottom: 1 }}>
+                Items
               </Typography>
+              {/*  start */}
 
-              <Typography variant="h4" component="h3" sx={{ paddingBottom: 2 }}>
-                Subtotal ({subtotal}) Items
-              </Typography>
+              {cartItems.length === 0 ? (
+                <Typography textAlign="center">No item</Typography>
+              ) : (
+                cartItems.map((item) => <CashierItem item={item} />)
+              )}
+            </Box>
 
-              <Typography variant="body1">
-                &#8369;
-                {totalAmount(cartItems).toFixed(2)}
-              </Typography>
+            <Paper sx={{ paddingTop: 2, paddingX: 1 }}>
+              <div>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Total Item</Typography>
+                  <Typography>{totalItems} </Typography>
+                </Box>
 
-              <Divider />
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Subtotal: </Typography>
+                  <Typography> {subtotal} </Typography>
+                </Box>
 
-              {userInfo && (
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Total Price: </Typography>
+                  <Typography>&#8369; {totalPrice.toFixed(2)} </Typography>
+                </Box>
+
+                <Divider />
                 <Button
                   fullWidth
-                  variant="contained"
-                  size="large"
-                  sx={{ marginTop: 3 }}
-                  disabled={cartItems.length === 0 || userInfo.role === "user"}
                   onClick={() => setIsSave(true)}
-                  startIcon={<BsFillBagCheckFill />}
+                  disabled={cartItems.length === 0}
                 >
                   Payment
                 </Button>
-              )}
-              {/*  </CardContent> */}
+              </div>
             </Paper>
-          </Grid>
+          </Paper>
         </Grid>
-      </div>
-    </Container>
+      </Grid>
+    </>
   );
 };
 

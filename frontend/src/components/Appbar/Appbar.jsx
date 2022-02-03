@@ -9,6 +9,7 @@ import {
   MenuItem,
   CircularProgress,
   Badge,
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useHistory } from "react-router";
@@ -62,10 +63,15 @@ const Appbar = ({ handleDrawerToggle }) => {
   return (
     <AppBar
       position="fixed"
-      elevation={0}
+      elevation={1}
       color="secondary"
       sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        width: {
+          sm:
+            location.pathname === "/cashier"
+              ? "100%"
+              : `calc(100% - ${drawerWidth}px)`,
+        },
         ml: { sm: `${drawerWidth}px` },
         backgroundColor: "#f9f9f9",
       }}
@@ -81,9 +87,13 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
+        {location.pathname === "/cashier" && (
+          <Typography variant="h5">Cashier</Typography>
+        )}
+
         <Box sx={{ flexGrow: 1 }} />
 
-        <Box>
+        {/*  <Box>
           <IconButton
             sx={{ color: "#212121" }}
             size="large"
@@ -93,7 +103,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               <FaCashRegister />
             </Badge>
           </IconButton>
-        </Box>
+        </Box> */}
 
         {userInfo ? (
           <PopupState variant="popover">

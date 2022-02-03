@@ -28,7 +28,7 @@ const Receipt = () => {
     dispatch(getOrderCashierDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return <Loader />;
+  if (loading) return "";
 
   return (
     <Container maxWidth="xs">
@@ -47,7 +47,7 @@ const Receipt = () => {
       >
         <div>
           <Typography>ORDER ID: {order.id}</Typography>
-          <Typography>HOST: {userInfo.name.toUpperCase()}</Typography>
+          <Typography>CASHIER: {userInfo.name.toUpperCase()}</Typography>
         </div>
         <div>
           <Typography>

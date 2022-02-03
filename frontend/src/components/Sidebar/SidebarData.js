@@ -39,7 +39,7 @@ export const navItems = [
     path: "/suppliers",
     icon: <GiFactory />,
   },
-  {
+  /*   {
     text: "Menu ",
     path: "/menu",
     icon: <BiFoodMenu />,
@@ -48,7 +48,7 @@ export const navItems = [
     text: "Cashier",
     path: "/cashier",
     icon: <FaCashRegister />,
-  },
+  }, */
   {
     text: "Sales Report",
     path: "/sales-report",

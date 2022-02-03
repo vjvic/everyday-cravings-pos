@@ -115,7 +115,7 @@ const UserListPage = () => {
   return (
     <Container>
       <Typography variant="h4" component="h1" sx={{ my: 4 }}>
-        User
+        Users
       </Typography>
 
       <div style={{ height: 500, width: "100%" }}>

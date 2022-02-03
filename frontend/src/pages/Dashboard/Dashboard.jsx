@@ -184,7 +184,7 @@ const DashboardPage = () => {
       icon: (
         <TrendingUpOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
       ),
-      number: "₱" + totalAmount,
+      number: "₱" + totalAmount.toFixed(2),
       text: "Total Revenue",
     },
     {

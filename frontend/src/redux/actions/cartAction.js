@@ -22,10 +22,6 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       qty,
     },
   });
-
-  //Set cart item to local storage
-
-  setItemToLcalStorage("cartItems", getState().cart.cartItems);
 };
 
 //Remove cart item action
@@ -34,9 +30,6 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     type: CART_REMOVE_ITEM,
     payload: id,
   });
-
-  //Save cart items to local storage
-  setItemToLcalStorage("cartItems", getState().cart.cartItems);
 };
 
 export const saveShippingAddress = (data) => (dispatch) => {

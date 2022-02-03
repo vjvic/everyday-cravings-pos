@@ -3,6 +3,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import PrivateRoute from "./components/Route/PrivateRoute";
+import AdminRoute from "./components/Route/AdminRoute";
+import CashierRoute from "./components/Route/CashierRoute";
 import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
@@ -52,13 +54,13 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <PrivateRoute exact path="/categories" component={Category} />
-            <PrivateRoute
+            <AdminRoute exact path="/categories" component={Category} />
+            <AdminRoute
               exact
               path="/categories/:id?/edit"
               component={CategoryEdit}
             />
-            <PrivateRoute path="/meal/:id" component={MealDetails} />
+            <AdminRoute path="/meal/:id" component={MealDetails} />
             <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute
@@ -66,29 +68,25 @@ function App() {
               path="/cashier/receipt/:id"
               component={Receipt}
             />
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <PrivateRoute exact path="/meals" component={Meals} />
-            <PrivateRoute exact path="/ingredients" component={Ingredient} />
-            <PrivateRoute
+            <AdminRoute exact path="/" component={Dashboard} />
+            <AdminRoute exact path="/meals" component={Meals} />
+            <AdminRoute exact path="/ingredients" component={Ingredient} />
+            <AdminRoute
               exact
               path="/ingredients/:id?/edit"
               component={IngredientEdit}
             />
-            <PrivateRoute exact path="/meals/:id?/edit" component={MealEdit} />
+            <AdminRoute exact path="/meals/:id?/edit" component={MealEdit} />
             <PrivateRoute exact path="/menu" component={Menu} />
-            <PrivateRoute exact path="/user-list" component={UserList} />
-            <PrivateRoute
-              exact
-              path="/user-list/:id/edit"
-              component={UserEdit}
-            />
-            <PrivateRoute exact path="/suppliers" component={Suppliers} />
-            <PrivateRoute
+            <AdminRoute exact path="/user-list" component={UserList} />
+            <AdminRoute exact path="/user-list/:id/edit" component={UserEdit} />
+            <AdminRoute exact path="/suppliers" component={Suppliers} />
+            <AdminRoute
               exact
               path="/suppliers/:id?/edit"
               component={SupplierEdit}
             />
-            <PrivateRoute exact path="/sales-report" component={SalesReport} />
+            <AdminRoute exact path="/sales-report" component={SalesReport} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
           </Layout>

@@ -34,6 +34,7 @@ const createOrderCashier = asyncHandler(async (req, res) => {
     paymentType,
     paid,
     orderItems,
+    user: req.user.name,
   });
 
   const createOrder = await order.save();

@@ -12,6 +12,10 @@ const orderCashierSchema = mongoose.Schema(
     change: { type: Number, default: 0 },
     paymentType: { type: String, required: true },
     paid: { type: Number, default: 0 },
+    user: {
+      type: String,
+      required: true,
+    },
     orderItems: [
       {
         name: { type: String, required: true },
