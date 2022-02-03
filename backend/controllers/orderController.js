@@ -9,7 +9,6 @@ import asyncHandler from "express-async-handler";
 
 const createOrderCashier = asyncHandler(async (req, res) => {
   const {
-    name,
     orderType,
     totalItems,
     subtotal,
@@ -24,7 +23,7 @@ const createOrderCashier = asyncHandler(async (req, res) => {
 
   const order = new OrderCashier({
     id,
-    name,
+
     orderType,
     totalItems,
     subtotal,

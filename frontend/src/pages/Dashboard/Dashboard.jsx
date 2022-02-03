@@ -15,6 +15,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderCashierList } from "../../redux/actions/orderAction";
 import { getMealList } from "../../redux/actions/mealAction";
+import { listUsers } from "../../redux/actions/userActions";
 import { format } from "date-fns";
 import { BarChart, Loader } from "../../components";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
@@ -49,9 +50,12 @@ const DashboardPage = () => {
     error: mealsError,
   } = useSelector((state) => state.mealList);
 
+  const { users } = useSelector((state) => state.userList);
+
   useEffect(() => {
     dispatch(getOrderCashierList());
     dispatch(getMealList());
+    dispatch(listUsers());
   }, [dispatch]);
 
   if (ordersLoading || mealsLoading) return <Loader />;
@@ -63,10 +67,10 @@ const DashboardPage = () => {
   const amount = orders.map((order) => order.totalPrice);
   const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
 
-  //Total customers
-  const customer = orders.map((order) => order.name);
-  const uniqueCustomer = [...new Set(customer)];
-  const totalCustomer = uniqueCustomer.length;
+  //Total cashier
+  /*   const totalCashier = users.filter((user) => user.role === "cashier");
+   */ /*   const uniqueCustomer = [...new Set(customer)];
+  const totalCustomer = uniqueCustomer.length; */
 
   //Total orders
   const totalOrders = orders ? orders.length : null;
@@ -198,8 +202,8 @@ const DashboardPage = () => {
       icon: (
         <PeopleAltOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
       ),
-      number: totalCustomer,
-      text: "Total Customers",
+      number: users && users.filter((user) => user.role === "cashier").length,
+      text: "Total Cashiers",
     },
   ];
 

@@ -88,7 +88,9 @@ const Appbar = ({ handleDrawerToggle }) => {
         </IconButton>
 
         {location.pathname === "/cashier" && (
-          <Typography variant="h5">Cashier</Typography>
+          <Typography variant="h5">
+            <FaCashRegister /> Cashier
+          </Typography>
         )}
 
         <Box sx={{ flexGrow: 1 }} />

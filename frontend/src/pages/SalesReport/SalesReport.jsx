@@ -40,14 +40,6 @@ const SalesReport = () => {
       },
     },
     {
-      field: "name",
-      headerName: "Customer Name",
-      flex: 1,
-      renderCell: (params) => {
-        return <div className="rowitem"> {capitalize(params.row.name)}</div>;
-      },
-    },
-    {
       field: "createdAt",
       headerName: "Date",
       flex: 1,

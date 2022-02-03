@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import {
   Typography,
   Grid,
-  Alert,
+  /*   Alert,
   Button,
   Divider,
   Modal,
@@ -16,7 +16,7 @@ import {
   Select,
   Container,
   Paper,
-  Card,
+  Card, */
   IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -56,42 +56,37 @@ const CashierItem = ({ item }) => {
         }}
       />
 
-      <div>
-        <div>{item.name}</div>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+      <Grid container spacing={2}>
+        <Grid item lg={6}>
+          <div>{item.name}</div>
           <div>
             <Typography variant="body">
               &#8369; {item.price.toFixed(2)}
             </Typography>
           </div>
+        </Grid>
 
-          <Box>
-            {item.qty === 1 ? (
-              <IconButton onClick={() => dispatch(removeFromCart(item.meal))}>
-                <DeleteIcon />
-              </IconButton>
-            ) : (
-              <IconButton
-                onClick={() => dispatch(addToCart(item.meal, item.qty - 1))}
-              >
-                <RemoveIcon />
-              </IconButton>
-            )}
-            <span>{item.qty}</span>
-            <IconButton
-              onClick={() => dispatch(addToCart(item.meal, item.qty + 1))}
-            >
-              <AddIcon />
+        <Grid item lg={6}>
+          {item.qty === 1 ? (
+            <IconButton onClick={() => dispatch(removeFromCart(item.meal))}>
+              <DeleteIcon />
             </IconButton>
-          </Box>
-        </Box>
-      </div>
+          ) : (
+            <IconButton
+              onClick={() => dispatch(addToCart(item.meal, item.qty - 1))}
+            >
+              <RemoveIcon />
+            </IconButton>
+          )}
+          <span>{item.qty}</span>
+          <IconButton
+            onClick={() => dispatch(addToCart(item.meal, item.qty + 1))}
+            disabled={item.qty > item.countInStock}
+          >
+            <AddIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

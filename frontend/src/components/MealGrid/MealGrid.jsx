@@ -89,7 +89,7 @@ const MealGrid = ({ meals, text }) => {
           >
             <MenuItem value="all">All</MenuItem>
             {category.map((c) => (
-              <MenuItem value={c.category.toLowerCase()}>
+              <MenuItem value={c.category.toLowerCase()} key={c}>
                 {capitalize(c.category)}
               </MenuItem>
             ))}

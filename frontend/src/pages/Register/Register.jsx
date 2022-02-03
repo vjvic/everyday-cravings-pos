@@ -43,7 +43,9 @@ const RegisterPage = () => {
 
   const onSubmit = (data, e) => {
     const id = uniqueID();
-    dispatch(userRegister(data.username, data.email, data.password, id));
+    dispatch(
+      userRegister(data.username, data.email.toLowerCase(), data.password, id)
+    );
 
     e.target.reset();
   };
