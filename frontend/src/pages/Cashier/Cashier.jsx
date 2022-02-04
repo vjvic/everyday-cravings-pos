@@ -124,7 +124,7 @@ const Cashier = () => {
   const handlePayment = (e) => {
     e.preventDefault();
 
-    if (Number(paid).toFixed(2) < totalPrice.toFixed(2)) {
+    if (paid < totalPrice) {
       setPaymentError(true);
     } else {
       setPaymentError(false);
@@ -215,7 +215,7 @@ const Cashier = () => {
               <span>{discount}%</span>
             </Typography>
 
-            {paid >= totalPrice.toFixed(2) && (
+            {paid >= totalPrice && (
               <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
                 <strong>Change: </strong>
                 <span>&#8369; {change().toFixed(2)}</span>
