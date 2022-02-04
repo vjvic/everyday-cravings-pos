@@ -28,7 +28,7 @@ const Receipt = () => {
     dispatch(getOrderCashierDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return "";
+  if (loading) return "l";
 
   return (
     <Container maxWidth="xs">

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import { Appbar, Sidebar } from "..";
+import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -9,8 +10,10 @@ const Layout = ({ children }) => {
     setMobileOpen(!mobileOpen);
   };
 
+  const { loading } = useSelector((state) => state.orderCashierDetails);
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: loading ? "none" : "flex" }}>
       <CssBaseline />
 
       {/*  Appbar */}

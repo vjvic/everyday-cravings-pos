@@ -61,13 +61,7 @@ function App() {
               component={CategoryEdit}
             />
             <AdminRoute path="/meal/:id" component={MealDetails} />
-            <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute
-              exact
-              path="/cashier/receipt/:id"
-              component={Receipt}
-            />
             <AdminRoute exact path="/" component={Dashboard} />
             <AdminRoute exact path="/meals" component={Meals} />
             <AdminRoute exact path="/ingredients" component={Ingredient} />
@@ -87,6 +81,13 @@ function App() {
               component={SupplierEdit}
             />
             <AdminRoute exact path="/sales-report" component={SalesReport} />
+
+            <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
+            <PrivateRoute
+              exact
+              path="/cashier/receipt/:id"
+              component={Receipt}
+            />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
           </Layout>
