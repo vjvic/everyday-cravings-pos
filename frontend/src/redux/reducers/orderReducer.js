@@ -168,10 +168,7 @@ export const orderCashierCreateReducer = (state = {}, action) => {
   }
 };
 
-export const orderCashierDetailsReducer = (
-  state = { loading: true },
-  action
-) => {
+export const orderCashierDetailsReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CASHIER_DETAILS_REQUEST:
       return { loading: true };

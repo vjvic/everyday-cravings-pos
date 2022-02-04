@@ -28,7 +28,7 @@ const Receipt = () => {
     dispatch(getOrderCashierDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return "l";
+  if (loading) return "";
 
   return (
     <Container maxWidth="xs">
@@ -38,72 +38,78 @@ const Receipt = () => {
         <Typography>999-888-888</Typography>
       </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: 3,
-        }}
-      >
-        <div>
-          <Typography>ORDER ID: {order.id}</Typography>
-          <Typography>CASHIER: {userInfo.name.toUpperCase()}</Typography>
-        </div>
-        <div>
-          <Typography>
-            {format(new Date(order.createdAt), "yyyy/MM/dd")}
-          </Typography>
-          <Typography>
-            {format(new Date(order.createdAt), "hh:mm:ss aa")}
-          </Typography>
-        </div>
-      </Box>
+      {order && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 3,
+          }}
+        >
+          <div>
+            <Typography>ORDER ID: {order.id}</Typography>
+            <Typography>CASHIER: {userInfo.name.toUpperCase()}</Typography>
+          </div>
+          <div>
+            <Typography>
+              {format(new Date(order.createdAt), "yyyy/MM/dd")}
+            </Typography>
+            <Typography>
+              {format(new Date(order.createdAt), "hh:mm:ss aa")}
+            </Typography>
+          </div>
+        </Box>
+      )}
 
       <Divider />
 
-      <Box
-        sx={{ display: "flex", justifyContent: "space-between", marginY: 2 }}
-      >
-        <div>
-          {order.orderItems.map((item) => (
-            <Typography>
-              <span>{item.qty} </span>
-              <span>{item.name.toUpperCase()}</span>
-            </Typography>
-          ))}
-        </div>
-        <div>
-          {order.orderItems.map((item) => (
-            <Typography>
-              &#8369; <span>{(item.qty * item.price).toFixed(2)} </span>
-            </Typography>
-          ))}
-        </div>
-      </Box>
+      {order && (
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between", marginY: 2 }}
+        >
+          <div>
+            {order.orderItems.map((item) => (
+              <Typography>
+                <span>{item.qty} </span>
+                <span>{item.name.toUpperCase()}</span>
+              </Typography>
+            ))}
+          </div>
+          <div>
+            {order.orderItems.map((item) => (
+              <Typography>
+                &#8369; <span>{(item.qty * item.price).toFixed(2)} </span>
+              </Typography>
+            ))}
+          </div>
+        </Box>
+      )}
 
       <Divider />
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginY: 2,
-          marginBottom: 10,
-        }}
-      >
-        <div>
-          <Typography>{"Subtotal".toUpperCase()}</Typography>
-          <Typography>{"Discount".toUpperCase()}</Typography>
-          <Typography>{"Total".toUpperCase()}</Typography>
-        </div>
-        <div>
-          <Typography>
-            &#8369; {(order.totalPrice + order.discount).toFixed(2)}
-          </Typography>
-          <Typography>&#8369; {order.discount.toFixed(2)}</Typography>
-          <Typography>&#8369; {order.totalPrice.toFixed(2)}</Typography>
-        </div>
-      </Box>
+      {order && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginY: 2,
+            marginBottom: 10,
+          }}
+        >
+          <div>
+            <Typography>{"Subtotal".toUpperCase()}</Typography>
+            <Typography>{"Discount".toUpperCase()}</Typography>
+            <Typography>{"Total".toUpperCase()}</Typography>
+          </div>
+          <div>
+            <Typography>
+              &#8369; {(order.totalPrice + order.discount).toFixed(2)}
+            </Typography>
+            <Typography>&#8369; {order.discount.toFixed(2)}</Typography>
+            <Typography>&#8369; {order.totalPrice.toFixed(2)}</Typography>
+          </div>
+        </Box>
+      )}
 
       <Box sx={{ textAlign: "center", marginBottom: 6 }}>
         <Typography>{"Thanks for visiting".toUpperCase()}</Typography>
