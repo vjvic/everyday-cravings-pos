@@ -37,7 +37,9 @@ export const getAllDaysOfMonth = () => {
     ),
   }).map((d) => format(new Date(d), "d"));
 
-  return days;
+  const uniquedays = [...new Set(days)];
+
+  return uniquedays;
 };
 
 //return all months of year
