@@ -29,12 +29,11 @@ const Item = ({ item, favorite }) => {
         }}
         title={
           <Typography
-            component={Link}
-            to={`/meal/${_id}`}
+            onClick={() => dispatch(addToCart(_id, 1))}
             color="inherit"
             noWrap
             variant="h6"
-            sx={{ textDecoration: "none" }}
+            sx={{ textDecoration: "none", cursor: "pointer" }}
           >
             {name}
           </Typography>
