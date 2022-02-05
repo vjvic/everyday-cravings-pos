@@ -149,7 +149,7 @@ const Edit = () => {
             label="Role"
             onChange={(e) => setRole(e.target.value)}
           >
-            {["Admin", "Cashier", "Supplier"].map((c, index) => (
+            {["Admin", "Cashier"].map((c, index) => (
               <MenuItem key={index} value={c.toLowerCase()}>
                 {c}
               </MenuItem>

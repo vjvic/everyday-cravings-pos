@@ -63,7 +63,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   return (
     <AppBar
       position="fixed"
-      elevation={1}
+      elevation={0}
       color="secondary"
       sx={{
         width: {
