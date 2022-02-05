@@ -3,8 +3,8 @@ import {
   IconButton,
   Typography,
   Container,
-  /* Stack,
-  Button, */
+  Stack,
+  Button,
   capitalize,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ import {
   GridToolbarFilterButton,
   GridToolbarExport,
 } from "@mui/x-data-grid";
+import AddIcon from "@mui/icons-material/Add";
 
 const CustomToolbar = () => {
   return (
@@ -50,7 +51,7 @@ const UserListPage = () => {
   const columns = [
     {
       field: "id",
-      headerName: "ID",
+      headerName: "User ID",
       flex: 1,
     },
     {
@@ -114,9 +115,25 @@ const UserListPage = () => {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" sx={{ my: 4 }}>
-        Users
-      </Typography>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ marginY: 3 }}
+      >
+        <Typography variant="h4" component="h1">
+          Users
+        </Typography>
+
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => history.push("user-list/edit")}
+          disabled={userInfo.role !== "admin"}
+        >
+          Add User
+        </Button>
+      </Stack>
 
       <div style={{ height: 500, width: "100%" }}>
         <DataGrid

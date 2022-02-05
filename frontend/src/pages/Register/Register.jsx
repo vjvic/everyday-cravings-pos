@@ -35,11 +35,11 @@ const RegisterPage = () => {
 
   const { userInfo, error } = useSelector((state) => state.userRegister);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (userInfo) {
       history.push("/");
     }
-  }, [history, userInfo]);
+  }, [history, userInfo]); */
 
   const onSubmit = (data, e) => {
     const id = uniqueID();

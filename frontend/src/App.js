@@ -74,7 +74,11 @@ function App() {
             <AdminRoute exact path="/meals/:id?/edit" component={MealEdit} />
             <PrivateRoute exact path="/menu" component={Menu} />
             <AdminRoute exact path="/user-list" component={UserList} />
-            <AdminRoute exact path="/user-list/:id/edit" component={UserEdit} />
+            <AdminRoute
+              exact
+              path="/user-list/:id?/edit"
+              component={UserEdit}
+            />
             <AdminRoute exact path="/suppliers" component={Suppliers} />
             <AdminRoute
               exact

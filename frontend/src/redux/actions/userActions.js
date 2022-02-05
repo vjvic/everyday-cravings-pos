@@ -23,6 +23,9 @@ import {
   USER_PROFILE_UPDATE_REQUEST,
   USER_PROFILE_UPDATE_SUCCESS,
   USER_PROFILE_UPDATE_FAIL,
+  USER_CREATE_SUCCESS,
+  USER_CREATE_REQUEST,
+  USER_CREATE_FAIL,
 } from "../constants/userConstants";
 import {
   MEAL_CREATE_RESET,
@@ -71,45 +74,39 @@ export const logout = () => (dispatch) => {
   dispatch({ type: MEAL_UPDATE_RESET });
 };
 
-export const userRegister = (name, email, password, id) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+export const userRegister =
+  (name, email, password, id, role) => async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_CREATE_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const { data } = await mealApi.post(
-      "/api/users",
-      { name, email, password, id },
-      config
-    );
+      const { data } = await mealApi.post(
+        "/api/users",
+        { name, email, password, id, role },
+        config
+      );
 
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
-
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
-
-    setItemToLcalStorage("userInfo", data);
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: USER_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {

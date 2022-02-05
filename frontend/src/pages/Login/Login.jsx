@@ -87,11 +87,11 @@ const LoginPage = () => {
               SIGN IN
             </Button>
 
-            <Box>
+            {/*  <Box>
               <Typography variant="body1">
                 Don't have an account? <Link to={"/register"}>Register</Link>
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Grid>

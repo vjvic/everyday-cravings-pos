@@ -54,7 +54,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route GET /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, id } = req.body;
+  const { name, email, password, id, role } = req.body;
 
   const userExist = await User.findOne({ email });
 
@@ -63,7 +63,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exist");
   }
 
-  const user = await User.create({ name, email, password, id });
+  const user = await User.create({ name, email, password, id, role });
 
   if (user) {
     res.json({
@@ -146,6 +146,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
     user.role = req.body.role;
     user.isAdmin = req.body.isAdmin;
     user.isCashier = req.body.isCashier;
