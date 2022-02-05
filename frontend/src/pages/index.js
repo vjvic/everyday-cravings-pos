@@ -17,6 +17,7 @@ import Ingredient from "./Ingredient/Ingredient";
 import CategoryEdit from "./Category/Edit/Edit";
 import IngredientEdit from "./Ingredient/Edit/Edit";
 import SupplierEdit from "./Suppliers/Edit/Edit";
+import notApproved from "./notApproved/notApproved";
 
 export {
   Dashboard,
@@ -38,4 +39,5 @@ export {
   CategoryEdit,
   IngredientEdit,
   SupplierEdit,
+  notApproved,
 };

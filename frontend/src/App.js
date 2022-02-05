@@ -26,6 +26,7 @@ import {
   CategoryEdit,
   IngredientEdit,
   SupplierEdit,
+  notApproved,
 } from "./pages";
 
 const secondary = "#FFECC2";
@@ -88,6 +89,8 @@ function App() {
               path="/cashier/receipt/:id"
               component={Receipt}
             />
+
+            <AdminRoute exact path="no-access" component={notApproved} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
           </Layout>

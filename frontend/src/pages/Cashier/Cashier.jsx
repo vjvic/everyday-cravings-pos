@@ -323,7 +323,7 @@ const Cashier = () => {
       </Modal>
 
       <Grid container sx={{ vh: "100%" }}>
-        <Grid item lg={9}>
+        <Grid item lg={9} md={8}>
           {mealsLoading ? (
             "loading..."
           ) : (
@@ -331,7 +331,7 @@ const Cashier = () => {
           )}
         </Grid>
 
-        <Grid item lg={3}>
+        <Grid item lg={3} md={4}>
           <Paper
             sx={{
               height: "80vh",
@@ -360,7 +360,7 @@ const Cashier = () => {
               <Divider sx={{ marginBottom: 2 }} />
               <div>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography variant="h6">Total Item</Typography>
+                  <Typography variant="h6">Total Item:</Typography>
                   <Typography>{totalItems} </Typography>
                 </Box>
 

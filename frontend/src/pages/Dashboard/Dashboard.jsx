@@ -139,6 +139,8 @@ const DashboardPage = () => {
 
   //Today revenue data
   const revenueToday = [
+    getRevenueToday("06"),
+    getRevenueToday("07"),
     getRevenueToday("08"),
     getRevenueToday("09"),
     getRevenueToday("10"),
@@ -152,6 +154,9 @@ const DashboardPage = () => {
     getRevenueToday("18"),
     getRevenueToday("19"),
     getRevenueToday("20"),
+    getRevenueToday("21"),
+    getRevenueToday("22"),
+    getRevenueToday("23"),
   ];
 
   //This month revenue data
