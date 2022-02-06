@@ -5,7 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { getOrderCashierDetails } from "../../redux/actions/orderAction";
 import styles from "./receipt.module.css";
 import { format } from "date-fns";
-import { Loader } from "../../components";
+/* import { Loader } from "../../components"; */
 import { Box } from "@mui/system";
 
 const Receipt = () => {

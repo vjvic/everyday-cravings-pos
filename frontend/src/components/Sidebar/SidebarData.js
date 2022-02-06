@@ -5,8 +5,8 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { MdCategory } from "react-icons/md";
 import { GiFactory } from "react-icons/gi";
 import { GiMeat } from "react-icons/gi";
-import { BiFoodMenu } from "react-icons/bi";
-import { FaCashRegister } from "react-icons/fa";
+/* import { BiFoodMenu } from "react-icons/bi";
+import { FaCashRegister } from "react-icons/fa"; */
 
 export const navItems = [
   {

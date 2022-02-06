@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { TextField, Button, Typography, Alert, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../../redux/actions/userActions";
 import * as yup from "yup";
@@ -21,8 +20,6 @@ const schema = yup.object().shape({
 });
 
 const RegisterPage = () => {
-  const history = useHistory();
-
   const dispatch = useDispatch();
 
   const {
@@ -33,13 +30,7 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { userInfo, error } = useSelector((state) => state.userRegister);
-
-  /*   useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]); */
+  const { error } = useSelector((state) => state.userRegister);
 
   const onSubmit = (data, e) => {
     const id = uniqueID();

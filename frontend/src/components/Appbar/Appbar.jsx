@@ -8,7 +8,7 @@ import {
   Menu,
   MenuItem,
   CircularProgress,
-  Badge,
+  /*  Badge, */
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -26,10 +26,10 @@ const Appbar = ({ handleDrawerToggle }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  const { cartItems } = useSelector((state) => state.cart);
+  /*  const { cartItems } = useSelector((state) => state.cart); */
 
   //Total cart items
-  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  /*  const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
 
   const drawerWidth = 240;
 
@@ -119,13 +119,15 @@ const Appbar = ({ handleDrawerToggle }) => {
                   {userInfo.name}
                 </Button>
                 <Menu {...bindMenu(popupState)}>
-                  <MenuItem
-                    onClick={popupState.close}
-                    component={Link}
-                    to="/profile"
-                  >
-                    Profile
-                  </MenuItem>
+                  {userInfo && userInfo.role === "admin" && (
+                    <MenuItem
+                      onClick={popupState.close}
+                      component={Link}
+                      to="/profile"
+                    >
+                      Profile
+                    </MenuItem>
+                  )}
                   <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                 </Menu>
               </React.Fragment>

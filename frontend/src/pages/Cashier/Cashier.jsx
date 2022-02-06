@@ -25,8 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart /* , removeFromCart */,
 } from "../../redux/actions/cartAction";
-import { Link } from "react-router-dom";
-import Item from "./Item/Item";
+/* import { Link } from "react-router-dom";
+import Item from "./Item/Item"; */
 import { createOrderCashier } from "../../redux/actions/orderAction";
 import { updateMealStock } from "../../redux/actions/mealAction";
 import { useHistory } from "react-router-dom";
@@ -79,10 +79,10 @@ const Cashier = () => {
   const {
     loading: mealsLoading,
     meals,
-    error: mealsError,
+    /*   error: mealsError, */
   } = useSelector((state) => state.mealList);
 
-  const { userInfo } = useSelector((state) => state.userLogin);
+  /* const { userInfo } = useSelector((state) => state.userLogin); */
 
   //Total amount
   let totalPrice = totalAmount(cartItems);

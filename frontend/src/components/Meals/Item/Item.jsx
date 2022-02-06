@@ -9,15 +9,15 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+/* import { Link } from "react-router-dom"; */
+/* import { useHistory } from "react-router"; */
 import { addToCart } from "../../../redux/actions/cartAction";
 import { useDispatch } from "react-redux";
 
 const Item = ({ item, favorite }) => {
   const { name, image, category, price, _id, countInStock, description } = item;
 
-  const history = useHistory();
+  /*  const history = useHistory(); */
 
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const Item = ({ item, favorite }) => {
               color="inherit"
               noWrap
               variant="h6"
-              sx={{ textDecoration: "none", cursor: "pointer" }}
+              sx={{ textDecoration: "none" }}
             >
               {name}
             </Typography>
@@ -43,13 +43,7 @@ const Item = ({ item, favorite }) => {
           subheader={category}
         />
 
-        <CardMedia
-          component="img"
-          height="120"
-          image={image}
-          alt={name}
-          sx={{ cursor: "pointer" }}
-        />
+        <CardMedia component="img" height="120" image={image} alt={name} />
 
         <CardContent>
           <Box

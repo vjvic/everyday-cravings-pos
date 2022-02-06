@@ -39,6 +39,8 @@ const Edit = () => {
   const [isCashier, setIsCashier] = useState(false);
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   let isEdit = id ? true : false;
 
@@ -60,13 +62,31 @@ const Edit = () => {
     e.preventDefault();
 
     if (isEdit) {
-      dispatch(
-        updateUser({ _id: id, name, email, role, isAdmin, isCashier, password })
-      );
+      if (password === confirmPassword) {
+        setPasswordError(false);
+        dispatch(
+          updateUser({
+            _id: id,
+            name,
+            email,
+            role,
+            isAdmin,
+            isCashier,
+            password,
+          })
+        );
+      } else {
+        setPasswordError(true);
+      }
     } else {
       //create user
-      const id = uniqueID();
-      dispatch(userRegister(name, email, password, id, role));
+      if (password === confirmPassword) {
+        setPasswordError(false);
+        const id = uniqueID();
+        dispatch(userRegister(name, email, password, id, role));
+      } else {
+        setPasswordError(true);
+      }
     }
   };
 
@@ -125,23 +145,37 @@ const Edit = () => {
           variant="outlined"
           value={name || ""}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <TextField
           label="Email"
           variant="outlined"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <TextField
-          label={isEdit ? "New password" : "Password"}
+          label="Password"
           variant="outlined"
           value={password || ""}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
-        <FormControl fullWidth>
+        <TextField
+          label="Confirm password"
+          variant="outlined"
+          value={confirmPassword || ""}
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          error={passwordError}
+          helperText={passwordError && "password must match"}
+        />
+
+        <FormControl fullWidth required>
           <InputLabel>Role</InputLabel>
           <Select
             defaultValue={role || ""}
