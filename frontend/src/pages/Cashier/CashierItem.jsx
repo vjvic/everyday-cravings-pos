@@ -51,7 +51,7 @@ const CashierItem = ({ item }) => {
         alt={item.name}
         style={{
           width: "90px",
-          height: "70px",
+          height: "100%",
           objectFit: "cover",
         }}
       />
@@ -67,24 +67,26 @@ const CashierItem = ({ item }) => {
         </Grid>
 
         <Grid item lg={6}>
-          {item.qty === 1 ? (
-            <IconButton onClick={() => dispatch(removeFromCart(item.meal))}>
-              <DeleteIcon />
-            </IconButton>
-          ) : (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {item.qty === 1 ? (
+              <IconButton onClick={() => dispatch(removeFromCart(item.meal))}>
+                <DeleteIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={() => dispatch(addToCart(item.meal, item.qty - 1))}
+              >
+                <RemoveIcon />
+              </IconButton>
+            )}
+            <div>{item.qty}</div>
             <IconButton
-              onClick={() => dispatch(addToCart(item.meal, item.qty - 1))}
+              onClick={() => dispatch(addToCart(item.meal, item.qty + 1))}
+              disabled={item.qty > item.countInStock}
             >
-              <RemoveIcon />
+              <AddIcon />
             </IconButton>
-          )}
-          <span>{item.qty}</span>
-          <IconButton
-            onClick={() => dispatch(addToCart(item.meal, item.qty + 1))}
-            disabled={item.qty > item.countInStock}
-          >
-            <AddIcon />
-          </IconButton>
+          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -28,11 +28,18 @@ const style = {
   fontSize: "50px",
   borderRadius: 1000,
   background: "#FFECC2",
-  height: 80,
-  width: 80,
+  height: 75,
+  width: 75,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+};
+
+const fontSize = {
+  lg: 22,
+  md: 20,
+  sm: 19,
+  xs: 18,
 };
 
 const DashboardPage = () => {
@@ -184,28 +191,28 @@ const DashboardPage = () => {
   const cardItems = [
     {
       icon: (
-        <FastfoodOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
+        <FastfoodOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
       ),
       number: totalMenu,
       text: "Total Menus",
     },
     {
       icon: (
-        <TrendingUpOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
+        <TrendingUpOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
       ),
       number: "₱" + totalAmount.toFixed(2),
       text: "Total Revenue",
     },
     {
       icon: (
-        <AssignmentOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
+        <AssignmentOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
       ),
       number: totalOrders,
       text: "Total Orders",
     },
     {
       icon: (
-        <PeopleAltOutlinedIcon sx={{ fontSize: "40px", color: "#DE8538" }} />
+        <PeopleAltOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
       ),
       number: users && users.filter((user) => user.role === "cashier").length,
       text: "Total Cashiers",
@@ -260,6 +267,7 @@ const DashboardPage = () => {
                         variant={mealsLoading || ordersLoading ? "body" : "h5"}
                         component="h4"
                         fontWeight="bold"
+                        sx={{ fontSize }}
                       >
                         {mealsLoading || ordersLoading
                           ? "loading..."

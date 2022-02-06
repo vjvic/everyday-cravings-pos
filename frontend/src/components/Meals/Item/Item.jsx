@@ -14,6 +14,13 @@ import { Box } from "@mui/system";
 import { addToCart } from "../../../redux/actions/cartAction";
 import { useDispatch } from "react-redux";
 
+const fontSize = {
+  lg: 20,
+  md: 18,
+  sm: 18,
+  xs: 18,
+};
+
 const Item = ({ item, favorite }) => {
   const { name, image, category, price, _id, countInStock, description } = item;
 
@@ -52,6 +59,7 @@ const Item = ({ item, favorite }) => {
               alignItems: "center",
               justifyContent: "space-between",
               marginTop: 1,
+              flexWrap: "no-wrap",
             }}
           >
             {countInStock <= 0 ? (
@@ -60,7 +68,9 @@ const Item = ({ item, favorite }) => {
               </Typography>
             ) : (
               <div>
-                <Typography variant="h5">&#8369; {price.toFixed(2)}</Typography>
+                <Typography sx={{ fontSize }} variant="h5" noWrap>
+                  &#8369; {price.toFixed(2)}
+                </Typography>
               </div>
             )}
 

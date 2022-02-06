@@ -106,7 +106,7 @@ const MealGrid = ({ meals, text }) => {
 
       <Grid container spacing={2}>
         {currentMeal.map((item) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={item._id}>
+          <Grid item xs={12} sm={12} md={4} lg={3} key={item._id}>
             <Item item={item} />
           </Grid>
         ))}
