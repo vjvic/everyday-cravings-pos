@@ -341,10 +341,10 @@ const Cashier = () => {
               justifyContent: "space-between",
             }}
           >
+            <Typography variant="h4" sx={{ paddingBottom: 1 }}>
+              Items
+            </Typography>
             <Box sx={{ overflowY: "auto" }}>
-              <Typography variant="h4" sx={{ paddingBottom: 1 }}>
-                Items
-              </Typography>
               {/*  start */}
 
               {cartItems.length === 0 ? (
