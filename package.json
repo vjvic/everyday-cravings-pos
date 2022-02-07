@@ -35,7 +35,8 @@
     "jsonwebtoken": "^8.5.1",
     "material-ui-popup-state": "^2.0.0",
     "mongoose": "^6.0.12",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "sweetalert2": "^11.4.0"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",

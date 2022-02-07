@@ -22,6 +22,7 @@ import {
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
+import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
@@ -47,9 +48,23 @@ const MealsPage = () => {
 
   //Delete Meal
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure")) {
+    /*  if (window.confirm("Are you sure")) {
       dispatch(deleteMeal(id));
-    }
+    } */
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      backdrop: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteMeal(id));
+      }
+    });
   };
 
   const columns = [

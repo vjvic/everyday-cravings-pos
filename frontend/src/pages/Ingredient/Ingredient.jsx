@@ -24,6 +24,7 @@ import {
 } from "../../redux/actions/ingredientAction";
 import { Loader } from "../../components";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
@@ -133,9 +134,24 @@ const Ingredient = () => {
 
   //Delete Meal
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure")) {
+    /* if (window.confirm("Are you sure")) {
       dispatch(deleteIngredient(id));
     }
+    */
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      backdrop: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteIngredient(id));
+      }
+    });
   };
 
   useEffect(() => {

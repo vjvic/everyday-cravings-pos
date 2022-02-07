@@ -23,6 +23,7 @@ import {
   GridToolbarExport,
 } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
+import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
@@ -43,9 +44,23 @@ const UserListPage = () => {
 
   //Delete user
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure")) {
+    /*  if (window.confirm("Are you sure")) {
       dispatch(deleteUser(id));
-    }
+    } */
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      backdrop: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUser(id));
+      }
+    });
   };
 
   const columns = [

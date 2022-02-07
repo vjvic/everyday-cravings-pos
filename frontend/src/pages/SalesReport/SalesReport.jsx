@@ -154,7 +154,7 @@ const SalesReport = () => {
   if (loading) return <Loader />;
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
         Sales Report
       </Typography>
