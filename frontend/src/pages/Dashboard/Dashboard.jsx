@@ -11,13 +11,14 @@ import {
   InputLabel,
   MenuItem,
   Container,
+  Paper,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrderCashierList } from "../../redux/actions/orderAction";
 import { getMealList } from "../../redux/actions/mealAction";
 import { listUsers } from "../../redux/actions/userActions";
 import { format } from "date-fns";
-import { BarChart, Loader } from "../../components";
+import { BarChart, Loader, PieChart, DoughnutChart } from "../../components";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
@@ -336,6 +337,27 @@ const DashboardPage = () => {
           <BarChart revenueData={selectedDate(date)} date={date} />
         </CardContent>
       </Card>
+
+      <Grid container spacing={2} sx={{ marginTop: 1 }}>
+        <Grid item lg={6} sm={12} xs={12}>
+          <Paper sx={{ padding: 2 }}>
+            <Typography variant="h5" fontWeight="bold" sx={{ paddingTop: 2 }}>
+              {" "}
+              Order Type
+            </Typography>
+            <PieChart data={orders} />
+          </Paper>
+        </Grid>
+        <Grid item lg={6} sm={12} xs={12}>
+          <Paper sx={{ padding: 2 }}>
+            <Typography variant="h5" fontWeight="bold" sx={{ paddingTop: 2 }}>
+              {" "}
+              Payment Type
+            </Typography>
+            <DoughnutChart data={orders} />
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
