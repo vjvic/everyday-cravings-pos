@@ -18,18 +18,16 @@ import { useHistory } from "react-router-dom";
 import {
   DataGrid,
   GridToolbarContainer,
-  GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  GridToolbarDensitySelector,
+  GridToolbarExport,
 } from "@mui/x-data-grid";
 import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      <GridToolbarExport />
     </GridToolbarContainer>
   );
 };
