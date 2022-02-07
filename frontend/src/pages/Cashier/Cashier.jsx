@@ -62,11 +62,11 @@ const Cashier = () => {
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
 
-  const [paid, setPaid] = useState(0);
+  const [paid, setPaid] = useState("");
   const [paymentType, setPaymentType] = useState("");
   const [orderType, setOrderType] = useState("");
   const [paymentError, setPaymentError] = useState(false);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("");
 
   //Item quantity
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
@@ -121,31 +121,36 @@ const Cashier = () => {
     }
   };
 
+  console.log(totalPrice.toFixed(2));
+  console.log(paid);
+
   const handlePayment = (e) => {
     e.preventDefault();
 
-    if (paid < totalPrice) {
+    if (paid < totalPrice.toFixed(2)) {
       setPaymentError(true);
     } else {
-      setPaymentError(false);
-      const orders = {
-        id: uniqueID(),
-        orderType,
-        totalItems,
-        subtotal,
-        discount: discountTotal,
-        totalPrice,
-        change: change(),
-        paymentType,
-        paid,
-        orderItems: cartItems,
-      };
+      if (totalPrice > 0) {
+        setPaymentError(false);
+        const orders = {
+          id: uniqueID(),
+          orderType,
+          totalItems,
+          subtotal,
+          discount: discountTotal,
+          totalPrice,
+          change: change(),
+          paymentType,
+          paid,
+          orderItems: cartItems,
+        };
 
-      dispatch(createOrderCashier(orders));
+        dispatch(createOrderCashier(orders));
 
-      cartItems.map((item) =>
-        dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
-      );
+        cartItems.map((item) =>
+          dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+        );
+      }
     }
   };
 
@@ -212,7 +217,7 @@ const Cashier = () => {
 
             <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
               <strong>Discount: </strong>
-              <span>{discount}%</span>
+              <span>{discount || 0}%</span>
             </Typography>
 
             {paid >= totalPrice && (
@@ -285,6 +290,7 @@ const Cashier = () => {
                   value={paid}
                   onChange={(e) => setPaid(e.target.value)}
                   required
+                  placeholder="0.00"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">&#8369;</InputAdornment>
@@ -299,6 +305,7 @@ const Cashier = () => {
                   value={discount}
                   onChange={(e) => setDiscount(e.target.value)}
                   required
+                  placeholder="0"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">&#37;</InputAdornment>
@@ -307,16 +314,31 @@ const Cashier = () => {
                 />
               </Box>
 
-              <Button
-                variant="contained"
-                type="submit"
-                size="large"
-                sx={{ height: "45px" }}
-                onClick={handlePayment}
-                disabled={loading}
-              >
-                Save payment
-              </Button>
+              <Box sx={{ display: "flex", gridGap: "0.5rem", marginY: 2 }}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                  sx={{ height: "45px" }}
+                  color="error"
+                  /*  onClick={handlePayment}
+                disabled={loading} */
+                  onClick={() => setIsSave(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                  sx={{ height: "45px" }}
+                  onClick={handlePayment}
+                  disabled={loading}
+                  color="info"
+                >
+                  Save payment
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Fade>

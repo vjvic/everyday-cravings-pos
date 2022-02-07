@@ -69,7 +69,7 @@ const Receipt = () => {
         >
           <div>
             {order.orderItems.map((item) => (
-              <Typography>
+              <Typography key={item._id}>
                 <span>{item.qty} </span>
                 <span>{item.name.toUpperCase()}</span>
               </Typography>
@@ -77,7 +77,7 @@ const Receipt = () => {
           </div>
           <div>
             {order.orderItems.map((item) => (
-              <Typography>
+              <Typography key={item._id}>
                 &#8369; <span>{(item.qty * item.price).toFixed(2)} </span>
               </Typography>
             ))}
@@ -120,7 +120,7 @@ const Receipt = () => {
         <Button color="inherit" onClick={handleBack}>
           Back to cashier
         </Button>
-        <Button variant="outlined" onClick={printReceipt}>
+        <Button variant="contained" color="info" onClick={printReceipt}>
           Print receipt
         </Button>
       </div>

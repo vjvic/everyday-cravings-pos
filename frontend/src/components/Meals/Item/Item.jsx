@@ -74,13 +74,17 @@ const Item = ({ item, favorite }) => {
               </div>
             )}
 
-            <Button
-              variant="contained"
-              onClick={() => dispatch(addToCart(_id, 1))}
-              disabled={countInStock <= 0}
-            >
-              Add
-            </Button>
+            {countInStock <= 0 ? (
+              ""
+            ) : (
+              <Button
+                variant="contained"
+                onClick={() => dispatch(addToCart(_id, 1))}
+                disabled={countInStock <= 0}
+              >
+                Add
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Card>
