@@ -62,6 +62,13 @@ const Ingredient = () => {
       field: "qty",
       headerName: "Qty",
       flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {params.row.qty <= 0 ? "out of stock" : params.row.qty}
+          </div>
+        );
+      },
     },
     {
       field: "measure",

@@ -90,7 +90,6 @@ const MealsPage = () => {
       field: "price",
       headerName: "Price",
       flex: 1,
-      type: "number",
       renderCell: (params) => {
         return (
           <div className="rowitem"> &#8369; {params.row.price.toFixed(2)}</div>
@@ -101,7 +100,17 @@ const MealsPage = () => {
       field: "countInStock",
       headerName: "Qty",
       flex: 1,
-      type: "number",
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            <Typography>
+              {params.row.countInStock <= 0
+                ? "out of stock"
+                : params.row.countInStock}
+            </Typography>
+          </div>
+        );
+      },
     },
     {
       field: "action",

@@ -78,6 +78,7 @@ const MealGrid = ({ meals, text }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gridGap: 5,
         }}
       >
         <FormControl sx={{ width: 200, marginBottom: 3, marginTop: 4 }}>

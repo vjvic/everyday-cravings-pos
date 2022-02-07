@@ -353,7 +353,7 @@ const Cashier = () => {
           )}
         </Grid>
 
-        <Grid item lg={4} md={4}>
+        <Grid item lg={4} md={4} sm={12} xs={12}>
           <Paper
             sx={{
               height: "80vh",
@@ -361,6 +361,7 @@ const Cashier = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              marginTop: 3,
             }}
           >
             <Box sx={{ overflowY: "auto" }}>

@@ -88,6 +88,7 @@ const SalesReport = () => {
       field: "paid",
       headerName: "Paid",
       flex: 1,
+      type: "number",
       renderCell: (params) => {
         return (
           <div className="rowitem"> &#8369; {params.row.paid.toFixed(2)}</div>
