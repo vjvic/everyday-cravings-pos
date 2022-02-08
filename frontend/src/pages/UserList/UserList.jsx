@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -6,6 +6,8 @@ import {
   Stack,
   Button,
   capitalize,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -27,7 +29,7 @@ import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer sx={{ displayPrint: "none" }}>
       <GridToolbarFilterButton />
       <GridToolbarExport />
     </GridToolbarContainer>
@@ -41,6 +43,8 @@ const UserListPage = () => {
   const { users, loading } = useSelector((state) => state.userList);
   const { success: deleteSuccess } = useSelector((state) => state.userDelete);
   const { userInfo } = useSelector((state) => state.userLogin);
+
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
   //Delete user
   const handleDelete = (id) => {
@@ -122,6 +126,10 @@ const UserListPage = () => {
   // render/re render user list
   useEffect(() => {
     dispatch(listUsers());
+
+    if (deleteSuccess) {
+      setIsSnackbar(true);
+    }
   }, [dispatch, deleteSuccess]);
 
   console.log(loading);
@@ -130,6 +138,20 @@ const UserListPage = () => {
 
   return (
     <Container>
+      <Snackbar
+        open={isSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setIsSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setIsSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          User successfuly deleted
+        </Alert>
+      </Snackbar>
+
       <Stack
         direction="row"
         justifyContent="space-between"

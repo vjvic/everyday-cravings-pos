@@ -15,7 +15,7 @@ import {
 
 const CustomToolbar = () => {
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer sx={{ displayPrint: "none" }}>
       {/*  <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
       <GridToolbarExport />

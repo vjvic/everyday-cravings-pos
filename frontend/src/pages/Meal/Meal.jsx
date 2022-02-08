@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -6,6 +6,8 @@ import {
   Stack,
   Container,
   capitalize,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { deleteMeal } from "../../redux/actions/mealAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +27,7 @@ import Swal from "sweetalert2";
 
 const CustomToolbar = () => {
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer sx={{ displayPrint: "none" }}>
       <GridToolbarFilterButton />
       <GridToolbarExport />
     </GridToolbarContainer>
@@ -43,6 +45,8 @@ const MealsPage = () => {
   const { success: deleteSuccess } = useSelector((state) => state.mealDelete);
 
   const { userInfo } = useSelector((state) => state.userLogin);
+
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
   //Delete Meal
   const handleDelete = (id) => {
@@ -143,12 +147,30 @@ const MealsPage = () => {
   // render/re render meal list
   useEffect(() => {
     dispatch(getMealList());
+
+    if (deleteSuccess) {
+      setIsSnackbar(true);
+    }
   }, [dispatch, deleteSuccess]);
 
   if (mealsLoading) return <Loader />;
 
   return (
     <Container>
+      <Snackbar
+        open={isSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setIsSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setIsSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Meal successfuly deleted
+        </Alert>
+      </Snackbar>
+
       <Stack
         direction="row"
         justifyContent="space-between"
