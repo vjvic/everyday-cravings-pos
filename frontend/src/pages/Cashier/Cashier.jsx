@@ -41,7 +41,9 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete"; */
 import { CART_RESET_ITEM } from "../../redux/constants/cartConstants";
 import CashierItem from "./CashierItem";
+import Reciept from "./Reciept";
 /* import AccountCircle from "@mui/icons-material/AccountCircle"; */
+import { getOrderCashierDetails } from "../../redux/actions/orderAction";
 
 const style = {
   position: "absolute",
@@ -81,6 +83,10 @@ const Cashier = () => {
     meals,
     /*   error: mealsError, */
   } = useSelector((state) => state.mealList);
+
+  const { order: orderDets } = useSelector(
+    (state) => state.orderCashierDetails
+  );
 
   /* const { userInfo } = useSelector((state) => state.userLogin); */
 
@@ -122,14 +128,16 @@ const Cashier = () => {
   };
 
   console.log(totalPrice.toFixed(2));
-  console.log(paid);
+  console.log("paid", paid);
+
+  if (paid < totalPrice) {
+    console.log(true);
+  }
 
   const handlePayment = (e) => {
     e.preventDefault();
 
-    if (paid < totalPrice.toFixed(2)) {
-      setPaymentError(true);
-    } else {
+    if (paid >= totalPrice.toFixed(2) || paid >= totalPrice) {
       if (totalPrice > 0) {
         setPaymentError(false);
         const orders = {
@@ -151,6 +159,8 @@ const Cashier = () => {
           dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
         );
       }
+    } else {
+      setPaymentError(true);
     }
   };
 
@@ -166,8 +176,9 @@ const Cashier = () => {
       setIsSave(false);
       setOrderType("");
       if (order._id) {
-        history.push(`/cashier/receipt/${order._id}`);
+        /* history.push(`/cashier/receipt/${order._id}`); */
         dispatch({ type: ORDER_CASHIER_CREATE_RESET });
+        dispatch(getOrderCashierDetails(order._id));
       }
     }
   }, [success, history, order, dispatch]);
@@ -193,8 +204,12 @@ const Cashier = () => {
     </>
   ); */
 
+  console.log("total", totalPrice);
+
   return (
     <>
+      {orderDets && <Reciept order={orderDets} />}
+
       <Modal
         open={isSave}
         onClose={() => setIsSave(false)}
@@ -203,6 +218,7 @@ const Cashier = () => {
         BackdropProps={{
           timeout: 500,
         }}
+        sx={{ displayPrint: "none" }}
       >
         <Fade in={isSave}>
           <Box sx={style}>
@@ -317,9 +333,8 @@ const Cashier = () => {
               <Box sx={{ display: "flex", gridGap: "0.5rem", marginY: 2 }}>
                 <Button
                   variant="contained"
-                  type="submit"
                   size="large"
-                  sx={{ height: "45px" }}
+                  sx={{ height: "45px", marginTop: 2 }}
                   color="error"
                   /*  onClick={handlePayment}
                 disabled={loading} */
@@ -329,9 +344,8 @@ const Cashier = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  type="submit"
                   size="large"
-                  sx={{ height: "45px" }}
+                  sx={{ height: "45px", marginTop: 2 }}
                   onClick={handlePayment}
                   disabled={loading}
                   color="info"
@@ -344,7 +358,7 @@ const Cashier = () => {
         </Fade>
       </Modal>
 
-      <Grid container sx={{ vh: "100%" }}>
+      <Grid container sx={{ vh: "100%", displayPrint: "none" }}>
         <Grid item lg={8} md={8}>
           {mealsLoading ? (
             "loading..."

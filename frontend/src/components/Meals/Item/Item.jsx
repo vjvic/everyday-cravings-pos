@@ -5,14 +5,16 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Button,
+  /*   Button, */
   Tooltip,
+  IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
 /* import { Link } from "react-router-dom"; */
 /* import { useHistory } from "react-router"; */
 import { addToCart } from "../../../redux/actions/cartAction";
 import { useDispatch } from "react-redux";
+import { MdAddShoppingCart } from "react-icons/md";
 
 const fontSize = {
   lg: 20,
@@ -77,13 +79,13 @@ const Item = ({ item, favorite }) => {
             {countInStock <= 0 ? (
               ""
             ) : (
-              <Button
+              <IconButton
                 variant="contained"
                 onClick={() => dispatch(addToCart(_id, 1))}
                 disabled={countInStock <= 0}
               >
-                Add
-              </Button>
+                <MdAddShoppingCart />
+              </IconButton>
             )}
           </Box>
         </CardContent>

@@ -46,6 +46,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
           justifyContent: "center",
           padding: 2,
           gridGap: 10,
+          displayPrint: "none",
         }}
       >
         <img
@@ -89,7 +90,11 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   return (
     <Box
       component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      sx={{
+        width: { sm: drawerWidth },
+        flexShrink: { sm: 0 },
+        displayPrint: "none",
+      }}
       aria-label="mailbox folders"
     >
       <Drawer

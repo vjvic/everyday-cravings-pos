@@ -31,6 +31,8 @@ const Appbar = ({ handleDrawerToggle }) => {
   //Total cart items
   /*  const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
 
+  const cashierRoute = location.pathname === "/cashier";
+
   const drawerWidth = 240;
 
   const logoutHandler = () => {
@@ -63,17 +65,15 @@ const Appbar = ({ handleDrawerToggle }) => {
   return (
     <AppBar
       position="fixed"
-      elevation={0}
-      color="secondary"
+      elevation={cashierRoute ? 1 : 0}
+      color={cashierRoute ? "primary" : "secondary"}
       sx={{
         width: {
-          sm:
-            location.pathname === "/cashier"
-              ? "100%"
-              : `calc(100% - ${drawerWidth}px)`,
+          sm: cashierRoute ? "100%" : `calc(100% - ${drawerWidth}px)`,
         },
         ml: { sm: `${drawerWidth}px` },
-        backgroundColor: "#f9f9f9",
+        backgroundColor: cashierRoute ? "" : "#f9f9f9",
+        displayPrint: "none",
       }}
     >
       <Toolbar>
@@ -113,7 +113,7 @@ const Appbar = ({ handleDrawerToggle }) => {
               <React.Fragment>
                 <Button
                   endIcon={<ArrowDropDownIcon />}
-                  sx={{ color: "#212121" }}
+                  sx={{ color: cashierRoute ? "inherit" : "#212121" }}
                   {...bindTrigger(popupState)}
                 >
                   {userInfo.name}
