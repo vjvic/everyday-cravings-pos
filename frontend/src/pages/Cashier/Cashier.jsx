@@ -90,14 +90,19 @@ const Cashier = () => {
 
   /* const { userInfo } = useSelector((state) => state.userLogin); */
 
+  //Subtotal
+  const subtotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const subtotalPrice = totalAmount(cartItems);
+
+  //total price with vat
+  const vat = (subtotalPrice * 12) / 100;
+  const total = subtotalPrice + vat;
+
   //Total amount
-  let totalPrice = totalAmount(cartItems);
+  let totalPrice = total;
 
   // Total Items
   const totalItems = cartItems.length;
-
-  //Subtotal
-  const subtotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   /* let discount = 0; */
 
@@ -113,7 +118,7 @@ const Cashier = () => {
 
   if (discount) {
     discountTotal = totalPrice * `0.${discount}`;
-    totalPrice = totalAmount(cartItems) - discountTotal;
+    totalPrice = total - discountTotal;
   } else {
     discountTotal = 0;
   }
@@ -143,14 +148,15 @@ const Cashier = () => {
         const orders = {
           id: uniqueID(),
           orderType,
-          totalItems,
-          subtotal,
+          totalItems: cartItems.reduce((acc, item) => acc + item.qty, 0),
+          subtotal: subtotalPrice,
           discount: discountTotal,
           totalPrice,
           change: change(),
           paymentType,
           paid,
           orderItems: cartItems,
+          vat,
         };
 
         dispatch(createOrderCashier(orders));
@@ -179,6 +185,11 @@ const Cashier = () => {
         /* history.push(`/cashier/receipt/${order._id}`); */
         dispatch({ type: ORDER_CASHIER_CREATE_RESET });
         dispatch(getOrderCashierDetails(order._id));
+        setPaid("");
+        setPaymentType("");
+        setOrderType("");
+        setPaymentError(false);
+        setDiscount("");
       }
     }
   }, [success, history, order, dispatch]);
@@ -226,14 +237,28 @@ const Cashier = () => {
               Payment
             </Typography>
 
-            <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
-              <strong>Total Price: </strong>
-              <span>&#8369; {totalPrice.toFixed(2)}</span>
+            <Divider sx={{ marginY: 1 }} />
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>Subtotal: </strong>
+              <span>&#8369; {totalAmount(cartItems).toFixed(2)}</span>
             </Typography>
 
-            <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
               <strong>Discount: </strong>
               <span>{discount || 0}%</span>
+            </Typography>
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>VAT: </strong>
+              <span>12%</span>
+            </Typography>
+
+            <Divider sx={{ marginY: 1 }} />
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>Total: </strong>
+              <span>&#8369; {totalPrice.toFixed(2)}</span>
             </Typography>
 
             {paid >= totalPrice && (
@@ -402,7 +427,7 @@ const Cashier = () => {
                 </Box>
 
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Typography variant="h6">Subtotal: </Typography>
+                  <Typography variant="h6">Subtotal Item: </Typography>
                   <Typography> {subtotal} </Typography>
                 </Box>
 

@@ -84,18 +84,28 @@ const Reciept = ({ order }) => {
         }}
       >
         <div>
-          <Typography>{"Subtotal".toUpperCase()}</Typography>
+          <Typography>{"Order Type".toUpperCase()}</Typography>
+          <Typography>{"Amount Due".toUpperCase()}</Typography>
+          <Typography>{"paid".toUpperCase()}</Typography>
+          <Typography>{"change".toUpperCase()}</Typography>
           <Typography>{"Discount".toUpperCase()}</Typography>
-          <Typography>{"Total".toUpperCase()}</Typography>
+          <Typography>{"Vatable sales".toUpperCase()}</Typography>
+          <Typography>{"Vat-Exempt sales".toUpperCase()}</Typography>
+          <Typography>{"Vat zero-rated sales".toUpperCase()}</Typography>
+          <Typography>{"VAT Amount(12%)".toUpperCase()}</Typography>
         </div>
         <div>
-          <Typography>
-            &#8369; {order && (order.totalPrice + order.discount).toFixed(2)}
-          </Typography>
-          <Typography>&#8369; {order && order.discount.toFixed(2)}</Typography>
+          <Typography> {order && order.orderType.toUpperCase()}</Typography>
           <Typography>
             &#8369; {order && order.totalPrice.toFixed(2)}
           </Typography>
+          <Typography>&#8369; {order && order.paid.toFixed(2)}</Typography>
+          <Typography>&#8369; {order && order.change.toFixed(2)}</Typography>
+          <Typography>&#8369; {order && order.discount.toFixed(2)}</Typography>
+          <Typography>&#8369; {order && order.subtotal.toFixed(2)}</Typography>
+          <Typography>&#8369; 0.00</Typography>
+          <Typography>&#8369; 0.00</Typography>
+          <Typography>&#8369; {order && order.vat.toFixed(2)}</Typography>
         </div>
       </Box>
 

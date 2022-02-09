@@ -11,6 +11,7 @@ const orderCashierSchema = mongoose.Schema(
     change: { type: Number, default: 0 },
     paymentType: { type: String, required: true },
     paid: { type: Number, default: 0 },
+    vat: { type: Number, required: true },
     user: {
       type: String,
       required: true,

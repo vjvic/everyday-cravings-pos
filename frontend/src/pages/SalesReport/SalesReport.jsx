@@ -117,6 +117,14 @@ const SalesReport = () => {
       headerName: "Subtotal",
       type: "number",
       flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {" "}
+            &#8369; {params.row.subtotal.toFixed(2)}
+          </div>
+        );
+      },
     },
     {
       field: "discount",
@@ -128,6 +136,20 @@ const SalesReport = () => {
           <div className="rowitem">
             {" "}
             &#8369; {params.row.discount.toFixed(2)}
+          </div>
+        );
+      },
+    },
+    {
+      field: "vat",
+      headerName: "VAT",
+      type: "number",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {" "}
+            &#8369; {params.row.vat && params.row.vat.toFixed(2)}
           </div>
         );
       },

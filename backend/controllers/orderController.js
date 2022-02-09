@@ -19,11 +19,11 @@ const createOrderCashier = asyncHandler(async (req, res) => {
     paymentType,
     paid,
     orderItems,
+    vat,
   } = req.body;
 
   const order = new OrderCashier({
     id,
-
     orderType,
     totalItems,
     subtotal,
@@ -34,6 +34,7 @@ const createOrderCashier = asyncHandler(async (req, res) => {
     paid,
     orderItems,
     user: req.user.name,
+    vat,
   });
 
   const createOrder = await order.save();
