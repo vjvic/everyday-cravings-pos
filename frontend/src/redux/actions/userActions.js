@@ -72,7 +72,11 @@ export const logout = () => (dispatch) => {
 };
 
 export const userRegister =
-  (name, email, password, id, role) => async (dispatch) => {
+  (name, email, password, id, role) => async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
     try {
       dispatch({
         type: USER_CREATE_REQUEST,
@@ -94,6 +98,12 @@ export const userRegister =
         type: USER_CREATE_SUCCESS,
         payload: data,
       });
+
+      if (userInfo === null) {
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+
+        setItemToLcalStorage("userInfo", data);
+      }
     } catch (error) {
       dispatch({
         type: USER_CREATE_FAIL,

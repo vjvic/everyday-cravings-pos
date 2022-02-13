@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 import { Alert } from "@mui/material";
-/* import { Link } from "react-router-dom"; */
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const history = useHistory();
@@ -87,11 +87,11 @@ const LoginPage = () => {
               SIGN IN
             </Button>
 
-            {/*  <Box>
+            <Box>
               <Typography variant="body1">
                 Don't have an account? <Link to={"/register"}>Register</Link>
               </Typography>
-            </Box> */}
+            </Box>
           </Box>
         </Box>
       </Grid>

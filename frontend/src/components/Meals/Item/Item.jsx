@@ -13,7 +13,8 @@ import { Box } from "@mui/system";
 /* import { Link } from "react-router-dom"; */
 /* import { useHistory } from "react-router"; */
 import { addToCart } from "../../../redux/actions/cartAction";
-import { useDispatch } from "react-redux";
+import { addToCashier } from "../../../redux/actions/cashierAction";
+import { useDispatch, useSelector } from "react-redux";
 import { MdAddShoppingCart } from "react-icons/md";
 
 const fontSize = {
@@ -28,7 +29,17 @@ const Item = ({ item, favorite }) => {
 
   /*  const history = useHistory(); */
 
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   const dispatch = useDispatch();
+
+  const handleAddTo = () => {
+    if (userInfo && userInfo.role === "user") {
+      dispatch(addToCart(_id, 1));
+    } else if (userInfo && userInfo.role === "cashier") {
+      dispatch(addToCashier(_id, 1));
+    }
+  };
 
   return (
     <Tooltip title={description}>
@@ -81,7 +92,7 @@ const Item = ({ item, favorite }) => {
             ) : (
               <IconButton
                 variant="contained"
-                onClick={() => dispatch(addToCart(_id, 1))}
+                onClick={handleAddTo}
                 disabled={countInStock <= 0}
               >
                 <MdAddShoppingCart />

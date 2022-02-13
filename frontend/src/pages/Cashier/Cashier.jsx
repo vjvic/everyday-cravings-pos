@@ -39,7 +39,7 @@ import { getMealList } from "../../redux/actions/mealAction";
 /* import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete"; */
-import { CART_RESET_ITEM } from "../../redux/constants/cartConstants";
+import { CASHIER_RESET_ITEM } from "../../redux/constants/cashierConstants";
 import CashierItem from "./CashierItem";
 import Reciept from "./Reciept";
 /* import AccountCircle from "@mui/icons-material/AccountCircle"; */
@@ -73,7 +73,7 @@ const Cashier = () => {
   //Item quantity
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cashierItems } = useSelector((state) => state.cashier);
   const { success, loading, error, order } = useSelector(
     (state) => state.orderCashierCreate
   );
@@ -91,8 +91,8 @@ const Cashier = () => {
   /* const { userInfo } = useSelector((state) => state.userLogin); */
 
   //Subtotal
-  const subtotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
-  const subtotalPrice = totalAmount(cartItems);
+  const subtotal = cashierItems.reduce((acc, item) => acc + item.qty, 0);
+  const subtotalPrice = totalAmount(cashierItems);
 
   //total price with vat
   const vat = (subtotalPrice * 12) / 100;
@@ -102,7 +102,7 @@ const Cashier = () => {
   let totalPrice = total;
 
   // Total Items
-  const totalItems = cartItems.length;
+  const totalItems = cashierItems.length;
 
   /* let discount = 0; */
 
@@ -148,20 +148,20 @@ const Cashier = () => {
         const orders = {
           id: uniqueID(),
           orderType,
-          totalItems: cartItems.reduce((acc, item) => acc + item.qty, 0),
+          totalItems: cashierItems.reduce((acc, item) => acc + item.qty, 0),
           subtotal: subtotalPrice,
           discount: discountTotal,
           totalPrice,
           change: change(),
           paymentType,
           paid,
-          orderItems: cartItems,
+          orderItems: cashierItems,
           vat,
         };
 
         dispatch(createOrderCashier(orders));
 
-        cartItems.map((item) =>
+        cashierItems.map((item) =>
           dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
         );
       }
@@ -178,7 +178,7 @@ const Cashier = () => {
 
   useEffect(() => {
     if (success) {
-      dispatch({ type: CART_RESET_ITEM });
+      dispatch({ type: CASHIER_RESET_ITEM });
       setIsSave(false);
       setOrderType("");
       if (order._id) {
@@ -241,7 +241,7 @@ const Cashier = () => {
 
             <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
               <strong>Subtotal: </strong>
-              <span>&#8369; {totalAmount(cartItems).toFixed(2)}</span>
+              <span>&#8369; {totalAmount(cashierItems).toFixed(2)}</span>
             </Typography>
 
             <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
@@ -409,10 +409,10 @@ const Cashier = () => {
               </Typography>
               {/*  start */}
 
-              {cartItems.length === 0 ? (
+              {cashierItems.length === 0 ? (
                 <Typography textAlign="center">No item</Typography>
               ) : (
-                cartItems.map((item) => (
+                cashierItems.map((item) => (
                   <CashierItem item={item} key={item.meal} />
                 ))
               )}
@@ -439,7 +439,7 @@ const Cashier = () => {
                 <Button
                   fullWidth
                   onClick={() => setIsSave(true)}
-                  disabled={cartItems.length === 0}
+                  disabled={cashierItems.length === 0}
                   variant="contained"
                   sx={{ marginTop: 2 }}
                 >

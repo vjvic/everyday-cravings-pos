@@ -22,6 +22,8 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       qty,
     },
   });
+
+  setItemToLcalStorage("cartItems", getState().cart.cartItems);
 };
 
 //Remove cart item action

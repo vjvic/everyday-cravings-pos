@@ -35,6 +35,7 @@ import {
   cartAddressReducer,
   cartPaymentMethodReducer,
 } from "./cartReducers";
+import { cashierReducer } from "./cashierReducers";
 import {
   categoryListReducer,
   categoryDeleteReducer,
@@ -111,6 +112,8 @@ const reducers = combineReducers({
   supplierCreate: supplierCreateReducer,
   supplierDelete: supplierDeleteReducer,
   supplierDetails: supplierDetailsReducer,
+
+  cashier: cashierReducer,
 });
 
 export default reducers;

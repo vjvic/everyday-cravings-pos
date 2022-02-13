@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextField, Button, Typography, Alert, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { uniqueID } from "../../utils/utils";
+import { useHistory } from "react-router-dom";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -21,6 +22,7 @@ const schema = yup.object().shape({
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     register,
@@ -30,16 +32,29 @@ const RegisterPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const { error } = useSelector((state) => state.userRegister);
+  const { error, success } = useSelector((state) => state.userRegister);
 
   const onSubmit = (data, e) => {
     const id = uniqueID();
+    const role = "user";
     dispatch(
-      userRegister(data.username, data.email.toLowerCase(), data.password, id)
+      userRegister(
+        data.username,
+        data.email.toLowerCase(),
+        data.password,
+        id,
+        role
+      )
     );
 
     e.target.reset();
   };
+
+  useEffect(() => {
+    if (success) {
+      history.push("/menu");
+    }
+  }, [success, history]);
 
   return (
     <Grid container alignItems="center" sx={{ height: "calc(100vh - 350px)" }}>

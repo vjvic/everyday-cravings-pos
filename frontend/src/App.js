@@ -27,6 +27,11 @@ import {
   IngredientEdit,
   SupplierEdit,
   notApproved,
+  Cart,
+  MyOrders,
+  Order,
+  OrderList,
+  Checkout,
 } from "./pages";
 
 const secondary = "#FFECC2";
@@ -55,38 +60,12 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <AdminRoute exact path="/categories" component={Category} />
-            <AdminRoute
-              exact
-              path="/categories/:id?/edit"
-              component={CategoryEdit}
-            />
-            <AdminRoute path="/meal/:id" component={MealDetails} />
+            {/* global  */}
             <PrivateRoute path="/profile" component={Profile} />
-            <AdminRoute exact path="/" component={Dashboard} />
-            <AdminRoute exact path="/meals" component={Meals} />
-            <AdminRoute exact path="/ingredients" component={Ingredient} />
-            <AdminRoute
-              exact
-              path="/ingredients/:id?/edit"
-              component={IngredientEdit}
-            />
-            <AdminRoute exact path="/meals/:id?/edit" component={MealEdit} />
             <PrivateRoute exact path="/menu" component={Menu} />
-            <AdminRoute exact path="/user-list" component={UserList} />
-            <AdminRoute
-              exact
-              path="/user-list/:id?/edit"
-              component={UserEdit}
-            />
-            <AdminRoute exact path="/suppliers" component={Suppliers} />
-            <AdminRoute
-              exact
-              path="/suppliers/:id?/edit"
-              component={SupplierEdit}
-            />
-            <AdminRoute exact path="/sales-report" component={SalesReport} />
+            <AdminRoute exact path="no-access" component={notApproved} />
 
+            {/* cashier */}
             <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
             <PrivateRoute
               exact
@@ -94,7 +73,45 @@ function App() {
               component={Receipt}
             />
 
-            <AdminRoute exact path="no-access" component={notApproved} />
+            {/*  Admin */}
+            <AdminRoute exact path="/" component={Dashboard} />
+            <AdminRoute
+              exact
+              path="/suppliers/:id?/edit"
+              component={SupplierEdit}
+            />
+            <AdminRoute
+              exact
+              path="/user-list/:id?/edit"
+              component={UserEdit}
+            />
+            <AdminRoute
+              exact
+              path="/ingredients/:id?/edit"
+              component={IngredientEdit}
+            />
+            <AdminRoute
+              exact
+              path="/categories/:id?/edit"
+              component={CategoryEdit}
+            />
+            <AdminRoute exact path="/categories" component={Category} />
+            <AdminRoute path="/meal/:id" component={MealDetails} />
+            <AdminRoute exact path="/meals/:id?/edit" component={MealEdit} />
+            <AdminRoute exact path="/meals" component={Meals} />
+            <AdminRoute exact path="/ingredients" component={Ingredient} />
+            <AdminRoute exact path="/suppliers" component={Suppliers} />
+            <AdminRoute exact path="/sales-report" component={SalesReport} />
+            <AdminRoute exact path="/user-list" component={UserList} />
+            <AdminRoute exact path="/order-list" component={OrderList} />
+
+            {/*  user */}
+            <PrivateRoute path="/checkout" component={Checkout} />
+            <PrivateRoute path="/orders/:id" component={Order} />
+            <PrivateRoute exact path="/cart/:id?" component={Cart} />
+            <PrivateRoute path="/my-orders" component={MyOrders} />
+
+            {/*  Login & Register */}
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
           </Layout>

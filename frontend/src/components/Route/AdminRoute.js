@@ -9,9 +9,10 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        return (userInfo && userInfo.role === "admin") ||
-          (userInfo && userInfo.role === "supplier") ? (
+        return userInfo && userInfo.role === "admin" ? (
           <Component {...props} />
+        ) : userInfo && userInfo.role === "user" ? (
+          <Redirect to="/menu" />
         ) : userInfo && userInfo.role === "cashier" ? (
           <Redirect to="/cashier" />
         ) : !userInfo ? (

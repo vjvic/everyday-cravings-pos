@@ -5,8 +5,11 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { MdCategory } from "react-icons/md";
 import { GiFactory } from "react-icons/gi";
 import { GiMeat } from "react-icons/gi";
-/* import { BiFoodMenu } from "react-icons/bi";
-import { FaCashRegister } from "react-icons/fa"; */
+import { BiFoodMenu } from "react-icons/bi";
+/* import { FaCashRegister } from "react-icons/fa"; */
+import { FiPackage } from "react-icons/fi";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { FaTruckMoving } from "react-icons/fa";
 
 export const navItems = [
   {
@@ -39,6 +42,11 @@ export const navItems = [
     path: "/suppliers",
     icon: <GiFactory />,
   },
+  {
+    text: "Order List ",
+    path: "/order-list",
+    icon: <FaTruckMoving />,
+  },
   /*   {
     text: "Menu ",
     path: "/menu",
@@ -53,5 +61,23 @@ export const navItems = [
     text: "Sales Report",
     path: "/sales-report",
     icon: <AssessmentIcon />,
+  },
+];
+
+export const userNavItems = [
+  {
+    text: "Menu",
+    path: "/menu",
+    icon: <BiFoodMenu />,
+  },
+  {
+    text: "Cart",
+    path: "/cart",
+    icon: <ShoppingCartIcon />,
+  },
+  {
+    text: "My Order",
+    path: "/my-orders",
+    icon: <FiPackage />,
   },
 ];

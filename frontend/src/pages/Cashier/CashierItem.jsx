@@ -23,7 +23,10 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/actions/cartAction";
+import {
+  addToCashier,
+  removeFromCashier,
+} from "../../redux/actions/cashierAction";
 import { useEffect } from "react";
 
 const CashierItem = ({ item }) => {
@@ -31,7 +34,7 @@ const CashierItem = ({ item }) => {
 
   useEffect(() => {
     if (item.qty <= 0 || item.countInStock <= 0) {
-      dispatch(removeFromCart(item.meal));
+      dispatch(removeFromCashier(item.meal));
     }
   }, [dispatch, item]);
 
@@ -69,19 +72,21 @@ const CashierItem = ({ item }) => {
         <Grid item lg={6}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             {item.qty === 1 ? (
-              <IconButton onClick={() => dispatch(removeFromCart(item.meal))}>
+              <IconButton
+                onClick={() => dispatch(removeFromCashier(item.meal))}
+              >
                 <DeleteIcon />
               </IconButton>
             ) : (
               <IconButton
-                onClick={() => dispatch(addToCart(item.meal, item.qty - 1))}
+                onClick={() => dispatch(addToCashier(item.meal, item.qty - 1))}
               >
                 <RemoveIcon />
               </IconButton>
             )}
             <div>{item.qty}</div>
             <IconButton
-              onClick={() => dispatch(addToCart(item.meal, item.qty + 1))}
+              onClick={() => dispatch(addToCashier(item.meal, item.qty + 1))}
               disabled={item.qty > item.countInStock}
             >
               <AddIcon />

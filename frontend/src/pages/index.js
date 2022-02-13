@@ -18,6 +18,11 @@ import CategoryEdit from "./Category/Edit/Edit";
 import IngredientEdit from "./Ingredient/Edit/Edit";
 import SupplierEdit from "./Suppliers/Edit/Edit";
 import notApproved from "./notApproved/notApproved";
+import Cart from "./Cart/Cart";
+import MyOrders from "./Orders/MyOrders";
+import Order from "./Orders/Order";
+import OrderList from "./Orders/OrderList";
+import Checkout from "./Checkout/Checkout";
 
 export {
   Dashboard,
@@ -40,4 +45,9 @@ export {
   IngredientEdit,
   SupplierEdit,
   notApproved,
+  Cart,
+  MyOrders,
+  Order,
+  OrderList,
+  Checkout,
 };

@@ -27,6 +27,7 @@ import {
   ORDER_CASHIER_DETAILS_SUCCESS,
   ORDER_CASHIER_DETAILS_FAIL,
 } from "../constants/orderConstants";
+import { CART_RESET_ITEM } from "../constants/cartConstants";
 import mealApi from "../../components/api/mealApi";
 import { logout } from "./userActions";
 
@@ -145,6 +146,9 @@ export const createOrder = (orders) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_CREATE_SUCCESS,
       payload: data,
+    });
+    dispatch({
+      type: CART_RESET_ITEM,
     });
   } catch (error) {
     const message =

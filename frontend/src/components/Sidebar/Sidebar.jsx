@@ -9,7 +9,7 @@ import {
   Drawer,
   Box,
 } from "@mui/material";
-import { navItems } from "./SidebarData";
+import { navItems, userNavItems } from "./SidebarData";
 import { useHistory, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -27,6 +27,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   };
 
   const { order } = useSelector((state) => state.orderCashierDetails);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   if (
     location.pathname === "/login" ||
@@ -70,20 +71,39 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
       </Box>
       <Divider />
       <List>
-        {/* User navitems */}
-        {navItems.map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => history.push(item.path)}
-            sx={{
-              backgroundColor: activeColor(item.path),
-            }}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        {/* admin navitems */}
+        {userInfo &&
+          userInfo.role !== "user" &&
+          navItems.map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+              sx={{
+                backgroundColor: activeColor(item.path),
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+
+        {/* user navitems */}
+        {userInfo &&
+          userInfo.role === "user" &&
+          userNavItems.map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+              sx={{
+                backgroundColor: activeColor(item.path),
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
       </List>
     </div>
   );

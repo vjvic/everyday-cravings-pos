@@ -7,7 +7,10 @@ import {
 } from "../constants/cartConstants";
 import { getItemFromLocalStorage } from "../../utils/utils";
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (
+  state = { cartItems: getItemFromLocalStorage("cartItems") },
+  action
+) => {
   switch (action.type) {
     case CART_ADD_ITEM:
       const item = action.payload;
