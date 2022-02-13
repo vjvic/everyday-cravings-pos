@@ -100,7 +100,7 @@ const Appbar = ({ handleDrawerToggle }) => {
           <IconButton
             sx={{ color: "#212121" }}
             size="large"
-            onClick={() => history.push("/cashier")}
+            onClick={() => history.push("/cart")}
           >
             <Badge badgeContent={total} color="error">
               <ShoppingCartIcon />
