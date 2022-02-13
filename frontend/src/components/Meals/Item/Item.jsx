@@ -38,7 +38,7 @@ const Item = ({ item, favorite }) => {
   const handleAddTo = () => {
     if (userInfo && userInfo.role === "user") {
       /*  dispatch(addToCart(_id, 1)); */
-      history.push(`/mealDets/${_id}`);
+      history.push(`/mealdetails/${_id}`);
     } else if (userInfo && userInfo.role === "cashier") {
       dispatch(addToCashier(_id, 1));
     }
