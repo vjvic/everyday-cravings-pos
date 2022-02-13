@@ -110,6 +110,7 @@ function App() {
             <PrivateRoute path="/orders/:id" component={Order} />
             <PrivateRoute exact path="/cart/:id?" component={Cart} />
             <PrivateRoute path="/my-orders" component={MyOrders} />
+            <PrivateRoute exact path="/mealDets/:id" component={MealDetails} />
 
             {/*  Login & Register */}
             <Route exact path="/login" component={Login} />

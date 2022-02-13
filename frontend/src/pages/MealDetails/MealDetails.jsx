@@ -23,7 +23,7 @@ import { Loader } from "../../components";
 import { MEAL_CREATE_REVIEW_RESET } from "../../redux/constants/mealConstants";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { FaCashRegister } from "react-icons/fa";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const MealDetailsPage = () => {
   const dispatch = useDispatch();
@@ -144,11 +144,11 @@ const MealDetailsPage = () => {
                   variant="contained"
                   fullWidth
                   size="large"
-                  onClick={() => history.push(`/cashier/${id}?qty=${qty}`)}
+                  onClick={() => history.push(`/cart/${id}?qty=${qty}`)}
                   disabled={countInStock === 0}
-                  startIcon={<FaCashRegister />}
+                  startIcon={<ShoppingCartIcon />}
                 >
-                  Add to Cashier
+                  Add to Cart
                 </Button>
               </Box>
             </CardContent>

@@ -8,7 +8,7 @@ import {
   Menu,
   MenuItem,
   CircularProgress,
-  /*  Badge, */
+  Badge,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -20,16 +20,17 @@ import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
 import { FaCashRegister } from "react-icons/fa";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  /*  const { cartItems } = useSelector((state) => state.cart); */
+  const { cartItems } = useSelector((state) => state.cart);
 
   //Total cart items
-  /*  const total = cartItems.reduce((acc, item) => acc + item.qty, 0); */
+  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const cashierRoute = location.pathname === "/cashier";
 
@@ -95,17 +96,17 @@ const Appbar = ({ handleDrawerToggle }) => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        {/*  <Box>
+        <Box sx={{ display: cashierRoute ? "none" : "block" }}>
           <IconButton
             sx={{ color: "#212121" }}
             size="large"
             onClick={() => history.push("/cashier")}
           >
             <Badge badgeContent={total} color="error">
-              <FaCashRegister />
+              <ShoppingCartIcon />
             </Badge>
           </IconButton>
-        </Box> */}
+        </Box>
 
         {userInfo ? (
           <PopupState variant="popover">

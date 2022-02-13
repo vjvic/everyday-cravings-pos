@@ -14,6 +14,7 @@ import { createOrder } from "../../redux/actions/orderAction";
 import { useHistory } from "react-router-dom";
 import { ORDER_CREATE_RESET } from "../../redux/constants/orderConstants";
 import { updateMealStock } from "../../redux/actions/mealAction";
+import { uniqueID } from "../../utils/utils";
 
 const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -34,7 +35,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
   const totalPriceItems = totalAmount(cartItems);
   const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
   //static shipping value
-  const shipping = 80;
+  const shipping = 40;
   const total = totalPriceItems + shipping;
 
   const handlePlaceOrder = () => {
@@ -46,6 +47,7 @@ const OrderSummary = ({ activeStep, handleBack, handleNext, steps }) => {
       totalItems: cartItems.length,
       subtotal: subTotal,
       totalPrice: total,
+      id: uniqueID(),
     };
 
     dispatch(createOrder(orders));

@@ -78,6 +78,7 @@ const createOrder = asyncHandler(async (req, res) => {
     totalItems,
     subtotal,
     totalPrice,
+    id,
   } = req.body;
 
   if (orderItems && orderItems === 0) {
@@ -94,6 +95,7 @@ const createOrder = asyncHandler(async (req, res) => {
       totalItems,
       subtotal,
       totalPrice,
+      id,
     });
 
     const createOrder = await order.save();

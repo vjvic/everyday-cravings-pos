@@ -12,10 +12,11 @@ import {
 import { Box } from "@mui/system";
 /* import { Link } from "react-router-dom"; */
 /* import { useHistory } from "react-router"; */
-import { addToCart } from "../../../redux/actions/cartAction";
+/* import { addToCart } from "../../../redux/actions/cartAction"; */
 import { addToCashier } from "../../../redux/actions/cashierAction";
 import { useDispatch, useSelector } from "react-redux";
 import { MdAddShoppingCart } from "react-icons/md";
+import { useHistory } from "react-router-dom";
 
 const fontSize = {
   lg: 20,
@@ -32,10 +33,12 @@ const Item = ({ item, favorite }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleAddTo = () => {
     if (userInfo && userInfo.role === "user") {
-      dispatch(addToCart(_id, 1));
+      /*  dispatch(addToCart(_id, 1)); */
+      history.push(`/mealDets/${_id}`);
     } else if (userInfo && userInfo.role === "cashier") {
       dispatch(addToCashier(_id, 1));
     }

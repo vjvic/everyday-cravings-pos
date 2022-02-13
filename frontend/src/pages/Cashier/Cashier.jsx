@@ -28,7 +28,7 @@ import {
 /* import { Link } from "react-router-dom";
 import Item from "./Item/Item"; */
 import { createOrderCashier } from "../../redux/actions/orderAction";
-import { updateMealStock } from "../../redux/actions/mealAction";
+/* import { updateMealStock } from "../../redux/actions/mealAction"; */
 import { useHistory } from "react-router-dom";
 import { totalAmount } from "../../utils/utils";
 import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants";
@@ -161,9 +161,9 @@ const Cashier = () => {
 
         dispatch(createOrderCashier(orders));
 
-        cashierItems.map((item) =>
+        /*  cashierItems.map((item) =>
           dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
-        );
+        ); */
       }
     } else {
       setPaymentError(true);

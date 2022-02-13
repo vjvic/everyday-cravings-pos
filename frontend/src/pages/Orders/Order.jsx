@@ -54,6 +54,7 @@ const OrderSummary = () => {
     isPaid,
     deliveredAt,
     paidAt,
+    id: orderID,
   } = orderDets;
 
   const { address, city, province, postalCode } = shippingAddress;
@@ -61,12 +62,12 @@ const OrderSummary = () => {
   const totalCart = orderItems.length;
   const totalItems = totalAmount(orderDets.orderItems);
   //static shipping value
-  const shipping = 80;
+  const shipping = 40;
   const total = totalItems + shipping;
 
   return (
     <Container>
-      <Typography variant="h4">Order {id}</Typography>
+      <Typography variant="h4">Order {orderID}</Typography>
       <Grid container spacing={3}>
         <Grid item lg={8}>
           <Box my={2}>

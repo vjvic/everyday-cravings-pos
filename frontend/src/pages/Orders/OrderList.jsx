@@ -82,7 +82,7 @@ const MyOrders = () => {
 
   const columns = [
     {
-      field: "_id",
+      field: "id",
       headerName: "Order ID",
       flex: 1,
     },
@@ -146,7 +146,7 @@ const MyOrders = () => {
             {params.row.isDelivered ? (
               <Chip label="Delivered" color="success" />
             ) : (
-              <Chip label="processing" color="warning" />
+              <Chip label="Processing" color="warning" />
             )}
           </div>
         );

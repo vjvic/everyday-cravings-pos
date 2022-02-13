@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import DeleteIcon from "@mui/icons-material/Delete";
+/* import DeleteIcon from "@mui/icons-material/Delete"; */
 import { useDispatch } from "react-redux";
 import {
   addToCashier,
@@ -71,19 +71,12 @@ const CashierItem = ({ item }) => {
 
         <Grid item lg={6}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            {item.qty === 1 ? (
-              <IconButton
-                onClick={() => dispatch(removeFromCashier(item.meal))}
-              >
-                <DeleteIcon />
-              </IconButton>
-            ) : (
-              <IconButton
-                onClick={() => dispatch(addToCashier(item.meal, item.qty - 1))}
-              >
-                <RemoveIcon />
-              </IconButton>
-            )}
+            <IconButton
+              onClick={() => dispatch(addToCashier(item.meal, item.qty - 1))}
+            >
+              <RemoveIcon />
+            </IconButton>
+
             <div>{item.qty}</div>
             <IconButton
               onClick={() => dispatch(addToCashier(item.meal, item.qty + 1))}
