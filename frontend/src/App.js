@@ -103,7 +103,7 @@ function App() {
             <AdminRoute exact path="/suppliers" component={Suppliers} />
             <AdminRoute exact path="/sales-report" component={SalesReport} />
             <AdminRoute exact path="/user-list" component={UserList} />
-            <AdminRoute exact path="/order-list" component={OrderList} />
+            <PrivateRoute exact path="/order-list" component={OrderList} />
 
             {/*  user */}
             <PrivateRoute path="/checkout" component={Checkout} />

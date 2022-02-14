@@ -37,6 +37,8 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   )
     return "";
 
+  const cashierRoute = userInfo && userInfo.role === "cashier";
+
   const drawer = (
     <div>
       {/*   <Toolbar /> */}
@@ -114,6 +116,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
         width: { sm: drawerWidth },
         flexShrink: { sm: 0 },
         displayPrint: "none",
+        display: cashierRoute ? "none" : "block",
       }}
       aria-label="mailbox folders"
     >

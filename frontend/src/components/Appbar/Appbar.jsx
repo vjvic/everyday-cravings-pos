@@ -21,6 +21,7 @@ import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
 import { FaCashRegister } from "react-icons/fa";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { NavItem } from "./styles";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const history = useHistory();
@@ -32,7 +33,8 @@ const Appbar = ({ handleDrawerToggle }) => {
   //Total cart items
   const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
-  const cashierRoute = location.pathname === "/cashier";
+  const cashierRoute = userInfo && userInfo.role === "cashier";
+  const userRoute = userInfo && userInfo.role === "user";
 
   const drawerWidth = 240;
 
@@ -48,6 +50,8 @@ const Appbar = ({ handleDrawerToggle }) => {
     location.pathname === `/cashier/receipt/${order ? order._id : " "}`
   )
     return "";
+
+  const locationPath = location.pathname;
 
   if (loading)
     return (
@@ -88,7 +92,7 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        {location.pathname === "/cashier" && (
+        {cashierRoute && (
           <Typography variant="h5">
             <FaCashRegister /> Cashier
           </Typography>
@@ -96,7 +100,34 @@ const Appbar = ({ handleDrawerToggle }) => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Box sx={{ display: cashierRoute ? "none" : "block" }}>
+        <Box
+          sx={{
+            display: cashierRoute ? "block" : "none",
+            color: "#fff",
+            marginRight: 4,
+          }}
+        >
+          <NavItem
+            to="/cashier"
+            style={{
+              borderBottom:
+                locationPath === "/cashier" ? "2px solid #fff" : "none",
+            }}
+          >
+            Cashier
+          </NavItem>
+          <NavItem
+            to="/order-list"
+            style={{
+              borderBottom:
+                locationPath === "/order-list" ? "2px solid #fff" : "none",
+            }}
+          >
+            Order-List
+          </NavItem>
+        </Box>
+
+        <Box sx={{ display: userRoute ? "block" : "none" }}>
           <IconButton
             sx={{ color: "#212121" }}
             size="large"

@@ -17,6 +17,7 @@ import {
   Select,
   MenuItem, */
   Chip,
+  Container,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
@@ -199,7 +200,7 @@ const MyOrders = () => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <>
+    <Container maxWidth="lg">
       <Box sx={{ width: "100%" }}>
         <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
           Online Orders
@@ -216,7 +217,7 @@ const MyOrders = () => {
           />
         </div>
       </Box>
-    </>
+    </Container>
   );
 };
 
