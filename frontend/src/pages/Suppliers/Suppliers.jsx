@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -7,8 +7,6 @@ import {
   Container,
   capitalize,
   Chip,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -47,8 +45,6 @@ const Supplier = () => {
   );
 
   const { userInfo } = useSelector((state) => state.userLogin);
-
-  const [isSnackbar, setIsSnackbar] = useState(false);
 
   const columns = [
     {
@@ -148,30 +144,12 @@ const Supplier = () => {
 
   useEffect(() => {
     dispatch(getSupplierList());
-
-    if (deleteSuccess) {
-      setIsSnackbar(true);
-    }
   }, [dispatch, deleteSuccess]);
 
   if (loading) return <Loader />;
 
   return (
     <Container>
-      <Snackbar
-        open={isSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setIsSnackbar(false)}
-      >
-        <Alert
-          onClose={() => setIsSnackbar(false)}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Supplier successfuly deleted
-        </Alert>
-      </Snackbar>
-
       <Stack
         direction="row"
         justifyContent="space-between"
