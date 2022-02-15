@@ -151,15 +151,16 @@ const Appbar = ({ handleDrawerToggle }) => {
                   {userInfo.name}
                 </Button>
                 <Menu {...bindMenu(popupState)}>
-                  {userInfo && userInfo.role === "admin" && (
-                    <MenuItem
-                      onClick={popupState.close}
-                      component={Link}
-                      to="/profile"
-                    >
-                      Profile
-                    </MenuItem>
-                  )}
+                  {(userInfo && userInfo.role === "admin") ||
+                    (userInfo.role === "user" && (
+                      <MenuItem
+                        onClick={popupState.close}
+                        component={Link}
+                        to="/profile"
+                      >
+                        Profile
+                      </MenuItem>
+                    ))}
                   <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                 </Menu>
               </React.Fragment>

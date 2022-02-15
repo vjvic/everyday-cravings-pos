@@ -178,7 +178,7 @@ const MyOrders = () => {
   if (orders.length === 0)
     return (
       <Alert severity="warning">
-        No orders back to <Link to="/">Home</Link>
+        No orders back to <Link to="/menu">Menu</Link>
       </Alert>
     );
 

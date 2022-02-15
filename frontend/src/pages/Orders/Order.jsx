@@ -209,31 +209,32 @@ const OrderSummary = () => {
                 </Grid>
               </Grid>
             </Box>
-            {userInfo.role === "admin" && (
-              <>
-                <Divider />
-                <Box p={2}>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    sx={{ marginBottom: 2 }}
-                    onClick={() => dispatch(updateOrderToDelivered(id))}
-                    disabled={isDelivered}
-                  >
-                    Mark As Delivered
-                  </Button>
-                  {/* Mark as paid if Cash on Delivery  */}
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={() => dispatch(updateOrderToPaid(id))}
-                    disabled={isPaid}
-                  >
-                    Mark As Paid
-                  </Button>
-                </Box>
-              </>
-            )}
+            {userInfo.role === "admin" ||
+              (userInfo.role === "cashier" && (
+                <>
+                  <Divider />
+                  <Box p={2}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{ marginBottom: 2 }}
+                      onClick={() => dispatch(updateOrderToDelivered(id))}
+                      disabled={isDelivered}
+                    >
+                      Mark As Delivered
+                    </Button>
+                    {/* Mark as paid if Cash on Delivery  */}
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      onClick={() => dispatch(updateOrderToPaid(id))}
+                      disabled={isPaid}
+                    >
+                      Mark As Paid
+                    </Button>
+                  </Box>
+                </>
+              ))}
           </Paper>
         </Grid>
       </Grid>

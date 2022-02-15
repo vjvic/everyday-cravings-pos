@@ -433,7 +433,9 @@ const Cashier = () => {
 
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   <Typography variant="h6">Total Price: </Typography>
-                  <Typography>&#8369; {totalPrice.toFixed(2)} </Typography>
+                  <Typography>
+                    &#8369; {totalAmount(cashierItems).toFixed(2)}{" "}
+                  </Typography>
                 </Box>
 
                 <Button

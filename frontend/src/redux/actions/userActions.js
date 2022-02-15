@@ -99,7 +99,7 @@ export const userRegister =
         payload: data,
       });
 
-      if (userInfo === null) {
+      if (!userInfo) {
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
         setItemToLcalStorage("userInfo", data);
