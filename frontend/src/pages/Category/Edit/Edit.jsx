@@ -62,7 +62,10 @@ const Edit = () => {
       );
     } else {
       dispatch(
-        createCategory({ category: categoryName.toLowerCase(), id: uniqueID() })
+        createCategory({
+          category: categoryName.toLowerCase(),
+          id: "CA" + uniqueID(),
+        })
       );
     }
   };

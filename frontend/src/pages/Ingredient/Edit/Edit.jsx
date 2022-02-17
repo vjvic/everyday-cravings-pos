@@ -84,7 +84,7 @@ const Edit = () => {
     } else {
       dispatch(
         createIngredient({
-          id: uniqueID(),
+          id: "IN" + uniqueID(),
           name: name.toLowerCase(),
           qty: qty,
           supplier: supplier,

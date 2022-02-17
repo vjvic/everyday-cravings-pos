@@ -79,7 +79,7 @@ const Edit = () => {
     } else {
       dispatch(
         createSupplier({
-          id: uniqueID(),
+          id: "SU" + uniqueID(),
           name: name.toLowerCase(),
           contact: contact,
           address: address,

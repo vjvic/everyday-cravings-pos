@@ -113,7 +113,7 @@ const Edit = () => {
         })
       );
     } else {
-      const id = uniqueID();
+      const id = "ME" + uniqueID();
       dispatch(
         createMeal(name, price, image, category, countInStock, description, id)
       );
