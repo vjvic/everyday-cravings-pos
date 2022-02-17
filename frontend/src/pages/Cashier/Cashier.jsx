@@ -339,7 +339,7 @@ const Cashier = () => {
                   }}
                 />
 
-                <TextField
+                {/*  <TextField
                   label="Discount"
                   variant="outlined"
                   type="number"
@@ -352,7 +352,19 @@ const Cashier = () => {
                       <InputAdornment position="start">&#37;</InputAdornment>
                     ),
                   }}
-                />
+                /> */}
+
+                <FormControl fullWidth required>
+                  <InputLabel>Discount</InputLabel>
+                  <Select
+                    defaultValue={discount || ""}
+                    value={discount || ""}
+                    label="discount"
+                    onChange={(e) => setDiscount(e.target.value)}
+                  >
+                    <MenuItem value={15}>Senior Citizen - 15%</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
 
               <Box sx={{ display: "flex", gridGap: "0.5rem", marginY: 2 }}>
