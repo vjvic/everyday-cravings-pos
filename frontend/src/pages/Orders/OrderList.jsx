@@ -206,7 +206,14 @@ const MyOrders = () => {
           Online Orders
         </Typography>
 
-        <div style={{ height: 500, maxWidth: "100%" }}>
+        <div
+          style={{
+            height: 500,
+            maxWidth: "100%",
+            backgroundColor: "#fff",
+            borderRadius: 10,
+          }}
+        >
           <DataGrid
             rows={orders}
             columns={columns}

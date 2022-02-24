@@ -13,8 +13,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { addToMealIngredient } from "../../../redux/actions/ingredientAction";
 import { useDispatch } from "react-redux";
 
-const IngredientItem = ({ ing }) => {
-  const [qtyInMeal, setQtyInMeal] = useState(0);
+const IngredientItem = ({ ing, countInStock }) => {
+  const [qtyInMeal, setQtyInMeal] = useState(Number(countInStock));
 
   const dispatch = useDispatch();
 

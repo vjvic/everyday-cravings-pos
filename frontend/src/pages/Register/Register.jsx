@@ -70,7 +70,13 @@ const RegisterPage = () => {
           </Box>
 
           <Box mb={5}>
-            <Typography variant="h4">Welcome to Everyday Cravings!</Typography>
+            <Typography variant="h4" component="span">
+              Welcome to Everyday
+            </Typography>
+            <Typography variant="h4" component="span" sx={{ color: "#DE8538" }}>
+              {" "}
+              Cravings!
+            </Typography>
           </Box>
 
           {error && <Alert severity="error">{error}</Alert>}

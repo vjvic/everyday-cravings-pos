@@ -135,7 +135,14 @@ const Category = () => {
         </Button>
       </Stack>
 
-      <div style={{ height: 500, width: "100%" }}>
+      <div
+        style={{
+          height: 500,
+          width: "100%",
+          backgroundColor: "#fff",
+          borderRadius: 10,
+        }}
+      >
         <DataGrid
           rows={category}
           columns={columns}

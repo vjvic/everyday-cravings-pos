@@ -280,18 +280,14 @@ const Edit = () => {
           fullWidth
         />
 
-        {isEdit ? (
-          ""
-        ) : (
-          <Box sx={{ display: "flex" }}>
-            <Typography variant="h5" sx={{ paddingRight: 3 }}>
-              Add Ingredients
-            </Typography>
-            <Button variant="contained" onClick={() => setOpen(true)}>
-              <AddIcon />
-            </Button>
-          </Box>
-        )}
+        <Box sx={{ display: "flex" }}>
+          <Typography variant="h5" sx={{ paddingRight: 3 }}>
+            Add Ingredients
+          </Typography>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            <AddIcon />
+          </Button>
+        </Box>
 
         <Modal open={open} onClose={() => setOpen(false)}>
           <Box sx={style}>
@@ -300,7 +296,11 @@ const Edit = () => {
             </Typography>
             <Grid container spacing={2}>
               {ingredient.map((ing) => (
-                <IngredientItem key={ing._id} ing={ing} />
+                <IngredientItem
+                  key={ing._id}
+                  ing={ing}
+                  countInStock={countInStock}
+                />
               ))}
             </Grid>
           </Box>

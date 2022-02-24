@@ -26,6 +26,10 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
     return location.pathname === path ? "#F5F5F5" : null;
   };
 
+  const navItemColor = (path) => {
+    return location.pathname === path ? "#DE8538" : null;
+  };
+
   const { order } = useSelector((state) => state.orderCashierDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -83,9 +87,12 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
               onClick={() => history.push(item.path)}
               sx={{
                 backgroundColor: activeColor(item.path),
+                color: navItemColor(item.path),
               }}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemIcon sx={{ color: navItemColor(item.path) }}>
+                {item.icon}
+              </ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
           ))}

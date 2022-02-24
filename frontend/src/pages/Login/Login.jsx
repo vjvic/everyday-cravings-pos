@@ -46,7 +46,13 @@ const LoginPage = () => {
           </Box>
 
           <Box mb={5}>
-            <Typography variant="h4">Everyday Cravings!</Typography>
+            <Typography variant="h4" component="span">
+              Everyday
+            </Typography>
+            <Typography variant="h4" component="span" sx={{ color: "#DE8538" }}>
+              {" "}
+              Cravings!
+            </Typography>
           </Box>
 
           {error && <Alert severity="error">{error}</Alert>}

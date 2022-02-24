@@ -65,6 +65,36 @@ const OrderSummary = () => {
   const shipping = 40;
   const total = totalItems + shipping;
 
+  let orderDetsActions;
+
+  if (userInfo.role === "cashier" || userInfo.role === "admin") {
+    orderDetsActions = (
+      <>
+        <Divider />
+        <Box p={2}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ marginBottom: 2 }}
+            onClick={() => dispatch(updateOrderToDelivered(id))}
+            disabled={isDelivered}
+          >
+            Mark As Delivered
+          </Button>
+          {/* Mark as paid if Cash on Delivery  */}
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={() => dispatch(updateOrderToPaid(id))}
+            disabled={isPaid}
+          >
+            Mark As Paid
+          </Button>
+        </Box>
+      </>
+    );
+  }
+
   return (
     <Container>
       <Typography variant="h4">Order {orderID}</Typography>
@@ -209,32 +239,7 @@ const OrderSummary = () => {
                 </Grid>
               </Grid>
             </Box>
-            {userInfo.role === "admin" ||
-              (userInfo.role === "cashier" && (
-                <>
-                  <Divider />
-                  <Box p={2}>
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      sx={{ marginBottom: 2 }}
-                      onClick={() => dispatch(updateOrderToDelivered(id))}
-                      disabled={isDelivered}
-                    >
-                      Mark As Delivered
-                    </Button>
-                    {/* Mark as paid if Cash on Delivery  */}
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      onClick={() => dispatch(updateOrderToPaid(id))}
-                      disabled={isPaid}
-                    >
-                      Mark As Paid
-                    </Button>
-                  </Box>
-                </>
-              ))}
+            {orderDetsActions}
           </Paper>
         </Grid>
       </Grid>

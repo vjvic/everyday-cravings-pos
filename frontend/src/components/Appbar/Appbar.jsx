@@ -70,8 +70,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   return (
     <AppBar
       position="fixed"
-      elevation={cashierRoute ? 1 : 0}
-      color={cashierRoute ? "primary" : "secondary"}
+      elevation="0"
       sx={{
         width: {
           sm: cashierRoute ? "100%" : `calc(100% - ${drawerWidth}px)`,
