@@ -3,9 +3,6 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
-  USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
-  USER_REGISTER_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
@@ -23,6 +20,9 @@ import {
   USER_PROFILE_UPDATE_REQUEST,
   USER_PROFILE_UPDATE_SUCCESS,
   USER_PROFILE_UPDATE_FAIL,
+  USER_CREATE_SUCCESS,
+  USER_CREATE_REQUEST,
+  USER_CREATE_FAIL,
 } from "../constants/userConstants";
 import {
   MEAL_CREATE_RESET,
@@ -31,6 +31,7 @@ import {
 import mealApi from "../../components/api/mealApi";
 import { setItemToLcalStorage } from "../../utils/utils";
 
+//Login user
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -61,6 +62,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+//Logout user
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
 
@@ -71,46 +73,52 @@ export const logout = () => (dispatch) => {
   dispatch({ type: MEAL_UPDATE_RESET });
 };
 
-export const userRegister = (name, email, password) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+//Register user
+export const userRegister =
+  (name, email, password, id, role) => async (dispatch, getState) => {
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    try {
+      dispatch({
+        type: USER_CREATE_REQUEST,
+      });
 
-    const { data } = await mealApi.post(
-      "/api/users",
-      { name, email, password },
-      config
-    );
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
+      const { data } = await mealApi.post(
+        "/api/users",
+        { name, email, password, id, role },
+        config
+      );
 
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: USER_CREATE_SUCCESS,
+        payload: data,
+      });
 
-    setItemToLcalStorage("userInfo", data);
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      if (!userInfo) {
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
+        setItemToLcalStorage("userInfo", data);
+      }
+    } catch (error) {
+      dispatch({
+        type: USER_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+  //Get user details
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -148,6 +156,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update user profile
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -192,6 +201,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
+//Get all users
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -229,6 +239,7 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 };
 
+//Delte user
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -263,6 +274,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update user
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({

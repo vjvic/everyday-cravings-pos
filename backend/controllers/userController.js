@@ -14,9 +14,12 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
+      isCashier: user.isCashier,
       token: generateToken(user._id),
     });
   } else {
@@ -29,14 +32,17 @@ const authUser = asyncHandler(async (req, res) => {
 //@route GET /api/users/profile
 //@access Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   if (user) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
+      isCashier: user.isCashier,
     });
   } else {
     res.status(404);
@@ -48,7 +54,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 //@route GET /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, id, role } = req.body;
 
   const userExist = await User.findOne({ email });
 
@@ -57,14 +63,17 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exist");
   }
 
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ name, email, password, id, role });
 
   if (user) {
     res.json({
       _id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isAdmin: user.isAdmin,
+      isCashier: user.isCashier,
       token: generateToken(user._id),
     });
   } else {
@@ -77,7 +86,7 @@ const registerUser = asyncHandler(async (req, res) => {
 //@route PUT /api/users/profile
 //@access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   if (user) {
     user.name = req.body.name || user.name;
@@ -91,9 +100,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.json({
       _id: updateUser._id,
+      id: updateUser.id,
       name: updateUser.name,
       email: updateUser.email,
+      role: updateUser.role,
       isAdmin: updateUser.isAdmin,
+      isCashier: updateUser.isCashier,
       token: generateToken(updateUser._id),
     });
   } else {
@@ -134,7 +146,10 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
+    user.role = req.body.role;
     user.isAdmin = req.body.isAdmin;
+    user.isCashier = req.body.isCashier;
 
     const updatedUser = await user.save();
 
@@ -142,7 +157,9 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      role: updatedUser.role,
       isAdmin: updatedUser.isAdmin,
+      isCashier: updatedUser.isCashier,
     });
   } else {
     res.status(404);

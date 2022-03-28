@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Typography,
   List,
@@ -9,11 +8,36 @@ import {
   Drawer,
   Box,
 } from "@mui/material";
-import { navItems, navItemsAdmin } from "./SidebarData";
+import { navItems, userNavItems } from "./SidebarData";
 import { useHistory, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
+
+const drawerStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 2,
+  gridGap: 10,
+  displayPrint: "none",
+};
+
+const drawerStyle2 = {
+  display: { xs: "block", sm: "none" },
+  "& .MuiDrawer-paper": {
+    boxSizing: "border-box",
+    width: drawerWidth,
+  },
+};
+
+const drawerStyle3 = {
+  display: { xs: "none", sm: "block" },
+  "& .MuiDrawer-paper": {
+    boxSizing: "border-box",
+    width: drawerWidth,
+  },
+};
 
 const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const container =
@@ -22,28 +46,31 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const history = useHistory();
   const location = useLocation();
 
-  /*   const { order } = useSelector((state) => state.orderDetails); */
-  const { userInfo } = useSelector((state) => state.userLogin);
-
   const activeColor = (path) => {
     return location.pathname === path ? "#F5F5F5" : null;
   };
 
-  if (location.pathname === "/login" || location.pathname === "/register")
-    return "";
+  const navItemColor = (path) => {
+    return location.pathname === path ? "#DE8538" : null;
+  };
+
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  const cashierRoute = userInfo && userInfo.role === "cashier";
+  const loginRoute = location.pathname === "/login";
+  const registerRoute = location.pathname === "/register";
+
+  const navStyle = {
+    width: { sm: drawerWidth },
+    flexShrink: { sm: 0 },
+    displayPrint: "none",
+    display: cashierRoute || loginRoute || registerRoute ? "none" : "block",
+  };
 
   const drawer = (
     <div>
       {/*   <Toolbar /> */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 2,
-          gridGap: 10,
-        }}
-      >
+      <Box sx={drawerStyle}>
         <img
           src="/images/logo.png"
           alt="logo"
@@ -65,30 +92,34 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
       </Box>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => history.push(item.path)}
-            sx={{
-              backgroundColor: activeColor(item.path),
-            }}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-
-        {userInfo && userInfo.isAdmin && <Divider />}
-
+        {/* admin navitems */}
         {userInfo &&
-          userInfo.isAdmin &&
-          navItemsAdmin.map((item) => (
+          userInfo.role !== "user" &&
+          navItems.map((item) => (
             <ListItem
               button
               key={item.text}
               onClick={() => history.push(item.path)}
-              /* className={location.pathname === item.path ? classes.active : null} */
+              sx={{
+                backgroundColor: activeColor(item.path),
+                color: navItemColor(item.path),
+              }}
+            >
+              <ListItemIcon sx={{ color: navItemColor(item.path) }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+
+        {/* user navitems */}
+        {userInfo &&
+          userInfo.role === "user" &&
+          userNavItems.map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
               sx={{
                 backgroundColor: activeColor(item.path),
               }}
@@ -101,11 +132,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
     </div>
   );
   return (
-    <Box
-      component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      aria-label="mailbox folders"
-    >
+    <Box component="nav" sx={navStyle} aria-label="mailbox folders">
       <Drawer
         container={container}
         variant="temporary"
@@ -114,27 +141,11 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
         ModalProps={{
           keepMounted: true,
         }}
-        sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
+        sx={drawerStyle2}
       >
         {drawer}
       </Drawer>
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-        open
-      >
+      <Drawer variant="permanent" sx={drawerStyle3} open>
         {drawer}
       </Drawer>
     </Box>

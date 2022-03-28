@@ -1,4 +1,5 @@
 import { styled, InputBase } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -7,6 +8,7 @@ export const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.grey[50],
   },
+  color: "#212121",
   boxShadow: "0 0 3px rgba(0,0,0,0.3)",
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -37,5 +39,14 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
+  },
+}));
+
+export const NavItem = styled(Link)(({ theme }) => ({
+  color: "#fff",
+  textDecoration: "none",
+  marginLeft: "1rem",
+  "&:hover": {
+    borderBottom: "2px solid #fff",
   },
 }));

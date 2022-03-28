@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -7,82 +7,51 @@ import {
   Button,
   Menu,
   MenuItem,
-  CircularProgress,
-  Badge,
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import SearchIcon from "@mui/icons-material/Search";
-import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
-import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/userActions";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { useLocation } from "react-router";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { FaCashRegister } from "react-icons/fa";
+import { Loader } from "../../components";
+
+const drawerWidth = 240;
 
 const Appbar = ({ handleDrawerToggle }) => {
-  const [keyword, setKeyword] = useState("");
-
-  const history = useHistory();
   const location = useLocation();
-
   const dispatch = useDispatch();
 
   const { loading, userInfo } = useSelector((state) => state.userLogin);
-  /*  const { order } = useSelector((state) => state.orderDetails); */
-  const { cartItems } = useSelector((state) => state.cart);
 
-  //Total cart items
-  const total = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const cashierRoute = userInfo && userInfo.role === "cashier";
+  const loginRoute = location.pathname === "/login";
+  const registerRoute = location.pathname === "/register";
 
-  const drawerWidth = 240;
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-
-    if (keyword) {
-      history.push("/results/" + keyword);
-      setKeyword("");
-    }
+  const appBar = {
+    width: {
+      sm: cashierRoute ? "100%" : `calc(100% - ${drawerWidth}px)`,
+    },
+    ml: { sm: `${drawerWidth}px` },
+    backgroundColor: "#f9f9f9",
+    displayPrint: "none",
+    borderBottom: "1px solid rgba(0,0,0,0.1)",
+    display: loginRoute || registerRoute ? "none" : "block",
   };
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 240px)",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-
-  if (location.pathname === "/login" || location.pathname === "/register")
-    return "";
+  if (loading) return <Loader />;
 
   return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      color="secondary"
-      sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
-        backgroundColor: "#f9f9f9",
-      }}
-    >
+    <AppBar position="fixed" elevation="0" sx={appBar}>
       <Toolbar>
         <IconButton
-          color="inherit"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
@@ -91,32 +60,13 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        <form onSubmit={handleSearch}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search..."
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-          </Search>
-        </form>
+        {cashierRoute && (
+          <Typography variant="h5" color="primary">
+            <FaCashRegister /> Cashier
+          </Typography>
+        )}
 
         <Box sx={{ flexGrow: 1 }} />
-
-        <Box>
-          <IconButton
-            size="large"
-            color="inherit"
-            onClick={() => history.push("/cart")}
-          >
-            <Badge badgeContent={total} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Box>
 
         {userInfo && (
           <PopupState variant="popover">
@@ -124,7 +74,6 @@ const Appbar = ({ handleDrawerToggle }) => {
               <React.Fragment>
                 <Button
                   endIcon={<ArrowDropDownIcon />}
-                  color="inherit"
                   {...bindTrigger(popupState)}
                 >
                   {userInfo.name}
@@ -137,6 +86,7 @@ const Appbar = ({ handleDrawerToggle }) => {
                   >
                     Profile
                   </MenuItem>
+
                   <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                 </Menu>
               </React.Fragment>

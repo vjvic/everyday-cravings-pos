@@ -7,6 +7,8 @@ import Route from "./Route/PrivateRoute";
 import Sidebar from "./Sidebar/Sidebar";
 import mealApi from "./api/mealApi";
 import MealGrid from "./MealGrid/MealGrid";
+import PieChart from "./Charts/PieChart";
+import DoughnutChart from "./Charts/DoughnutChart";
 
 export {
   mealApi,
@@ -18,4 +20,6 @@ export {
   Route,
   Sidebar,
   MealGrid,
+  PieChart,
+  DoughnutChart,
 };

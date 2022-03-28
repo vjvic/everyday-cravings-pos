@@ -37,7 +37,9 @@ export const getAllDaysOfMonth = () => {
     ),
   }).map((d) => format(new Date(d), "d"));
 
-  return days;
+  const uniquedays = [...new Set(days)];
+
+  return uniquedays;
 };
 
 //return all months of year
@@ -53,4 +55,10 @@ export const getAllMonthsOfYear = () => {
 //return all cart items total amount
 export const totalAmount = (cartItems) => {
   return cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
+};
+
+//Unique id
+
+export const uniqueID = () => {
+  return Math.floor(Math.random() * Date.now());
 };

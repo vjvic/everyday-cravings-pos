@@ -8,6 +8,9 @@ import cors from "cors";
 import mealRoutes from "./routes/mealRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import supplierRoutes from "./routes/supplierRoutes.js";
+import ingredientRoutes from "./routes/ingredientRoutes.js";
 
 /* import uploadRoutes from "./routes/uploadRoutes.js"; */
 
@@ -23,6 +26,9 @@ app.use(express.json());
 app.use("/api/meals", mealRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/supplier", supplierRoutes);
+app.use("/api/ingredient", ingredientRoutes);
 
 const __dirname = path.resolve();
 

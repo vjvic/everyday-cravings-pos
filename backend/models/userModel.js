@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 
 const userSchema = mongoose.Schema(
   {
+    id: { type: String, required: true },
     name: {
       type: String,
       required: true,
@@ -16,11 +17,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
+    role: { type: String, required: true },
   },
   {
     timeStamps: true,

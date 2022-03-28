@@ -1,67 +1,119 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
-  Paper,
-  TableRow,
-  TablePagination,
-  TableContainer,
-  TableCell,
-  TableBody,
-  Table,
   IconButton,
   Typography,
-  TableHead,
-  TextField,
+  Container,
+  Stack,
+  Button,
+  capitalize,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
 
-const UserListPage = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState("");
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
+import AddIcon from "@mui/icons-material/Add";
+import Swal from "sweetalert2";
 
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer sx={{ displayPrint: "none" }}>
+      <GridToolbarFilterButton />
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+};
+
+const UserListPage = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userList);
   const { success: deleteSuccess } = useSelector((state) => state.userDelete);
-
-  //Change page
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   //Delete user
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure")) {
-      dispatch(deleteUser(id));
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      backdrop: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUser(id));
+      }
+    });
   };
 
-  //Filter user
-
-  const filterUser = (user) => {
-    if (searchTerm !== "") {
-      return Object.values(user)
-        .join(" ")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-    } else {
-      return user;
-    }
-  };
+  const columns = [
+    {
+      field: "id",
+      headerName: "User ID",
+      flex: 1,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            {params.row.role && capitalize(params.row.role)}
+          </div>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      sortable: false,
+      filter: false,
+      valueGetter: (params) => params.row._id,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            <IconButton
+              onClick={() => history.push(`user-list/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        );
+      },
+    },
+  ];
 
   // render/re render user list
   useEffect(() => {
@@ -73,83 +125,46 @@ const UserListPage = () => {
   if (loading) return <Loader />;
 
   return (
-    <>
-      <Box sx={{ width: "100%" }}>
-        <Typography variant="h4" component="h1" sx={{ marginY: 3 }}>
-          User List
+    <Container>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ marginY: 3 }}
+      >
+        <Typography variant="h4" component="h1">
+          Users
         </Typography>
 
-        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
-          <TextField
-            label="Search..."
-            variant="standard"
-            color="secondary"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </Box>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => history.push("user-list/edit")}
+          disabled={userInfo.role !== "admin"}
+        >
+          Add User
+        </Button>
+      </Stack>
 
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <TableContainer>
-            <Table size="medium">
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {["ID", "Email", "Name", "Admin"].map((headCell) => (
-                    <TableCell key={headCell}>{headCell}</TableCell>
-                  ))}
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {users
-                  .filter((user) => filterUser(user))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow hover key={row._id}>
-                        <TableCell></TableCell>
-                        <TableCell component="th" id={labelId} scope="row">
-                          {row._id}
-                        </TableCell>
-                        <TableCell>{row.email}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>
-                          {row.isAdmin ? <CheckIcon /> : <CloseIcon />}
-                        </TableCell>
-                        <TableCell>
-                          <IconButton
-                            onClick={() =>
-                              history.push(`user-list/${row._id}/edit`)
-                            }
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton onClick={() => handleDelete(row._id)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={users.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Box>
-    </>
+      <div
+        style={{
+          height: 500,
+          width: "100%",
+          backgroundColor: "#fff",
+          borderRadius: 10,
+        }}
+      >
+        <DataGrid
+          rows={users}
+          columns={columns}
+          getRowId={(row) => row._id}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
+          componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
+        />
+      </div>
+    </Container>
   );
 };
 

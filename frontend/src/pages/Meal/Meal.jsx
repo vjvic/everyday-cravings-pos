@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
-  Paper,
-  TableRow,
-  TablePagination,
-  TableContainer,
-  TableCell,
-  TableBody,
-  Table,
   IconButton,
   Typography,
-  TableHead,
-  TextField,
   Button,
   Stack,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
+  Container,
+  capitalize,
 } from "@mui/material";
 import { deleteMeal } from "../../redux/actions/mealAction";
-import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getMealList } from "../../redux/actions/mealAction";
 import { Loader } from "../../components";
@@ -27,13 +15,24 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { useHistory } from "react-router-dom";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
+import Swal from "sweetalert2";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer sx={{ displayPrint: "none" }}>
+      <GridToolbarFilterButton />
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+};
 
 const MealsPage = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -43,67 +42,100 @@ const MealsPage = () => {
 
   const { success: deleteSuccess } = useSelector((state) => state.mealDelete);
 
-  //Change page
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   //Delete Meal
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure")) {
-      dispatch(deleteMeal(id));
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      backdrop: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteMeal(id));
+      }
+    });
   };
 
-  //Return filter item
-
-  const filterByCategory = (order) => {
-    if (selectedCategory === "Breakfast") {
-      return order.category === "breakfast";
-    } else if (selectedCategory === "Lunch") {
-      return order.category === "lunch";
-    } else if (selectedCategory === "Dinner") {
-      return order.category === "dinner";
-    } else if (selectedCategory === "Dessert") {
-      return order.cateory === "dessert";
-    } else if (selectedCategory === "All") {
-    } else if (selectedCategory === "Drinks") {
-      return order.cateory === "drinks";
-    } else if (selectedCategory === "All") {
-      return order;
-    } else {
-      return order;
-    }
-  };
-
-  const filterItem = (order) => {
-    if (searchTerm !== "" && selectedCategory) {
-      return (
-        Object.values(order)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) && filterByCategory(order)
-      );
-    }
-
-    if (searchTerm !== "") {
-      return (
-        Object.values(order)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) && filterByCategory(order)
-      );
-    } else if (selectedCategory) {
-      return filterByCategory(order);
-    } else {
-      return order;
-    }
-  };
+  const columns = [
+    {
+      field: "id",
+      headerName: "Meal ID",
+      flex: 1,
+    },
+    {
+      field: "name",
+      headerName: "Meal Name",
+      flex: 1,
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> {capitalize(params.row.category)}</div>
+        );
+      },
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem"> &#8369; {params.row.price.toFixed(2)}</div>
+        );
+      },
+    },
+    {
+      field: "countInStock",
+      headerName: "Qty",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            <Typography>
+              {params.row.countInStock <= 0
+                ? "out of stock"
+                : params.row.countInStock}
+            </Typography>
+          </div>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      sortable: false,
+      filter: false,
+      valueGetter: (params) => params.row._id,
+      renderCell: (params) => {
+        return (
+          <div className="rowitem">
+            <IconButton
+              onClick={() => history.push(`meals/${params.row._id}/edit`)}
+              disabled={userInfo.role !== "admin"}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => handleDelete(params.row._id)}
+              disabled={userInfo.role !== "admin"}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        );
+      },
+    },
+  ];
 
   // render/re render meal list
   useEffect(() => {
@@ -113,121 +145,46 @@ const MealsPage = () => {
   if (mealsLoading) return <Loader />;
 
   return (
-    <>
-      <Box sx={{ width: "100%" }}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ marginY: 3 }}
+    <Container>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ marginY: 3 }}
+      >
+        <Typography variant="h4" component="h1">
+          Meal List
+        </Typography>
+
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => history.push("meals/edit")}
+          disabled={userInfo.role !== "admin"}
         >
-          <Typography variant="h4" component="h1">
-            Meal List
-          </Typography>
+          Add Meal
+        </Button>
+      </Stack>
 
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => history.push("meals/edit")}
-          >
-            Add Meal
-          </Button>
-        </Stack>
-
-        <Box mb={2} sx={{ display: "flex", justifyContent: "end" }}>
-          <TextField
-            label="Search..."
-            variant="standard"
-            color="secondary"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          <FormControl
-            color="secondary"
-            variant="standard"
-            sx={{ minWidth: 120, marginX: 2 }}
-          >
-            <InputLabel>Filter by category</InputLabel>
-            <Select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              label="Filter by category"
-            >
-              {["All", "Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"].map(
-                (c, index) => (
-                  <MenuItem key={index} value={c}>
-                    {c}
-                  </MenuItem>
-                )
-              )}
-            </Select>
-          </FormControl>
-        </Box>
-
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <TableContainer>
-            <Table size="medium">
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {["ID", "Meal Name", "Price", "Category"].map((headCell) => (
-                    <TableCell key={headCell}>{headCell}</TableCell>
-                  ))}
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {meals &&
-                  meals
-                    .filter((meal) => filterItem(meal))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const labelId = `enhanced-table-checkbox-${index}`;
-
-                      return (
-                        <TableRow hover key={row._id}>
-                          <TableCell></TableCell>
-                          <TableCell component="th" id={labelId} scope="row">
-                            {row._id}
-                          </TableCell>
-                          <TableCell>{row.name}</TableCell>
-                          <TableCell>&#8369; {row.price}</TableCell>
-                          <TableCell sx={{ textTransform: "Capitalize" }}>
-                            {row.category}
-                          </TableCell>
-                          <TableCell>
-                            <IconButton
-                              onClick={() =>
-                                history.push(`meals/${row._id}/edit`)
-                              }
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton onClick={() => handleDelete(row._id)}>
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={meals ? meals.length : 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Box>
-    </>
+      <div
+        style={{
+          height: 500,
+          width: "100%",
+          backgroundColor: "#fff",
+          borderRadius: 10,
+        }}
+      >
+        <DataGrid
+          rows={meals}
+          columns={columns}
+          getRowId={(row) => row._id}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
+          componentsProps={{ toolbar: { printOptions: { allColumns: true } } }}
+        />
+      </div>
+    </Container>
   );
 };
 

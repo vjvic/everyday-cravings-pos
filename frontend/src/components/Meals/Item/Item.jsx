@@ -1,77 +1,90 @@
-import React from "react";
 import {
   Card,
   CardHeader,
   CardMedia,
   CardContent,
   Typography,
-  Stack,
-  Rating,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { addToCashier } from "../../../redux/actions/cashierAction";
+import { useDispatch } from "react-redux";
+import { MdAddShoppingCart } from "react-icons/md";
 
-const Item = ({ item, favorite }) => {
-  const { name, image, category, price, _id, rating, numReviews } = item;
+const fontSize = {
+  lg: 20,
+  md: 18,
+  sm: 18,
+  xs: 18,
+};
 
-  const history = useHistory();
+const cardHeaderStyle = {
+  display: "block",
+  overflow: "hidden",
+  textTransform: "capitalize",
+};
+
+const cardContentStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginTop: 1,
+  flexWrap: "no-wrap",
+};
+
+const Item = ({ item }) => {
+  const { name, image, category, price, _id, countInStock, description } = item;
+
+  const dispatch = useDispatch();
 
   return (
-    <Card>
-      <CardHeader
-        sx={{
-          display: "block",
-          overflow: "hidden",
-          textTransform: "capitalize",
-        }}
-        title={
-          <Typography
-            component={Link}
-            to={`/meal/${_id}`}
-            color="inherit"
-            noWrap
-            variant="h5"
-            sx={{ textDecoration: "none" }}
-          >
-            {name}
-          </Typography>
-        }
-        subheader={category}
-      />
+    <Tooltip title={description}>
+      <Card>
+        <CardHeader
+          sx={cardHeaderStyle}
+          title={
+            <Typography
+              color="inherit"
+              noWrap
+              variant="h6"
+              sx={{ textDecoration: "none" }}
+            >
+              {name}
+            </Typography>
+          }
+          subheader={category}
+        />
 
-      <CardMedia
-        component="img"
-        height="194"
-        image={image}
-        alt={name}
-        sx={{ cursor: "pointer" }}
-        onClick={() => history.push(`/meal/${_id}`)}
-      />
+        <CardMedia component="img" height="120" image={image} alt={name} />
 
-      <CardContent>
-        <Stack direction="row" alignItems="center" pb={1} spacing={1}>
-          <Rating
-            name="half-rating-read"
-            defaultValue={rating}
-            precision={0.5}
-            readOnly
-          />
-          <Typography variant="body2">{numReviews} reviews</Typography>
-        </Stack>
+        <CardContent>
+          <Box sx={cardContentStyle}>
+            {countInStock <= 0 ? (
+              <Typography variant="h6" sx={{ color: "red" }}>
+                Out of stock
+              </Typography>
+            ) : (
+              <Typography sx={{ fontSize }} variant="h5" noWrap>
+                &#8369; {price.toFixed(2)}
+              </Typography>
+            )}
 
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {" "}
-          <Typography variant="h5">&#8369; {price}</Typography>
-        </Box>
-      </CardContent>
-    </Card>
+            {countInStock <= 0 ? (
+              ""
+            ) : (
+              <IconButton
+                variant="contained"
+                onClick={() => dispatch(addToCashier(_id, 1))}
+                disabled={countInStock <= 0}
+              >
+                <MdAddShoppingCart />
+              </IconButton>
+            )}
+          </Box>
+        </CardContent>
+      </Card>
+    </Tooltip>
   );
 };
 

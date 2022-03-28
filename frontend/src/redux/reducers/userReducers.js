@@ -3,9 +3,6 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
-  USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
-  USER_REGISTER_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
@@ -24,6 +21,10 @@ import {
   USER_PROFILE_UPDATE_REQUEST,
   USER_PROFILE_UPDATE_SUCCESS,
   USER_PROFILE_UPDATE_FAIL,
+  USER_CREATE_REQUEST,
+  USER_CREATE_SUCCESS,
+  USER_CREATE_FAIL,
+  USER_CREATE_RESET,
 } from "../constants/userConstants";
 import { getItemFromLocalStorage } from "../../utils/utils";
 
@@ -75,13 +76,13 @@ export const userUpdateProfileReducer = (state = {}, action) => {
 
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
-    case USER_REGISTER_REQUEST:
+    case USER_CREATE_REQUEST:
       return { loading: true };
-    case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
-    case USER_REGISTER_FAIL:
+    case USER_CREATE_SUCCESS:
+      return { loading: false, user: action.payload, success: true };
+    case USER_CREATE_FAIL:
       return { loading: false, error: action.payload };
-    case USER_LOGOUT:
+    case USER_CREATE_RESET:
       return {};
     default:
       return state;

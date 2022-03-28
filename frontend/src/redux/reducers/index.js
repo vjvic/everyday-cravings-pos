@@ -5,9 +5,6 @@ import {
   mealDeleteReducer,
   mealCreateReducer,
   mealUpdateReducer,
-  mealCreateReviewsReducer,
-  mealCategoryReducer,
-  mealTopListReducer,
   mealUpdateStockReducer,
 } from "./mealReducers";
 import {
@@ -20,32 +17,44 @@ import {
   userUpdateProfileReducer,
 } from "./userReducers";
 import {
-  orderCreateReducer,
-  orderDetailsReducer,
-  orderMyListReducer,
-  orderListReducer,
-  orderUpdateToDeliveredReducer,
-  orderUpdateToPaidReducer,
+  orderCashierCreateReducer,
+  orderCashierListReducer,
+  orderCashierDetailsReducer,
 } from "./orderReducer";
+import { cashierReducer } from "./cashierReducers";
 import {
-  cartReducer,
-  cartAddressReducer,
-  cartPaymentMethodReducer,
-} from "./cartReducers";
+  categoryListReducer,
+  categoryDeleteReducer,
+  categoryCreateReducer,
+  categoryUpdateReducer,
+  categoryDetailsReducer,
+} from "./categoryReducers";
+import {
+  ingredientListReducer,
+  ingredientDeleteReducer,
+  ingredientCreateReducer,
+  ingredientUpdateReducer,
+  ingredientDetailsReducer,
+  ingredientItemsReducer,
+  ingredientUpdateStockReducer,
+} from "./ingredientReducer";
+import {
+  supplierListReducer,
+  supplierDeleteReducer,
+  supplierCreateReducer,
+  supplierUpdateReducer,
+  supplierDetailsReducer,
+} from "./supplierReducer";
 
 const reducers = combineReducers({
+  //meals
   mealList: mealListReducer,
-  mealCategory: mealCategoryReducer,
   mealDetails: mealDetailsReducer,
   mealDelete: mealDeleteReducer,
   mealCreate: mealCreateReducer,
   mealUpdate: mealUpdateReducer,
-  mealCreateReviews: mealCreateReviewsReducer,
-  mealTop: mealTopListReducer,
   mealUpdateStock: mealUpdateStockReducer,
-  cart: cartReducer,
-  cartPaymentMethod: cartPaymentMethodReducer,
-  cartAddress: cartAddressReducer,
+//users
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userList: userListReducer,
@@ -53,12 +62,31 @@ const reducers = combineReducers({
   userUpdate: userUpdateReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
-  orderCreate: orderCreateReducer,
-  orderDetails: orderDetailsReducer,
-  orderMyList: orderMyListReducer,
-  orderList: orderListReducer,
-  orderUpdateToDelivered: orderUpdateToDeliveredReducer,
-  orderUpdateToPaid: orderUpdateToPaidReducer,
+//categories
+  categoryList: categoryListReducer,
+  categoryUpdate: categoryUpdateReducer,
+  categoryCreate: categoryCreateReducer,
+  categoryDelete: categoryDeleteReducer,
+  categoryDetails: categoryDetailsReducer,
+//ingredients
+  ingredientList: ingredientListReducer,
+  ingredientUpdate: ingredientUpdateReducer,
+  ingredientCreate: ingredientCreateReducer,
+  ingredientDelete: ingredientDeleteReducer,
+  ingredientDetails: ingredientDetailsReducer,
+  ingredientItems: ingredientItemsReducer,
+  ingredientUpdateStock: ingredientUpdateStockReducer,
+//suppliers
+  supplierList: supplierListReducer,
+  supplierUpdate: supplierUpdateReducer,
+  supplierCreate: supplierCreateReducer,
+  supplierDelete: supplierDeleteReducer,
+  supplierDetails: supplierDetailsReducer,
+//cashier
+  cashier: cashierReducer,
+  orderCashierCreate: orderCashierCreateReducer,
+  orderCashierList: orderCashierListReducer,
+  orderCashierDetails: orderCashierDetailsReducer,
 });
 
 export default reducers;

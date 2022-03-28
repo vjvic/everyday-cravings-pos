@@ -1,4 +1,3 @@
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import { Box } from "@mui/system";
 import { getAllDaysOfMonth, getAllMonthsOfYear } from "../../utils/utils";
@@ -30,42 +29,41 @@ const BarChart = ({ revenueData, date }) => {
     }
   };
 
+  const options = {
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontSize: 25,
+      },
+    },
+  };
+
+  const data = {
+    labels: selectedDate(date),
+    datasets: [
+      {
+        label: "Revenue",
+        data: revenueData,
+        fill: true,
+        lineTension: 0.5,
+        backgroundColor: "rgba(255, 236, 194, 0.6)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <Box mt={7}>
-      <Bar
-        data={{
-          labels: selectedDate(date),
-          datasets: [
-            {
-              label: "Revenue",
-              data: revenueData,
-              fill: true,
-              lineTension: 0.5,
-              backgroundColor: "rgba(255, 236, 194, 0.6)",
-              borderWidth: 1,
-            },
-          ],
-        }}
-        height={400}
-        width={600}
-        options={{
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-          legend: {
-            labels: {
-              fontSize: 25,
-            },
-          },
-        }}
-      />
+      <Bar data={data} height={400} width={600} options={options} />
     </Box>
   );
 };

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import {
   Typography,
   Grid,
   Alert,
-  Card,
-  CardContent,
   Button,
   Divider,
   Modal,
@@ -16,14 +14,24 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Paper,
+  InputAdornment,
 } from "@mui/material";
-import { useParams, useLocation /* useHistory  */ } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/actions/cartAction";
-import { Link } from "react-router-dom";
-import Item from "./item";
-/* import { createOrder } from "../../redux/actions/orderAction"; */
+import { createOrderCashier } from "../../redux/actions/orderAction";
 import { useHistory } from "react-router-dom";
+import { totalAmount } from "../../utils/utils";
+import {
+  ORDER_CASHIER_CREATE_RESET,
+  ORDER_CASHIER_DETAILS_RESET,
+} from "../../redux/constants/orderConstants";
+import { uniqueID } from "../../utils/utils";
+import { MealGrid } from "../../components";
+import { getMealList, updateMealStock } from "../../redux/actions/mealAction";
+import { CASHIER_RESET_ITEM } from "../../redux/constants/cashierConstants";
+import CashierItem from "./CashierItem";
+import { getOrderCashierDetails } from "../../redux/actions/orderAction";
+import Receipt from "./Reciept";
 
 const style = {
   position: "absolute",
@@ -38,99 +46,122 @@ const style = {
 };
 
 const Cashier = () => {
-  const { id } = useParams();
-  const location = useLocation();
   const history = useHistory();
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
 
-  const [customerName, setCustomerName] = useState("");
   const [paid, setPaid] = useState("");
   const [paymentType, setPaymentType] = useState("");
+  const [orderType, setOrderType] = useState("");
+  const [paymentError, setPaymentError] = useState(false);
+  const [discount, setDiscount] = useState("");
 
-  //Item quantity
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
-
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cashierItems } = useSelector((state) => state.cashier);
   const { success, loading, error, order } = useSelector(
-    (state) => state.orderCreate
+    (state) => state.orderCashierCreate
   );
 
-  //Total amount
-  const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.qty * item.price,
-    0
+  const { loading: mealsLoading, meals } = useSelector(
+    (state) => state.mealList
   );
-  // Total Items
-  const totalItem = cartItems.length;
+
+  const { order: orderDets } = useSelector(
+    (state) => state.orderCashierDetails
+  );
 
   //Subtotal
-  const subTotal = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const subtotal = cashierItems.reduce((acc, item) => acc + item.qty, 0);
+  const subtotalPrice = totalAmount(cashierItems);
 
-  //change
-  const change = Math.abs(totalAmount - Number(paid));
+  //total price with vat
+  const vat = (subtotalPrice * 12) / 100;
+  const total = subtotalPrice + vat;
+
+  //Total amount
+  let totalPrice = total;
+
+  // Total Items
+  const totalItems = cashierItems.length;
+
+  let discountTotal;
+
+  if (discount) {
+    discountTotal = totalPrice * `0.${discount}`;
+    totalPrice = total - discountTotal;
+  } else {
+    discountTotal = 0;
+  }
+
+  //handle change
+  const change = () => {
+    if (paid) {
+      return Math.abs(totalPrice - Number(paid));
+    } else {
+      return 0;
+    }
+  };
 
   const handlePayment = (e) => {
     e.preventDefault();
 
-    /* const orders = {
-      totalItem,
-      subTotal,
-      customerName: customerName.toLowerCase(),
-      paid: Number(paid),
-      change: change,
-      totalAmount,
-      paymentType,
-      date: new Date(),
-    }; */
+    if (paid >= totalPrice.toFixed(2) || paid >= totalPrice) {
+      if (totalPrice > 0) {
+        setPaymentError(false);
+        const orders = {
+          id: uniqueID(),
+          orderType,
+          totalItems: cashierItems.reduce((acc, item) => acc + item.qty, 0),
+          subtotal: subtotalPrice,
+          discount: discountTotal,
+          totalPrice,
+          change: change(),
+          paymentType,
+          paid,
+          orderItems: cashierItems,
+          vat,
+        };
 
-    if (customerName && paid >= totalAmount && paymentType) {
-      /* dispatch(createOrder(orders)); */
+        dispatch(createOrderCashier(orders));
+      }
+    } else {
+      setPaymentError(true);
     }
   };
 
   useEffect(() => {
-    if (id) {
-      dispatch(addToCart(id, qty));
-    }
-  }, [dispatch, id, qty]);
-
-  useEffect(() => {
     if (success) {
+      dispatch({ type: CASHIER_RESET_ITEM });
       setIsSave(false);
-      setCustomerName("");
-      setPaid("");
-      setPaymentType("");
+      setOrderType("");
+      //Update meal stock if success
+      cashierItems.map((item) =>
+        dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+      );
       if (order._id) {
-        history.push(`/admin/receipt/${order._id}`);
+        dispatch({ type: ORDER_CASHIER_CREATE_RESET });
+        dispatch(getOrderCashierDetails(order._id));
+        setPaid("");
+        setPaymentType("");
+        setOrderType("");
+        setPaymentError(false);
+        setDiscount("");
       }
     }
-  }, [success, history, order]);
 
-  const noCart = (
-    <Alert severity="info">
-      No item{" "}
-      <Typography
-        variant="body2"
-        color="inherit"
-        component={Link}
-        to="/admin/menu"
-      >
-        Go to Menu
-      </Typography>
-    </Alert>
-  );
+    return () => {
+      dispatch({ type: ORDER_CASHIER_CREATE_RESET });
+      dispatch({ type: ORDER_CASHIER_DETAILS_RESET });
+    };
+  }, [success, history, order, dispatch, cashierItems]);
 
-  const cartItemsList = (
-    <>
-      {cartItems.map((item) => (
-        <Item item={item} key={item.meal} />
-      ))}
-    </>
-  );
+  useState(() => {
+    dispatch(getMealList());
+  }, []);
 
   return (
     <>
+      {orderDets && <Receipt order={orderDets} />}
+
       <Modal
         open={isSave}
         onClose={() => setIsSave(false)}
@@ -139,6 +170,7 @@ const Cashier = () => {
         BackdropProps={{
           timeout: 500,
         }}
+        sx={{ displayPrint: "none" }}
       >
         <Fade in={isSave}>
           <Box sx={style}>
@@ -146,18 +178,38 @@ const Cashier = () => {
               Payment
             </Typography>
 
-            <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
-              <strong>Total Amount: </strong>
-              <span>&#8369; {totalAmount.toFixed(2)}</span>
+            <Divider sx={{ marginY: 1 }} />
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>Subtotal: </strong>
+              <span>&#8369; {totalAmount(cashierItems).toFixed(2)}</span>
             </Typography>
-            {Number(paid) >= totalAmount && (
-              <Typography variant="body" omponent="p">
-                <strong>Total Change: </strong>
-                <span>&#8369; {change.toFixed(2)}</span>
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>Discount: </strong>
+              <span>{discount || 0}%</span>
+            </Typography>
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>VAT: </strong>
+              <span>12%</span>
+            </Typography>
+
+            <Divider sx={{ marginY: 1 }} />
+
+            <Typography variant="body" component="p" sx={{ marginTop: 1 }}>
+              <strong>Total: </strong>
+              <span>&#8369; {totalPrice.toFixed(2)}</span>
+            </Typography>
+
+            {paid >= totalPrice && (
+              <Typography variant="body" component="p" sx={{ marginTop: 2 }}>
+                <strong>Change: </strong>
+                <span>&#8369; {change().toFixed(2)}</span>
               </Typography>
             )}
 
-            {error && <Alert severity="error">{error}</Alert>}
+            {error && <Alert severity="error">Failed to save payment</Alert>}
 
             <Box
               component="form"
@@ -165,108 +217,177 @@ const Cashier = () => {
               sx={{
                 "& > :not(style)": { my: 1, width: "100%" },
               }}
-              onSubmit={handlePayment}
+              /*  onSubmit={handlePayment} */
             >
-              <TextField
-                label="Customer Name"
-                variant="outlined"
-                color="secondary"
-                value={customerName || ""}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-
-              <TextField
-                label="Paid"
-                type="number"
-                variant="outlined"
-                color="secondary"
-                value={paid || ""}
-                onChange={(e) => setPaid(e.target.value)}
-              />
-
-              <FormControl fullWidth color="secondary">
-                <InputLabel>Payment Type</InputLabel>
+              <FormControl fullWidth required>
+                <InputLabel>Order Type</InputLabel>
                 <Select
-                  defaultValue={paymentType || ""}
-                  value={paymentType || ""}
+                  defaultValue={orderType || ""}
+                  value={orderType || ""}
                   label="Payment Type"
-                  onChange={(e) => setPaymentType(e.target.value)}
+                  onChange={(e) => setOrderType(e.target.value)}
                 >
-                  <MenuItem value="cash">Cash</MenuItem>
-                  <MenuItem value="credit-card">Credit Card</MenuItem>
+                  <MenuItem value="dine-in">Dine-in</MenuItem>
+                  <MenuItem value="delivery">Delivery/Pickup</MenuItem>
                 </Select>
               </FormControl>
 
-              <Button
-                variant="contained"
-                type="submit"
-                size="large"
-                sx={{ height: "45px" }}
-                disabled={loading}
-              >
-                Save payment
-              </Button>
+              <FormControl fullWidth required>
+                <InputLabel>Payment Type</InputLabel>
+                {orderType === "dine-in" ? (
+                  <Select
+                    defaultValue={paymentType}
+                    value={paymentType}
+                    label="Payment Type"
+                    onChange={(e) => setPaymentType(e.target.value)}
+                  >
+                    <MenuItem value="cash">Cash</MenuItem>
+                    <MenuItem value="credit/debit-card">
+                      Credit/Debit-Card
+                    </MenuItem>
+                  </Select>
+                ) : (
+                  <Select
+                    defaultValue={paymentType}
+                    value={paymentType}
+                    label="Payment Type"
+                    onChange={(e) => setPaymentType(e.target.value)}
+                  >
+                    <MenuItem value="cod">COD</MenuItem>
+                    <MenuItem value="gcash">Gcash</MenuItem>
+                    <MenuItem value="credit/debit-card">
+                      Credit/Debit-Card
+                    </MenuItem>
+                  </Select>
+                )}
+              </FormControl>
+
+              <Box sx={{ display: "flex", gridGap: 3 }}>
+                <TextField
+                  error={paymentError}
+                  helperText={paymentError && "Not enough"}
+                  label="Paid"
+                  variant="outlined"
+                  type="number"
+                  value={paid}
+                  onChange={(e) => setPaid(e.target.value)}
+                  required
+                  placeholder="0.00"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">&#8369;</InputAdornment>
+                    ),
+                  }}
+                />
+
+                <FormControl fullWidth required>
+                  <InputLabel>Discount</InputLabel>
+                  <Select
+                    defaultValue={discount || ""}
+                    value={discount || ""}
+                    label="discount"
+                    onChange={(e) => setDiscount(e.target.value)}
+                  >
+                    <MenuItem value={15}>Senior Citizen - 15%</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Box sx={{ display: "flex", gridGap: "0.5rem", marginY: 2 }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ height: "45px", marginTop: 2 }}
+                  color="error"
+                  onClick={() => setIsSave(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ height: "45px", marginTop: 2 }}
+                  onClick={handlePayment}
+                  disabled={loading}
+                  color="info"
+                >
+                  Save payment
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Fade>
       </Modal>
-      <div>
-        <Box mb={5}>
-          <Typography variant="h4" component="h1" sx={{ marginBottom: 2 }}>
-            Cashier
-          </Typography>
-        </Box>
 
-        <Typography variant="h5" sx={{ marginBottom: 2 }}>
-          Cart Items
-        </Typography>
+      <Grid container sx={{ vh: "100%", displayPrint: "none" }}>
+        <Grid item lg={8} md={8}>
+          {mealsLoading ? (
+            "loading..."
+          ) : (
+            <MealGrid meals={meals} text={"Menu"} />
+          )}
+        </Grid>
 
-        <Grid container spacing={3}>
-          <Grid item sm={12} md={7} lg={7}>
-            {cartItems <= 0 ? noCart : cartItemsList}
-          </Grid>
+        <Grid item lg={4} md={4} sm={12} xs={12}>
+          <Paper
+            sx={{
+              height: "80vh",
+              padding: 2,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              marginTop: 3,
+            }}
+          >
+            <Box sx={{ overflowY: "auto" }}>
+              <Typography variant="h4" sx={{ paddingBottom: 1 }}>
+                Items
+              </Typography>
+              {/*  start */}
 
-          <Grid item xs={12} sm={12} md={5} lg={5}>
-            <Card>
-              <CardContent>
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  sx={{ paddingBottom: 2 }}
-                >
-                  Total ({totalItem}) Items
-                </Typography>
+              {cashierItems.length === 0 ? (
+                <Typography textAlign="center">No item</Typography>
+              ) : (
+                cashierItems.map((item) => (
+                  <CashierItem item={item} key={item.meal} />
+                ))
+              )}
+            </Box>
 
-                <Typography
-                  variant="h4"
-                  component="h3"
-                  sx={{ paddingBottom: 2 }}
-                >
-                  Subtotal ({subTotal}) Items
-                </Typography>
+            <Paper elevation={0} sx={{ paddingTop: 2, paddingX: 1 }}>
+              <Divider sx={{ marginBottom: 2 }} />
+              <div>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Total Item:</Typography>
+                  <Typography>{totalItems} </Typography>
+                </Box>
 
-                <Typography variant="body1">
-                  &#8369;
-                  {totalAmount.toFixed(2)}
-                </Typography>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Subtotal Item: </Typography>
+                  <Typography> {subtotal} </Typography>
+                </Box>
 
-                <Divider />
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Typography variant="h6">Total Price: </Typography>
+                  <Typography>
+                    &#8369; {totalAmount(cashierItems).toFixed(2)}{" "}
+                  </Typography>
+                </Box>
 
                 <Button
                   fullWidth
-                  variant="contained"
-                  size="large"
-                  sx={{ marginTop: 3 }}
-                  disabled={cartItems.length === 0}
                   onClick={() => setIsSave(true)}
+                  disabled={cashierItems.length === 0}
+                  variant="contained"
+                  sx={{ marginTop: 2 }}
                 >
                   Payment
                 </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+              </div>
+            </Paper>
+          </Paper>
         </Grid>
-      </div>
+      </Grid>
     </>
   );
 };

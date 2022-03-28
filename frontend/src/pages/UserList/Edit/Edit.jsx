@@ -1,20 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/system";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Button,
-  FormControlLabel,
-  Checkbox,
   Typography,
   Divider,
   Alert,
   Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Paper,
 } from "@mui/material";
-import { updateUser, getUserDetails } from "../../../redux/actions/userActions";
+import {
+  updateUser,
+  getUserDetails,
+  userRegister,
+} from "../../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { Loader } from "../../../components";
-import { USER_UPDATE_RESET } from "../../../redux/constants/userConstants";
+import {
+  USER_UPDATE_RESET,
+  USER_CREATE_RESET,
+} from "../../../redux/constants/userConstants";
+import { uniqueID } from "../../../utils/utils";
 
 const Edit = () => {
   const { id } = useParams();
@@ -24,6 +34,13 @@ const Edit = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isCashier, setIsCashier] = useState(false);
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  let isEdit = id ? true : false;
 
   const {
     loading: updateLoading,
@@ -35,78 +52,149 @@ const Edit = () => {
     (state) => state.userDetails
   );
 
+  const { success, error } = useSelector((state) => state.userRegister);
+
   //Edit submit
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateUser({ _id: id, name, email, isAdmin }));
+    if (isEdit) {
+      if (password === confirmPassword) {
+        setPasswordError(false);
+        dispatch(
+          updateUser({
+            _id: id,
+            name,
+            email,
+            role,
+            isAdmin,
+            isCashier,
+            password,
+          })
+        );
+      } else {
+        setPasswordError(true);
+      }
+    } else {
+      //create user
+      if (password === confirmPassword) {
+        setPasswordError(false);
+        const id = uniqueID();
+        dispatch(userRegister(name, email, password, id, role));
+      } else {
+        setPasswordError(true);
+      }
+    }
   };
 
   useEffect(() => {
-    if (user) {
+    if (isEdit && user) {
       setName(user.name);
       setEmail(user.email);
+      setRole(user.role);
       setIsAdmin(user.isAdmin);
+      setIsCashier(user.isCashier);
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, isEdit]);
 
   useEffect(() => {
-    if (updateSuccess) {
-      history.push("/admin/user-list");
+    if (isEdit && updateSuccess) {
+      history.push("/user-list");
+    }
+
+    return () => {
       dispatch({ type: USER_UPDATE_RESET });
-    }
-  }, [history, updateSuccess, dispatch]);
+    };
+  }, [history, updateSuccess, dispatch, isEdit]);
 
   useEffect(() => {
-    if (id) {
+    if (success) {
+      history.push("/user-list");
+    }
+
+    return () => {
+      dispatch({ type: USER_CREATE_RESET });
+    };
+  }, [success, history, dispatch]);
+
+  useEffect(() => {
+    if (isEdit && id) {
       dispatch(getUserDetails(id));
     }
-  }, [id, dispatch]);
+  }, [id, dispatch, isEdit]);
 
   if (userLoading) return <Loader />;
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1, width: "100%" },
+          padding: 2,
         }}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h4">Edit User</Typography>
+        <Typography variant="h4">
+          {" "}
+          {isEdit ? "Edit User" : "Add User"}
+        </Typography>
         <Divider />
-
         {updateError && <Alert severity="error">{updateError}</Alert>}
+        {error && <Alert severity="error">Failed to create user</Alert>}
 
         <TextField
           label="Name"
           variant="outlined"
-          color="secondary"
           value={name || ""}
           onChange={(e) => setName(e.target.value)}
+          required
         />
-
         <TextField
           label="Email"
           variant="outlined"
-          color="secondary"
           value={email || ""}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              color="secondary"
-              checked={isAdmin || false}
-              onChange={(e) => setIsAdmin(e.target.checked)}
-            />
-          }
-          label="Is Admin"
+        <TextField
+          label="Password"
+          variant="outlined"
+          value={password || ""}
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          required={!isEdit}
         />
+
+        <TextField
+          label="Confirm password"
+          variant="outlined"
+          value={confirmPassword || ""}
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          error={passwordError}
+          helperText={passwordError && "password must match"}
+          required={!isEdit}
+        />
+
+        <FormControl fullWidth required>
+          <InputLabel>Role</InputLabel>
+          <Select
+            defaultValue={role || ""}
+            value={role || ""}
+            label="Role"
+            onChange={(e) => setRole(e.target.value)}
+          >
+            {["Admin", "Cashier"].map((c, index) => (
+              <MenuItem key={index} value={c.toLowerCase()}>
+                {c}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
         <Button
           variant="contained"
@@ -115,9 +203,9 @@ const Edit = () => {
           sx={{ height: "45px" }}
           disabled={updateLoading}
         >
-          UPDATE
+          {isEdit ? "Update" : "Add"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

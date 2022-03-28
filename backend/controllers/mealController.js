@@ -40,25 +40,8 @@ const getMealById = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc Fetch meal by category
-//@route GET /api/meals/category/:category
-//@access Public
-const getMealByCategory = asyncHandler(async (req, res) => {
-  const category = req.params.category;
 
-  const meals = await Meal.find({ category });
 
-  res.json(meals);
-});
-
-//@desc Fetch all top meals
-//@route GET /api/meals/top
-//@access Public
-const getTopMeal = asyncHandler(async (req, res) => {
-  const meals = await Meal.find({}).sort({ rating: -1 }).limit(4);
-
-  res.json(meals);
-});
 
 //@desc Delete meal by id
 //@route DELETE /api/meals/:id
@@ -80,6 +63,7 @@ const deleteMeal = asyncHandler(async (req, res) => {
 //@access Private/Admin
 const createMeal = asyncHandler(async (req, res) => {
   const {
+    id,
     name,
     price,
     image,
@@ -90,6 +74,7 @@ const createMeal = asyncHandler(async (req, res) => {
   } = req.body;
 
   const meal = await Meal.create({
+    id,
     name,
     price,
     image,
@@ -101,6 +86,7 @@ const createMeal = asyncHandler(async (req, res) => {
 
   if (meal) {
     res.json({
+      id: meal.id,
       name: meal.name,
       price: meal.price,
       image: meal.image,
@@ -158,46 +144,7 @@ const updateMealStock = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc Create new review
-//@route PUT /api/meals/:id/reviews
-//@access Private
-const createMealReviews = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
 
-  const meal = await Meal.findById(req.params.id);
-
-  if (meal) {
-    const alreadyReviewed = meal.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    );
-
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error("Meal already reviewed");
-    }
-
-    const review = {
-      name: req.user.name,
-      rating: Number(rating),
-      comment,
-      user: req.user._id,
-    };
-
-    meal.reviews.push(review);
-
-    meal.numReviews = meal.reviews.length;
-
-    meal.rating =
-      meal.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      meal.reviews.length;
-
-    meal.save();
-    res.status(201).json({ message: "Review added" });
-  } else {
-    res.status(404);
-    throw Error("meal not found");
-  }
-});
 
 export {
   getMeal,
@@ -205,8 +152,5 @@ export {
   deleteMeal,
   createMeal,
   updateMeal,
-  createMealReviews,
-  getMealByCategory,
-  getTopMeal,
   updateMealStock,
 };

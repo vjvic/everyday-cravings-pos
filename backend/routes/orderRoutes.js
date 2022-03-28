@@ -1,23 +1,21 @@
 import express from "express";
 const router = express.Router();
 import {
-  /* getOrder, */
-  createOrder,
-  getOrderById,
-  updateOrderToPaid,
-  updateOrderToDelivered,
-  getUserOrders,
-  getAllOrders,
+  createOrderCashier,
+  getOrderCashierById,
+  getAllOrderCashier,
 } from "../controllers/orderController.js";
-import { protect, isAdmin } from "../middleware/authMiddleware.js";
+import { protect,admin } from "../middleware/authMiddleware.js";
+
+//cashier
 
 router
-  .route("/")
-  .get(protect, isAdmin, getAllOrders)
-  .post(protect, createOrder);
-router.get("/myorders", protect, getUserOrders);
-router.get("/:id", protect, getOrderById);
-router.put("/:id/pay", protect, isAdmin, updateOrderToPaid);
-router.put("/:id/deliver", protect, isAdmin, updateOrderToDelivered);
+  .route("/cashier")
+  .post(protect,admin, createOrderCashier)
+  .get(protect, admin,getAllOrderCashier);
+
+router.get("/cashier/:id", protect, getOrderCashierById);
+
+
 
 export default router;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Divider,
@@ -12,6 +12,10 @@ import {
   Stack,
   Alert,
   Container,
+  Paper,
+  Grid,
+  Modal,
+  capitalize,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -28,6 +32,30 @@ import {
   MEAL_CREATE_RESET,
   MEAL_UPDATE_RESET,
 } from "../../../redux/constants/mealConstants";
+import { getCategoryList } from "../../../redux/actions/categoryAction";
+import { uniqueID } from "../../../utils/utils";
+import {
+  getIngredientList,
+  removeFromMealIngredient,
+  updateIngredientStock,
+} from "../../../redux/actions/ingredientAction";
+import AddIcon from "@mui/icons-material/Add";
+/* import RemoveIcon from "@mui/icons-material/Remove"; */
+import IngredientItem from "./IngredientItem";
+import { INGREDIENT_RESET_ITEM } from "../../../redux/constants/ingredientConstants";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 1000,
+  height: 500,
+  bgcolor: "#f1f1f1",
+  boxShadow: 24,
+  borderRadius: 1,
+  p: 4,
+};
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -38,6 +66,8 @@ const Edit = () => {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+
+  const [open, setOpen] = useState(false);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -63,6 +93,10 @@ const Edit = () => {
     error: updateError,
   } = useSelector((state) => state.mealUpdate);
 
+  const { category: categoryList } = useSelector((state) => state.categoryList);
+  const { ingredient } = useSelector((state) => state.ingredientList);
+  const { ingredients } = useSelector((state) => state.ingredientItems);
+
   const handleEditSubmit = (e) => {
     e.preventDefault();
 
@@ -79,12 +113,19 @@ const Edit = () => {
         })
       );
     } else {
+      const id = "ME" + uniqueID();
       dispatch(
-        createMeal(name, price, image, category, countInStock, description)
+        createMeal(name, price, image, category, countInStock, description, id)
       );
+
+      ingredients.map((ing) =>
+        dispatch(updateIngredientStock(ing.ingredient, ing.qty - ing.qtyInMeal))
+      );
+      dispatch({ type: INGREDIENT_RESET_ITEM });
     }
   };
 
+  //Upload image
   const types = ["image/jpeg", "image/png"];
 
   const uploadFileHandler = async (e) => {
@@ -131,21 +172,30 @@ const Edit = () => {
 
   useEffect(() => {
     if (createSuccess || updateSuccess) {
-      history.push("/admin/meals");
+      history.push("/meals");
+    }
+
+    return () => {
       dispatch({ type: MEAL_CREATE_RESET });
       dispatch({ type: MEAL_UPDATE_RESET });
-    }
+    };
   }, [createSuccess, updateSuccess, history, dispatch]);
+
+  useEffect(() => {
+    dispatch(getCategoryList());
+    dispatch(getIngredientList());
+  }, [dispatch]);
 
   if (mealLoading) return <Loader />;
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1 },
+          padding: 2,
         }}
         onSubmit={handleEditSubmit}
       >
@@ -157,7 +207,7 @@ const Edit = () => {
 
         {updateError ||
           (mealCreateError && (
-            <Alert severity="error">{updateError || mealCreateError}</Alert>
+            <Alert severity="error">Failed to create Meal</Alert>
           ))}
         {mealError && <Alert severity="error">{mealError}</Alert>}
         {uploadError && <Alert severity="error">{uploadError}</Alert>}
@@ -165,7 +215,6 @@ const Edit = () => {
         <TextField
           label="Meal Name"
           variant="outlined"
-          color="secondary"
           value={name || ""}
           onChange={(e) => setName(e.target.value)}
           fullWidth
@@ -174,7 +223,6 @@ const Edit = () => {
         <TextField
           label="Price"
           variant="outlined"
-          color="secondary"
           type="number"
           value={price || ""}
           onChange={(e) => setPrice(e.target.value)}
@@ -184,7 +232,6 @@ const Edit = () => {
         <TextField
           label="Image"
           variant="outlined"
-          color="secondary"
           value={image || ""}
           onChange={(e) => setImage(e.target.value)}
           fullWidth
@@ -201,7 +248,7 @@ const Edit = () => {
         </Button>
 
         <Stack direction="row" spacing={2}>
-          <FormControl fullWidth color="secondary">
+          <FormControl fullWidth>
             <InputLabel>Category</InputLabel>
             <Select
               defaultValue={category || ""}
@@ -209,20 +256,18 @@ const Edit = () => {
               label="Category"
               onChange={(e) => setCategory(e.target.value)}
             >
-              {["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"].map(
-                (c, index) => (
-                  <MenuItem key={index} value={c.toLowerCase()}>
-                    {c}
+              {categoryList &&
+                categoryList.map((c, index) => (
+                  <MenuItem key={index} value={c.category.toLowerCase()}>
+                    {capitalize(c.category)}
                   </MenuItem>
-                )
-              )}
+                ))}
             </Select>
           </FormControl>
 
           <TextField
             label="Count In Stock"
             variant="outlined"
-            color="secondary"
             type="number"
             value={countInStock || ""}
             onChange={(e) => setCountInstock(e.target.value)}
@@ -233,13 +278,65 @@ const Edit = () => {
         <TextField
           label="Description"
           variant="outlined"
-          color="secondary"
           multiline
           rows={3}
           value={description || ""}
           onChange={(e) => setDescription(e.target.value)}
           fullWidth
         />
+
+        <Box sx={{ display: "flex" }}>
+          <Typography variant="h5" sx={{ paddingRight: 3 }}>
+            Add Ingredients
+          </Typography>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            <AddIcon />
+          </Button>
+        </Box>
+
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <Box sx={style}>
+            <Typography variant="h5" sx={{ marginBottom: 1 }}>
+              Ingredients
+            </Typography>
+            <Grid container spacing={2}>
+              {ingredient.map((ing) => (
+                <IngredientItem
+                  key={ing._id}
+                  ing={ing}
+                  countInStock={countInStock}
+                />
+              ))}
+            </Grid>
+          </Box>
+        </Modal>
+
+        <Grid container spacing={2}>
+          {ingredients.map((ing) => (
+            <Grid item lg={4} key={ing.ingredient}>
+              <Paper
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: 1,
+                  paddingX: 2,
+                }}
+              >
+                <div>
+                  {capitalize(ing.name)} {ing.qtyInMeal} {ing.measure}
+                </div>
+                <Button
+                  onClick={() =>
+                    dispatch(removeFromMealIngredient(ing.ingredient))
+                  }
+                >
+                  Remove
+                </Button>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
 
         <Button
           variant="contained"
@@ -251,7 +348,7 @@ const Edit = () => {
         >
           {isEdit ? "UPDATE" : "ADD"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

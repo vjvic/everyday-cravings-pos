@@ -1,4 +1,3 @@
-import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
@@ -8,42 +7,35 @@ import Layout from "./components/Layout/Layout";
 import {
   Dashboard,
   Login,
-  Register,
-  MealDetails,
   Meals,
   Profile,
-  Results,
-  /*  Cashier, */
   Menu,
-  /*  Receipt, */
   SalesReport,
   UserList,
-  Home,
   Category,
   MealEdit,
   UserEdit,
-  Cart,
-  Checkout,
-  Order,
-  MyOrders,
-  OrderList,
+  Cashier,
+  Suppliers,
+  Ingredient,
+  CategoryEdit,
+  IngredientEdit,
+  SupplierEdit,
 } from "./pages";
 
-const secondary = "#DE8538";
+const secondary = "#FFECC2";
+const primary = "#DE8538";
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#FFECC2" },
+    primary: { main: primary, contrastText: "#fff" },
     secondary: {
       main: secondary,
     },
     background: {
-      default: "#f9f9f9",
+      default: "#F1F5F8",
       paper: "#fff",
     },
-  },
-  stepper: {
-    iconColor: "green", // or logic to change color
   },
   shape: {
     borderRadius: 10,
@@ -57,31 +49,45 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute path="/category/:category" component={Category} />
-            <PrivateRoute path="/meal/:id" component={MealDetails} />
-            <PrivateRoute path="/results/:keyword" component={Results} />
-            <PrivateRoute path="/cart/:id?" component={Cart} />
-            <PrivateRoute path="/checkout" component={Checkout} />
-            <PrivateRoute path="/orders/:id" component={Order} />
-            <PrivateRoute path="/my-orders" component={MyOrders} />
+            {/* global  */}
             <PrivateRoute path="/profile" component={Profile} />
-            <AdminRoute path="/admin/dashboard" component={Dashboard} />
-            <AdminRoute exact path="/admin/meals" component={Meals} />
+
+            {/* cashier */}
+            <PrivateRoute exact path="/cashier/:id?" component={Cashier} />
+            <PrivateRoute exact path="/menu" component={Menu} />
+
+            {/*  Admin */}
+            <AdminRoute exact path="/" component={Dashboard} />
             <AdminRoute
               exact
-              path="/admin/meals/:id?/edit"
-              component={MealEdit}
+              path="/suppliers/:id?/edit"
+              component={SupplierEdit}
             />
-            <AdminRoute path="/admin/menu" component={Menu} />
-            <AdminRoute exact path="/admin/user-list" component={UserList} />
-            <AdminRoute path="/admin/order-list" component={OrderList} />
-            <AdminRoute path="/admin/user-list/:id/edit" component={UserEdit} />
-            {/*   <PrivateRoute path="/admin/cashier/:id?" component={Cashier} /> */}
-            {/*     <PrivateRoute path="/admin/receipt/:id" component={Receipt} /> */}
-            <AdminRoute path="/admin/sales-report" component={SalesReport} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
+            <AdminRoute
+              exact
+              path="/user-list/:id?/edit"
+              component={UserEdit}
+            />
+            <AdminRoute
+              exact
+              path="/ingredients/:id?/edit"
+              component={IngredientEdit}
+            />
+            <AdminRoute
+              exact
+              path="/categories/:id?/edit"
+              component={CategoryEdit}
+            />
+            <AdminRoute exact path="/categories" component={Category} />
+            <AdminRoute exact path="/meals/:id?/edit" component={MealEdit} />
+            <AdminRoute exact path="/meals" component={Meals} />
+            <AdminRoute exact path="/ingredients" component={Ingredient} />
+            <AdminRoute exact path="/suppliers" component={Suppliers} />
+            <AdminRoute exact path="/sales-report" component={SalesReport} />
+            <AdminRoute exact path="/user-list" component={UserList} />
+
+            {/*  Login  */}
+            <Route exact path="/login" component={Login} />
           </Layout>
         </Switch>
       </Router>
