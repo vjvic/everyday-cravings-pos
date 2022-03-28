@@ -18,6 +18,8 @@ import {
 import { mealApi } from "../../components";
 import { logout } from "./userActions";
 
+
+//Create new category
 export const createCategory = (category) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -59,6 +61,7 @@ export const createCategory = (category) => async (dispatch, getState) => {
   }
 };
 
+//Delete category
 export const deleteCategory = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -95,6 +98,7 @@ export const deleteCategory = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update category
 export const updateCategory = (meal) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -137,6 +141,8 @@ export const updateCategory = (meal) => async (dispatch, getState) => {
   }
 };
 
+
+//Get all categories
 export const getCategoryList = () => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
@@ -164,6 +170,8 @@ export const getCategoryList = () => async (dispatch, getState) => {
   }
 };
 
+
+//Get category details
 export const getCategoryDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({

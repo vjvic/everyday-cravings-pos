@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Divider,
@@ -9,14 +9,13 @@ import {
   Select,
   InputLabel,
   MenuItem,
-  /*  Stack, */
   Alert,
   Container,
   FormControlLabel,
   Checkbox,
   capitalize,
+  Paper,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../../../components";
 import {
@@ -109,20 +108,24 @@ const Edit = () => {
   useEffect(() => {
     if (createSuccess || updateSuccess) {
       history.push("/suppliers");
+    }
+
+    return () => {
       dispatch({ type: SUPPLIER_CREATE_RESET });
       dispatch({ type: SUPPLIER_UPDATE_RESET });
-    }
+    };
   }, [createSuccess, updateSuccess, history, dispatch]);
 
   if (supplierLoading) return <Loader />;
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1 },
+          padding: 2,
         }}
         onSubmit={handleEditSubmit}
       >
@@ -180,45 +183,6 @@ const Edit = () => {
           </Select>
         </FormControl>
 
-        {/*   <Stack direction="row" spacing={2}>
-          <TextField
-            label="qty"
-            variant="outlined"
-            value={qty || ""}
-            type="number"
-            onChange={(e) => setQty(e.target.value)}
-            fullWidth
-          />
-
-         
-        </Stack> */}
-
-        {/*   <Stack direction="row" spacing={2}> */}
-        {/*    <FormControl fullWidth>
-            <InputLabel>Supplier</InputLabel>
-            <Select
-              defaultValue={supplier || ""}
-              value={supplier || ""}
-              label="Supplier"
-              onChange={(e) => setSupplier(e.target.value)}
-            >
-              {supplierList.map((c, index) => (
-                <MenuItem key={index} value={c.name.toLowerCase()}>
-                  {c.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
-
-        {/* <TextField
-            label="Cost"
-            variant="outlined"
-            value={cost || ""}
-            onChange={(e) => setCost(e.target.value)}
-            fullWidth
-          />
-        </Stack> */}
-
         <FormControlLabel
           control={
             <Checkbox
@@ -239,7 +203,7 @@ const Edit = () => {
         >
           {isEdit ? "UPDATE" : "ADD"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

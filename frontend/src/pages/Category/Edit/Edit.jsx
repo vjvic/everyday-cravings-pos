@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Divider,
@@ -7,8 +7,8 @@ import {
   Button,
   Alert,
   Container,
+  Paper,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../../../components";
 import {
@@ -85,20 +85,24 @@ const Edit = () => {
   useEffect(() => {
     if (createSuccess || updateSuccess) {
       history.push("/categories");
+    }
+
+    return () => {
       dispatch({ type: CATEGORY_CREATE_RESET });
       dispatch({ type: CATEGORY_UPDATE_RESET });
-    }
+    };
   }, [createSuccess, updateSuccess, history, dispatch]);
 
   if (categoryLoading) return <Loader />;
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1 },
+          padding: 2,
         }}
         onSubmit={handleEditSubmit}
       >
@@ -134,7 +138,7 @@ const Edit = () => {
         >
           {isEdit ? "UPDATE" : "ADD"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

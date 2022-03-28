@@ -4,6 +4,7 @@ import {
 } from "../constants/cashierConstants";
 import { mealApi } from "../../components";
 
+//Add item to cashier
 export const addToCashier = (id, qty) => async (dispatch, getState) => {
   const { data } = await mealApi.get(`/api/meals/${id}`);
 
@@ -20,6 +21,7 @@ export const addToCashier = (id, qty) => async (dispatch, getState) => {
   });
 };
 
+//Remove item from cashier
 export const removeFromCashier = (id) => (dispatch, getState) => {
   dispatch({
     type: CASHIER_REMOVE_ITEM,

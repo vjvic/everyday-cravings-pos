@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Divider,
@@ -125,6 +125,7 @@ const Edit = () => {
     }
   };
 
+  //Upload image
   const types = ["image/jpeg", "image/png"];
 
   const uploadFileHandler = async (e) => {
@@ -172,9 +173,12 @@ const Edit = () => {
   useEffect(() => {
     if (createSuccess || updateSuccess) {
       history.push("/meals");
+    }
+
+    return () => {
       dispatch({ type: MEAL_CREATE_RESET });
       dispatch({ type: MEAL_UPDATE_RESET });
-    }
+    };
   }, [createSuccess, updateSuccess, history, dispatch]);
 
   useEffect(() => {
@@ -186,11 +190,12 @@ const Edit = () => {
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1 },
+          padding: 2,
         }}
         onSubmit={handleEditSubmit}
       >
@@ -343,7 +348,7 @@ const Edit = () => {
         >
           {isEdit ? "UPDATE" : "ADD"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

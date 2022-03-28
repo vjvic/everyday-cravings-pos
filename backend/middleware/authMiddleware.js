@@ -30,14 +30,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-const isAdmin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
-    next();
-  } else {
-    res.status(401);
-    throw new Error("Not authorized as admin");
-  }
-};
+
 
 const admin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
@@ -57,4 +50,4 @@ const cashier = (req, res, next) => {
   }
 };
 
-export { protect, isAdmin, admin, cashier };
+export { protect,  admin, cashier };

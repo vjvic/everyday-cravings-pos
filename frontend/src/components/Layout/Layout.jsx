@@ -1,10 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import { Appbar, Sidebar } from "..";
 import { useSelector } from "react-redux";
 
+const style = {
+  flexGrow: 1,
+  p: 3,
+  overflowX: "hidden",
+  height: "100vh",
+};
+
 const Layout = ({ children }) => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -27,15 +34,7 @@ const Layout = ({ children }) => {
 
       {/*  Main */}
 
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          overflowX: "hidden",
-          height: "100vh",
-        }}
-      >
+      <Box component="main" sx={style}>
         <Toolbar />
         {children}
       </Box>

@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/system";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Button,
-  /*  FormControlLabel,
-  Checkbox, */
   Typography,
   Divider,
   Alert,
@@ -13,6 +10,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Paper,
 } from "@mui/material";
 import {
   updateUser,
@@ -103,15 +101,21 @@ const Edit = () => {
   useEffect(() => {
     if (isEdit && updateSuccess) {
       history.push("/user-list");
-      dispatch({ type: USER_UPDATE_RESET });
     }
+
+    return () => {
+      dispatch({ type: USER_UPDATE_RESET });
+    };
   }, [history, updateSuccess, dispatch, isEdit]);
 
   useEffect(() => {
     if (success) {
-      dispatch({ type: USER_CREATE_RESET });
       history.push("/user-list");
     }
+
+    return () => {
+      dispatch({ type: USER_CREATE_RESET });
+    };
   }, [success, history, dispatch]);
 
   useEffect(() => {
@@ -124,11 +128,12 @@ const Edit = () => {
 
   return (
     <Container maxWidth="md">
-      <Box
+      <Paper
+        elevation={0}
         component="form"
-        mt={3}
         sx={{
           "& > :not(style)": { my: 1, width: "100%" },
+          padding: 2,
         }}
         onSubmit={handleSubmit}
       >
@@ -161,7 +166,7 @@ const Edit = () => {
           value={password || ""}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
-          required
+          required={!isEdit}
         />
 
         <TextField
@@ -170,9 +175,9 @@ const Edit = () => {
           value={confirmPassword || ""}
           type="password"
           onChange={(e) => setConfirmPassword(e.target.value)}
-          required
           error={passwordError}
           helperText={passwordError && "password must match"}
+          required={!isEdit}
         />
 
         <FormControl fullWidth required>
@@ -183,33 +188,14 @@ const Edit = () => {
             label="Role"
             onChange={(e) => setRole(e.target.value)}
           >
-            {["Admin", "Cashier", "User"].map((c, index) => (
+            {["Admin", "Cashier"].map((c, index) => (
               <MenuItem key={index} value={c.toLowerCase()}>
                 {c}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        {/* 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isAdmin || false}
-              onChange={(e) => setIsAdmin(e.target.checked)}
-            />
-          }
-          label="Is Admin"
-        />
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isCashier || false}
-              onChange={(e) => setIsCashier(e.target.checked)}
-            />
-          }
-          label="Is Cashier"
-        /> */}
         <Button
           variant="contained"
           type="submit"
@@ -219,7 +205,7 @@ const Edit = () => {
         >
           {isEdit ? "Update" : "Add"}
         </Button>
-      </Box>
+      </Paper>
     </Container>
   );
 };

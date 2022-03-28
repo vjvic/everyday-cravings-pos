@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 import { Alert } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const history = useHistory();
@@ -92,12 +91,6 @@ const LoginPage = () => {
             <Button variant="contained" type="submit" sx={{ height: "45px" }}>
               SIGN IN
             </Button>
-
-            <Box>
-              <Typography variant="body1">
-                Don't have an account? <Link to={"/register"}>Register</Link>
-              </Typography>
-            </Box>
           </Box>
         </Box>
       </Grid>

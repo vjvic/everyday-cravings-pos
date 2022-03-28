@@ -13,7 +13,7 @@ import {
 router
   .route("/")
   .post(protect, admin, createIngredient)
-  .get(protect, getAllIngredient);
+  .get(protect,admin, getAllIngredient);
 router
   .route("/:id")
   .get(protect, admin, getIngredientById)

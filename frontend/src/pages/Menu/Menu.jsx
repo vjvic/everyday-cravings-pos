@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import MenuItem from "./MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "@mui/material";

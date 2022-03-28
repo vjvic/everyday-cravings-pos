@@ -9,10 +9,10 @@ import {
   getCategoryById,
 } from "../controllers/categoryController.js";
 
-router.route("/").post(protect, createCategory).get(protect, getAllCategory);
+router.route("/").post(protect, admin,createCategory).get(protect,admin, getAllCategory);
 router
   .route("/:id")
-  .get(protect, getCategoryById)
+  .get(protect,admin, getCategoryById)
   .delete(protect, admin, deleteCategory)
   .put(protect, admin, updateCategory);
 

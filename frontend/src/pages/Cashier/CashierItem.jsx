@@ -1,33 +1,28 @@
-import React from "react";
 import { Box } from "@mui/system";
-import {
-  Typography,
-  Grid,
-  /*   Alert,
-  Button,
-  Divider,
-  Modal,
-  TextField,
-  Fade,
-  Backdrop,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Container,
-  Paper,
-  Card, */
-  IconButton,
-} from "@mui/material";
+import { Typography, Grid, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-/* import DeleteIcon from "@mui/icons-material/Delete"; */
 import { useDispatch } from "react-redux";
 import {
   addToCashier,
   removeFromCashier,
 } from "../../redux/actions/cashierAction";
 import { useEffect } from "react";
+
+const style = {
+  display: "flex",
+  alignItems: "center",
+  gridGap: "0.5rem",
+  boxShadow: "0 0 1px rgba(0,0,0,0.5)",
+  marginY: 2,
+  marginX: 1,
+};
+
+const imgStyle = {
+  width: "90px",
+  height: "100%",
+  objectFit: "cover",
+};
 
 const CashierItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -39,25 +34,8 @@ const CashierItem = ({ item }) => {
   }, [dispatch, item]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gridGap: "0.5rem",
-        boxShadow: "0 0 1px rgba(0,0,0,0.5)",
-        marginY: 2,
-        marginX: 1,
-      }}
-    >
-      <img
-        src={item.image}
-        alt={item.name}
-        style={{
-          width: "90px",
-          height: "100%",
-          objectFit: "cover",
-        }}
-      />
+    <Box sx={style}>
+      <img src={item.image} alt={item.name} style={imgStyle} />
 
       <Grid container spacing={2}>
         <Grid item lg={6}>

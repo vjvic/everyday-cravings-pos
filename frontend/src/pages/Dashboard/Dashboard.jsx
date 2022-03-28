@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import {
   Typography,
@@ -19,29 +19,28 @@ import { getMealList } from "../../redux/actions/mealAction";
 import { listUsers } from "../../redux/actions/userActions";
 import { format } from "date-fns";
 import { BarChart, Loader, PieChart, DoughnutChart } from "../../components";
-import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
-import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { getAllDaysOfMonth, getAllMonthsOfYear } from "../../utils/utils";
+import Stats from "./Stats";
 
-const style = {
-  fontSize: "50px",
-  borderRadius: 1000,
-  background: "#FFECC2",
-  height: 75,
-  width: 75,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
-const fontSize = {
-  lg: 22,
-  md: 20,
-  sm: 19,
-  xs: 18,
-};
+const revenueTime = [
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+];
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -52,13 +51,9 @@ const DashboardPage = () => {
     loading: ordersLoading,
     error: ordersError,
   } = useSelector((state) => state.orderCashierList);
-  const {
-    meals,
-    loading: mealsLoading,
-    error: mealsError,
-  } = useSelector((state) => state.mealList);
-
-  const { users } = useSelector((state) => state.userList);
+  const { loading: mealsLoading, error: mealsError } = useSelector(
+    (state) => state.mealList
+  );
 
   useEffect(() => {
     dispatch(getOrderCashierList());
@@ -67,24 +62,8 @@ const DashboardPage = () => {
   }, [dispatch]);
 
   if (ordersLoading || mealsLoading) return <Loader />;
-  /* if (orders === undefined && meals === undefined) return ""; */
   if (ordersError || mealsError)
     return <Alert severity="error">{ordersError || mealsError}</Alert>;
-
-  //Total amount
-  const amount = orders.map((order) => order.totalPrice);
-  const totalAmount = amount.reduce((acc, amount) => acc + amount, 0);
-
-  //Total cashier
-  /*   const totalCashier = users.filter((user) => user.role === "cashier");
-   */ /*   const uniqueCustomer = [...new Set(customer)];
-  const totalCustomer = uniqueCustomer.length; */
-
-  //Total orders
-  const totalOrders = orders ? orders.length : null;
-
-  //Total menu
-  const totalMenu = meals ? meals.length : null;
 
   //Get revenue for specific time
   const getRevenueToday = (time) => {
@@ -146,26 +125,8 @@ const DashboardPage = () => {
   };
 
   //Today revenue data
-  const revenueToday = [
-    getRevenueToday("06"),
-    getRevenueToday("07"),
-    getRevenueToday("08"),
-    getRevenueToday("09"),
-    getRevenueToday("10"),
-    getRevenueToday("11"),
-    getRevenueToday("12"),
-    getRevenueToday("13"),
-    getRevenueToday("14"),
-    getRevenueToday("15"),
-    getRevenueToday("16"),
-    getRevenueToday("17"),
-    getRevenueToday("18"),
-    getRevenueToday("19"),
-    getRevenueToday("20"),
-    getRevenueToday("21"),
-    getRevenueToday("22"),
-    getRevenueToday("23"),
-  ];
+
+  const revenueToday = revenueTime.map((time) => getRevenueToday(time));
 
   //This month revenue data
   const revenueThisMonth = getAllDaysOfMonth().map((d) =>
@@ -188,38 +149,6 @@ const DashboardPage = () => {
     }
   };
 
-  // Card Items
-  const cardItems = [
-    {
-      icon: (
-        <FastfoodOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
-      ),
-      number: totalMenu,
-      text: "Total Menus",
-    },
-    {
-      icon: (
-        <TrendingUpOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
-      ),
-      number: "₱" + totalAmount.toFixed(2),
-      text: "Total Revenue",
-    },
-    {
-      icon: (
-        <AssignmentOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
-      ),
-      number: totalOrders,
-      text: "Total Orders",
-    },
-    {
-      icon: (
-        <PeopleAltOutlinedIcon sx={{ fontSize: "35px", color: "#DE8538" }} />
-      ),
-      number: users && users.filter((user) => user.role === "cashier").length,
-      text: "Total Cashiers",
-    },
-  ];
-
   //Return text based on selected date
   const dateText = () => {
     if (date === "Today") {
@@ -231,7 +160,7 @@ const DashboardPage = () => {
     }
   };
 
-  //Return totol revenue based on selected date
+  //Return total revenue based on selected date
   const getTotalRevenue = () => {
     if (date === "Today") {
       return getTotalRevenueToday();
@@ -248,45 +177,9 @@ const DashboardPage = () => {
         Dashboard
       </Typography>
 
-      <div>
-        <Grid container spacing={2}>
-          {cardItems.map((item) => (
-            <Grid item xs={12} sm={12} md={6} lg={3} key={item.text}>
-              <Card>
-                <CardContent>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gridGap: "1rem",
-                    }}
-                  >
-                    <Box sx={style}>{item.icon}</Box>
+      <Stats />
 
-                    <div>
-                      <Typography
-                        variant={mealsLoading || ordersLoading ? "body" : "h5"}
-                        component="h4"
-                        fontWeight="bold"
-                        sx={{ fontSize }}
-                      >
-                        {mealsLoading || ordersLoading
-                          ? "loading..."
-                          : item.number}
-                      </Typography>
-                      <Typography variant="body1" component="h4">
-                        {item.text}
-                      </Typography>
-                    </div>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </div>
-
-      <Card sx={{ marginTop: 4 }}>
+      <Card sx={{ marginTop: 4 }} elevation={0}>
         <CardContent>
           <Box
             mb={2}
@@ -340,7 +233,7 @@ const DashboardPage = () => {
 
       <Grid container spacing={2} sx={{ marginTop: 1 }}>
         <Grid item lg={6} sm={12} xs={12}>
-          <Paper sx={{ padding: 2 }}>
+          <Paper sx={{ padding: 2 }} elevation={0}>
             <Typography variant="h5" fontWeight="bold" sx={{ paddingTop: 2 }}>
               {" "}
               Order Type
@@ -349,7 +242,7 @@ const DashboardPage = () => {
           </Paper>
         </Grid>
         <Grid item lg={6} sm={12} xs={12}>
-          <Paper sx={{ padding: 2 }}>
+          <Paper sx={{ padding: 2 }} elevation={0}>
             <Typography variant="h5" fontWeight="bold" sx={{ paddingTop: 2 }}>
               {" "}
               Payment Type

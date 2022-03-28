@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Typography, Container, capitalize } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderCashierList } from "../../redux/actions/orderAction";
@@ -7,19 +7,15 @@ import { Loader } from "../../components";
 import {
   DataGrid,
   GridToolbarContainer,
-  /*   GridToolbarColumnsButton, */
   GridToolbarFilterButton,
-  /*   GridToolbarDensitySelector, */
   GridToolbarExport,
 } from "@mui/x-data-grid";
 
 const CustomToolbar = () => {
   return (
     <GridToolbarContainer sx={{ displayPrint: "none" }}>
-      {/*  <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
       <GridToolbarExport />
-      {/*   <GridToolbarDensitySelector /> */}
     </GridToolbarContainer>
   );
 };

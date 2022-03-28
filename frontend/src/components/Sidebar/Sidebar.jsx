@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Typography,
   List,
@@ -15,6 +14,31 @@ import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
+const drawerStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 2,
+  gridGap: 10,
+  displayPrint: "none",
+};
+
+const drawerStyle2 = {
+  display: { xs: "block", sm: "none" },
+  "& .MuiDrawer-paper": {
+    boxSizing: "border-box",
+    width: drawerWidth,
+  },
+};
+
+const drawerStyle3 = {
+  display: { xs: "none", sm: "block" },
+  "& .MuiDrawer-paper": {
+    boxSizing: "border-box",
+    width: drawerWidth,
+  },
+};
+
 const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -30,32 +54,23 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
     return location.pathname === path ? "#DE8538" : null;
   };
 
-  const { order } = useSelector((state) => state.orderCashierDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
 
-  if (
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname === `/cashier/receipt/${order ? order._id : " "}` ||
-    location.pathname === `/cashier`
-  )
-    return "";
-
   const cashierRoute = userInfo && userInfo.role === "cashier";
+  const loginRoute = location.pathname === "/login";
+  const registerRoute = location.pathname === "/register";
+
+  const navStyle = {
+    width: { sm: drawerWidth },
+    flexShrink: { sm: 0 },
+    displayPrint: "none",
+    display: cashierRoute || loginRoute || registerRoute ? "none" : "block",
+  };
 
   const drawer = (
     <div>
       {/*   <Toolbar /> */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 2,
-          gridGap: 10,
-          displayPrint: "none",
-        }}
-      >
+      <Box sx={drawerStyle}>
         <img
           src="/images/logo.png"
           alt="logo"
@@ -117,16 +132,7 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
     </div>
   );
   return (
-    <Box
-      component="nav"
-      sx={{
-        width: { sm: drawerWidth },
-        flexShrink: { sm: 0 },
-        displayPrint: "none",
-        display: cashierRoute ? "none" : "block",
-      }}
-      aria-label="mailbox folders"
-    >
+    <Box component="nav" sx={navStyle} aria-label="mailbox folders">
       <Drawer
         container={container}
         variant="temporary"
@@ -135,27 +141,11 @@ const Sidebar = ({ window, mobileOpen, handleDrawerToggle }) => {
         ModalProps={{
           keepMounted: true,
         }}
-        sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
+        sx={drawerStyle2}
       >
         {drawer}
       </Drawer>
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-        open
-      >
+      <Drawer variant="permanent" sx={drawerStyle3} open>
         {drawer}
       </Drawer>
     </Box>

@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Alert } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Alert,
+  Paper,
+  Divider,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -54,10 +61,14 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <Box sx={{ maxWidth: "600px", margin: "auto" }}>
-        <Box mb={5}>
+      <Paper
+        elevation={0}
+        sx={{ maxWidth: "600px", margin: "auto", padding: 2 }}
+      >
+        <Box>
           <Typography variant="h4">Profile</Typography>
         </Box>
+        <Divider sx={{ marginBottom: 2 }} />
 
         {errorDetails && <Alert severity="error">Failed to fetch data</Alert>}
         {errorUpdate && (
@@ -126,7 +137,7 @@ const ProfilePage = () => {
             UPDATE
           </Button>
         </Box>
-      </Box>
+      </Paper>
     </div>
   );
 };

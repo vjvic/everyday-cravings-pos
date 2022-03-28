@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -122,10 +122,6 @@ const Supplier = () => {
 
   //Delete Meal
   const handleDelete = (id) => {
-    /* if (window.confirm("Are you sure")) {
-      dispatch(deleteSupplier(id));
-    } */
-
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

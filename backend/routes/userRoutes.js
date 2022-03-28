@@ -23,7 +23,7 @@ router
 
 router
   .route("/:id")
-  .delete(protect, deleteUser)
+  .delete(protect, admin,deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
 

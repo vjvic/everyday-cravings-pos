@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
   Paper,
@@ -13,11 +13,22 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { addToMealIngredient } from "../../../redux/actions/ingredientAction";
 import { useDispatch } from "react-redux";
 
+const style = {
+  padding: 1,
+  paddingX: 3,
+  marginY: 1,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  height: 50,
+};
+
 const IngredientItem = ({ ing, countInStock }) => {
   const [qtyInMeal, setQtyInMeal] = useState(Number(countInStock));
 
   const dispatch = useDispatch();
 
+  //Add ingredient
   const handleAdd = (e) => {
     e.preventDefault();
 
@@ -29,17 +40,7 @@ const IngredientItem = ({ ing, countInStock }) => {
 
   return (
     <Grid item lg={6}>
-      <Paper
-        sx={{
-          padding: 1,
-          paddingX: 3,
-          marginY: 1,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: 50,
-        }}
-      >
+      <Paper sx={style}>
         <div> {capitalize(ing.name)} </div>
         {ing.qty === 0 ? (
           <Typography sx={{ color: "red" }}>Out of stock</Typography>

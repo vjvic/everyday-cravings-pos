@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { format } from "date-fns";
-import { /* useDispatch, */ useSelector } from "react-redux";
-/* import { getOrderCashierDetails } from "../../redux/actions/orderAction"; */
+import { useSelector } from "react-redux";
+
+const textList = [
+  "Order Type",
+  "Amount Due",
+  "paid",
+  "Change",
+  "Discount",
+  "Vatable sales",
+  "Vat-Exempt sales",
+  "Vat zero-rated sales",
+  "VAT Amount(12%)",
+];
 
 const Reciept = ({ order }) => {
-  /*   const dispatch = useDispatch(); */
-
   const { userInfo } = useSelector((state) => state.userLogin);
-  /*   const { order } = useSelector((state) => state.orderCashierDetails); */
-
-  /*  const { order } = useSelector((state) => state.orderCashierDetails);
-
-  useEffect(() => {
-    dispatch(getOrderCashierDetails(id));
-  }, [dispatch, id]); */
 
   useEffect(() => {
     window.print();
@@ -84,15 +86,9 @@ const Reciept = ({ order }) => {
         }}
       >
         <div>
-          <Typography>{"Order Type".toUpperCase()}</Typography>
-          <Typography>{"Amount Due".toUpperCase()}</Typography>
-          <Typography>{"paid".toUpperCase()}</Typography>
-          <Typography>{"change".toUpperCase()}</Typography>
-          <Typography>{"Discount".toUpperCase()}</Typography>
-          <Typography>{"Vatable sales".toUpperCase()}</Typography>
-          <Typography>{"Vat-Exempt sales".toUpperCase()}</Typography>
-          <Typography>{"Vat zero-rated sales".toUpperCase()}</Typography>
-          <Typography>{"VAT Amount(12%)".toUpperCase()}</Typography>
+          {textList.map((text) => (
+            <Typography key={text}>{text.toUpperCase()}</Typography>
+          ))}
         </div>
         <div>
           <Typography> {order && order.orderType.toUpperCase()}</Typography>

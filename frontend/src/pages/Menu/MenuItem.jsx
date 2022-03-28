@@ -1,4 +1,3 @@
-import React from "react";
 import { MealGrid } from "../../components";
 
 const MenuItem = ({ meals }) => {

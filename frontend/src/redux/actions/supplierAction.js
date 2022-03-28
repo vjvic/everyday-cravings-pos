@@ -18,6 +18,7 @@ import {
 import { mealApi } from "../../components";
 import { logout } from "./userActions";
 
+//Create new supplier
 export const createSupplier = (supplier) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -59,6 +60,7 @@ export const createSupplier = (supplier) => async (dispatch, getState) => {
   }
 };
 
+//Delete supplier
 export const deleteSupplier = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -95,6 +97,7 @@ export const deleteSupplier = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update supplier
 export const updateSupplier = (supplier) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -137,6 +140,7 @@ export const updateSupplier = (supplier) => async (dispatch, getState) => {
   }
 };
 
+//Get all suppliers
 export const getSupplierList = () => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
@@ -164,6 +168,7 @@ export const getSupplierList = () => async (dispatch, getState) => {
   }
 };
 
+//Get supplier details
 export const getSupplierDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({

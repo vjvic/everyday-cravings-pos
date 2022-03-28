@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   IconButton,
   Typography,
@@ -10,12 +10,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-/* import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close"; */
+
 import { deleteUser, listUsers } from "../../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../../components";
-/* import AddIcon from "@mui/icons-material/Add"; */
+
 import {
   DataGrid,
   GridToolbarContainer,
@@ -44,9 +43,6 @@ const UserListPage = () => {
 
   //Delete user
   const handleDelete = (id) => {
-    /*  if (window.confirm("Are you sure")) {
-      dispatch(deleteUser(id));
-    } */
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

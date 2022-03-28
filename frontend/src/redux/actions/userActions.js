@@ -31,6 +31,7 @@ import {
 import mealApi from "../../components/api/mealApi";
 import { setItemToLcalStorage } from "../../utils/utils";
 
+//Login user
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -61,6 +62,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+//Logout user
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
 
@@ -71,6 +73,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: MEAL_UPDATE_RESET });
 };
 
+//Register user
 export const userRegister =
   (name, email, password, id, role) => async (dispatch, getState) => {
     const {
@@ -115,6 +118,7 @@ export const userRegister =
     }
   };
 
+  //Get user details
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -152,6 +156,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update user profile
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -196,6 +201,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
+//Get all users
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -233,6 +239,7 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 };
 
+//Delte user
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -267,6 +274,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update user
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({

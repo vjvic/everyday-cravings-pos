@@ -1,4 +1,3 @@
-import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -11,8 +10,6 @@ const AdminRoute = ({ component: Component, ...rest }) => {
       render={(props) => {
         return userInfo && userInfo.role === "admin" ? (
           <Component {...props} />
-        ) : userInfo && userInfo.role === "user" ? (
-          <Redirect to="/menu" />
         ) : userInfo && userInfo.role === "cashier" ? (
           <Redirect to="/cashier" />
         ) : !userInfo ? (

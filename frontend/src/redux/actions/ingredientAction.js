@@ -23,6 +23,7 @@ import {
 import { mealApi } from "../../components";
 import { logout } from "./userActions";
 
+//Create new ingedients
 export const createIngredient = (ingredient) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -64,6 +65,7 @@ export const createIngredient = (ingredient) => async (dispatch, getState) => {
   }
 };
 
+//Delete ingredients
 export const deleteIngredient = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -100,6 +102,7 @@ export const deleteIngredient = (id) => async (dispatch, getState) => {
   }
 };
 
+//Update ingredients
 export const updateIngredient = (ingredient) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -142,6 +145,7 @@ export const updateIngredient = (ingredient) => async (dispatch, getState) => {
   }
 };
 
+//Get all ingredients
 export const getIngredientList = () => async (dispatch, getState) => {
   const {
     userLogin: { userInfo },
@@ -169,6 +173,7 @@ export const getIngredientList = () => async (dispatch, getState) => {
   }
 };
 
+//Get ingredient details
 export const getIngredientDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -206,8 +211,8 @@ export const getIngredientDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-//
 
+//Add ingredient to specific meal
 export const addToMealIngredient =
   (id, qtyInMeal) => async (dispatch, getState) => {
     const {
@@ -237,6 +242,7 @@ export const addToMealIngredient =
     });
   };
 
+  // Remove ingredient to specific meal
 export const removeFromMealIngredient = (id) => (dispatch) => {
   dispatch({
     type: INGREDIENT_REMOVE_ITEM,

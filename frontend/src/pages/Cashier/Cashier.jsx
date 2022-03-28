@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import {
   Typography,
@@ -14,36 +14,24 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  /* Container, */
   Paper,
-  /* Card,
-  IconButton, */
   InputAdornment,
 } from "@mui/material";
-import { useParams, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart /* , removeFromCart */,
-} from "../../redux/actions/cartAction";
-/* import { Link } from "react-router-dom";
-import Item from "./Item/Item"; */
 import { createOrderCashier } from "../../redux/actions/orderAction";
-/* import { updateMealStock } from "../../redux/actions/mealAction"; */
 import { useHistory } from "react-router-dom";
 import { totalAmount } from "../../utils/utils";
-import { ORDER_CASHIER_CREATE_RESET } from "../../redux/constants/orderConstants";
-/* import { BsFillBagCheckFill } from "react-icons/bs"; */
+import {
+  ORDER_CASHIER_CREATE_RESET,
+  ORDER_CASHIER_DETAILS_RESET,
+} from "../../redux/constants/orderConstants";
 import { uniqueID } from "../../utils/utils";
 import { MealGrid } from "../../components";
-import { getMealList } from "../../redux/actions/mealAction";
-/* import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import DeleteIcon from "@mui/icons-material/Delete"; */
+import { getMealList, updateMealStock } from "../../redux/actions/mealAction";
 import { CASHIER_RESET_ITEM } from "../../redux/constants/cashierConstants";
 import CashierItem from "./CashierItem";
-import Reciept from "./Reciept";
-/* import AccountCircle from "@mui/icons-material/AccountCircle"; */
 import { getOrderCashierDetails } from "../../redux/actions/orderAction";
+import Receipt from "./Reciept";
 
 const style = {
   position: "absolute",
@@ -58,8 +46,6 @@ const style = {
 };
 
 const Cashier = () => {
-  const { id } = useParams();
-  const location = useLocation();
   const history = useHistory();
   const [isSave, setIsSave] = useState(false);
   const dispatch = useDispatch();
@@ -70,25 +56,18 @@ const Cashier = () => {
   const [paymentError, setPaymentError] = useState(false);
   const [discount, setDiscount] = useState("");
 
-  //Item quantity
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
-
   const { cashierItems } = useSelector((state) => state.cashier);
   const { success, loading, error, order } = useSelector(
     (state) => state.orderCashierCreate
   );
 
-  const {
-    loading: mealsLoading,
-    meals,
-    /*   error: mealsError, */
-  } = useSelector((state) => state.mealList);
+  const { loading: mealsLoading, meals } = useSelector(
+    (state) => state.mealList
+  );
 
   const { order: orderDets } = useSelector(
     (state) => state.orderCashierDetails
   );
-
-  /* const { userInfo } = useSelector((state) => state.userLogin); */
 
   //Subtotal
   const subtotal = cashierItems.reduce((acc, item) => acc + item.qty, 0);
@@ -104,16 +83,6 @@ const Cashier = () => {
   // Total Items
   const totalItems = cashierItems.length;
 
-  /* let discount = 0; */
-
-  /* if (orderType === "foodpanda") {
-    discount = totalPrice * 0.15;
-    totalPrice = totalAmount(cartItems) - discount;
-  } else {
-    discount = 0;
-  }
- */
-
   let discountTotal;
 
   if (discount) {
@@ -123,7 +92,7 @@ const Cashier = () => {
     discountTotal = 0;
   }
 
-  //change
+  //handle change
   const change = () => {
     if (paid) {
       return Math.abs(totalPrice - Number(paid));
@@ -131,13 +100,6 @@ const Cashier = () => {
       return 0;
     }
   };
-
-  console.log(totalPrice.toFixed(2));
-  console.log("paid", paid);
-
-  if (paid < totalPrice) {
-    console.log(true);
-  }
 
   const handlePayment = (e) => {
     e.preventDefault();
@@ -160,10 +122,6 @@ const Cashier = () => {
         };
 
         dispatch(createOrderCashier(orders));
-
-        /*  cashierItems.map((item) =>
-          dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
-        ); */
       }
     } else {
       setPaymentError(true);
@@ -171,18 +129,15 @@ const Cashier = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      dispatch(addToCart(id, qty));
-    }
-  }, [dispatch, id, qty]);
-
-  useEffect(() => {
     if (success) {
       dispatch({ type: CASHIER_RESET_ITEM });
       setIsSave(false);
       setOrderType("");
+      //Update meal stock if success
+      cashierItems.map((item) =>
+        dispatch(updateMealStock(item.meal, item.countInStock - item.qty))
+      );
       if (order._id) {
-        /* history.push(`/cashier/receipt/${order._id}`); */
         dispatch({ type: ORDER_CASHIER_CREATE_RESET });
         dispatch(getOrderCashierDetails(order._id));
         setPaid("");
@@ -192,34 +147,20 @@ const Cashier = () => {
         setDiscount("");
       }
     }
-  }, [success, history, order, dispatch]);
+
+    return () => {
+      dispatch({ type: ORDER_CASHIER_CREATE_RESET });
+      dispatch({ type: ORDER_CASHIER_DETAILS_RESET });
+    };
+  }, [success, history, order, dispatch, cashierItems]);
 
   useState(() => {
     dispatch(getMealList());
   }, []);
 
-  /*   const noCart = (
-    <Alert severity="info">
-      No item{" "}
-      <Typography variant="body2" color="inherit" component={Link} to="/menu">
-        Go to Menu
-      </Typography>
-    </Alert>
-  );
-
-  const cartItemsList = (
-    <>
-      {cartItems.map((item) => (
-        <Item item={item} key={item.meal} />
-      ))}
-    </>
-  ); */
-
-  console.log("total", totalPrice);
-
   return (
     <>
-      {orderDets && <Reciept order={orderDets} />}
+      {orderDets && <Receipt order={orderDets} />}
 
       <Modal
         open={isSave}
@@ -339,21 +280,6 @@ const Cashier = () => {
                   }}
                 />
 
-                {/*  <TextField
-                  label="Discount"
-                  variant="outlined"
-                  type="number"
-                  value={discount}
-                  onChange={(e) => setDiscount(e.target.value)}
-                  required
-                  placeholder="0"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">&#37;</InputAdornment>
-                    ),
-                  }}
-                /> */}
-
                 <FormControl fullWidth required>
                   <InputLabel>Discount</InputLabel>
                   <Select
@@ -373,8 +299,6 @@ const Cashier = () => {
                   size="large"
                   sx={{ height: "45px", marginTop: 2 }}
                   color="error"
-                  /*  onClick={handlePayment}
-                disabled={loading} */
                   onClick={() => setIsSave(false)}
                 >
                   Cancel
